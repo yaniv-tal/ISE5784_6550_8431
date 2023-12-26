@@ -14,13 +14,13 @@ public class Point {
     }
 
     public Point add(Vector vec){
-        return new Point(this.xyz.add(vec.xyz));
+        return new Point(xyz.add(vec.xyz));
     }
 
     public double distanceSquared(Point point){
         double x = point.xyz.d1 - this.xyz.d1;
-        double y = point.xyz.d1 - this.xyz.d2;
-        double z = point.xyz.d1 - this.xyz.d3;
+        double y = point.xyz.d2 - this.xyz.d2;
+        double z = point.xyz.d3 - this.xyz.d3;
         return x*x + y*y + z*z;
     }
 
