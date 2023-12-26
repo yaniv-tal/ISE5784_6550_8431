@@ -18,9 +18,10 @@ public class Point {
     }
 
     public double distanceSquared(Point point){
-        return (point.xyz.d1 - this.xyz.d1) * (point.xyz.d1 - this.xyz.d1) +
-                (point.xyz.d1 - this.xyz.d2) * (point.xyz.d1 - this.xyz.d2) +
-                (point.xyz.d1 - this.xyz.d3) * (point.xyz.d1 - this.xyz.d3);
+        double x = point.xyz.d1 - this.xyz.d1;
+        double y = point.xyz.d1 - this.xyz.d2;
+        double z = point.xyz.d1 - this.xyz.d3;
+        return x*x + y*y + z*z;
     }
 
     public double distance(Point point){
