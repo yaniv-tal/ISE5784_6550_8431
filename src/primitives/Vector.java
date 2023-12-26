@@ -40,4 +40,12 @@ public class Vector extends Point {
     public Vector normalize(){
         return scale(1/length());
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        return obj instanceof Vector other && super.equals(other);return false;
+    }
+    @Override
+    public String toString() { return "->" + super.toString(); }
 }

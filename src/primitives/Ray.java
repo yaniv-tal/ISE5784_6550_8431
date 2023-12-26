@@ -1,12 +1,14 @@
 package primitives;
 
 public class Ray {
-    private Point head;
-    private Vector direction;
+    private final Point head;
+    private final Vector direction;
 
     public Ray(Point head, Vector direction) {
         this.head = head;
-        this.direction = direction;
+        this.direction = direction.normalize();
     }
+
+
 
 }
