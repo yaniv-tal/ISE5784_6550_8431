@@ -10,3 +10,4 @@ public interface Geometry {
      */
     public Vector getNormal(Point point);
 }
+

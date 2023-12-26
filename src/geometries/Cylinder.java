@@ -7,6 +7,14 @@ import primitives.Vector;
 public class Cylinder extends Tube{
     private final double height;
 
+    /**
+     *constructor. Gets a radius, and a ray to the direction,
+     * and height of the cylinder.
+     * Creates a pipe by calling its constructor, and creates the cylinder.
+     * @param radius
+     * @param aray
+     * @param height
+     */
     public Cylinder(double radius, Ray aray, double height) {
         super(radius, aray);
         this.height = height;

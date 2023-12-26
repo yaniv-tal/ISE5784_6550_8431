@@ -6,6 +6,12 @@ public class Ray {
     private final Point head;
     private final Vector direction;
 
+    /**
+     * constructor. Gets the head and the direction vector,
+     * normalizes the vector and creates the ray.
+     * @param head
+     * @param direction
+     */
     public Ray(Point head, Vector direction) {
         this.head = head;
         this.direction = direction.normalize();
