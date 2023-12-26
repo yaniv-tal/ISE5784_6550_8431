@@ -1,6 +1,14 @@
 package primitives;
 
 public class Vector extends Point {
+    /**
+     * The constructor gets three double values
+     * And creates a vector by the head point.
+     * If it is the 0 vector, exception will be thrown
+     * @param x
+     * @param y
+     * @param z
+     */
     public Vector(double x, double y, double z) {
         super(x, y, z);
         if(this.xyz.equals(Double3.ZERO)){
@@ -8,6 +16,12 @@ public class Vector extends Point {
         }
     }
 
+    /**
+     * The constructor gets double3 values
+     * And creates a vector by the head point.
+     * If it is the 0 vector, exception will be thrown
+     * @param XYZ
+     */
     public Vector(Double3 XYZ) {
         super(XYZ);
         if(this.xyz.equals(Double3.ZERO)) throw new IllegalArgumentException("Zero Vector is illegal");
@@ -18,6 +32,11 @@ public class Vector extends Point {
         return new Vector(this.xyz.add(vec.xyz));
     }
 
+    /**
+     *
+     * @param number
+     * @return
+     */
     public Vector scale(double number){
         return new Vector(this.xyz.scale(number));
     }
