@@ -1,5 +1,9 @@
 package primitives;
 
+/**
+ * the class implements a Point in space.
+ * @author Yaniv and Ahuvya.
+ */
 public class Point {
     public static final Point ZERO = new Point(Double3.ZERO);
     /**

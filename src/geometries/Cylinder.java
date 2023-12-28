@@ -4,6 +4,10 @@ import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
 
+/**
+ * the class implements a cylinder.
+ * @author Yaniv and Ahuvya.
+ */
 public class Cylinder extends Tube{
     private final double height;
 

@@ -3,6 +3,10 @@ package geometries;
 import primitives.Point;
 import primitives.Vector;
 
+/**
+ * interface of geometric shapes.
+ * @author Yaniv and Ahuvya.
+ */
 public interface Geometry {
     /**
      * @param point

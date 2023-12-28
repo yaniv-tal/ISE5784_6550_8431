@@ -1,5 +1,8 @@
 package primitives;
-
+/**
+ * the class implements a vector.
+ * @author Yaniv and Ahuvya.
+ */
 public class Vector extends Point {
     /**
      * The constructor gets three double values

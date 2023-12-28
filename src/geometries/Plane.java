@@ -3,6 +3,10 @@ package geometries;
 import primitives.Point;
 import primitives.Vector;
 
+/**
+ * the class implements a plane.
+ * @author Yaniv and Ahuvya.
+ */
 public class Plane implements Geometry{
     private final Point q;
     private final Vector normal;
@@ -34,6 +38,10 @@ public class Plane implements Geometry{
         return normal;
     }
 
+    /**
+     * the function return the normal of the plane.
+     * @return
+     */
     public Vector getNormal() {
         return normal;
     }

@@ -3,6 +3,10 @@ package geometries;
 import primitives.Point;
 import primitives.Vector;
 
+/**
+ * the class implements a sphere.
+ * @author Yaniv and Ahuvya.
+ */
 public class Sphere extends RadialGeometry{
     private final Point center;
 

@@ -1,7 +1,10 @@
 package primitives;
 
 import java.util.Objects;
-
+/**
+ * the class implements a Ray in space .
+ * @author Yaniv and Ahuvya.
+ */
 public class Ray {
     private final Point head;
     private final Vector direction;
