@@ -28,9 +28,9 @@ public class Plane implements Geometry{
      * @param y
      * @param z
      */
-    public Plane(Point x,Point y, Point z){
+    public Plane(Point x, Point y, Point z){
         this.q = x;
-        this.normal = null;
+        this.normal = z.subtract(y).crossProduct(z.subtract(x)).normalize();
     }
 
     @Override
