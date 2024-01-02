@@ -18,6 +18,8 @@ class VectorTest {
      */
     @Test
     void testAdd() {
+        // ============ Equivalence Partitions Tests ==============
+
     }
     /**
      * Test method for {@link primitives.Vector#scale(double)}.
