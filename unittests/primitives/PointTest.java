@@ -23,7 +23,7 @@ class PointTest {
     @Test
     void testSubtract() {
         // ============ Equivalence Partitions Tests ==============
-        assertEquals(Point.ZERO,);
+
     }
     /**
      * Test method for {@link primitives.Point#add(primitives.Vector)}.
