@@ -26,6 +26,19 @@ class VectorTest {
      */
     @Test
     void testScale() {
+        // ============ Equivalence Partitions Tests ==============
+        Vector vr = v1.crossProduct(v3);
+        // TC01: Test that length of cross-product is proper (orthogonal vectors taken
+        // for simplicity)
+        assertEquals(v1.length() * v3.length(), vr.length(), 0.001, "crossProduct() wrong result length");
+        // TC02: Test cross-product result orthogonality to its operands
+        assertEquals(0, vr.dotProduct(v1), "crossProduct() result is not orthogonal to 1st operand");
+        assertEquals(0, vr.dotProduct(v3), "crossProduct() result is not orthogonal to 2nd operand");
+        // =============== Boundary Values Tests ==================
+        // TC11: test zero vector from cross-product of parallel vectors
+        assertThrows(IllegalArgumentException.class, () -> v1.crossProduct(v2), //
+                "crossProduct() for parallel vectors does not throw an exception");
+
     }
     /**
      * Test method for {@link primitives.Vector#dotProduct(primitives.Vector)}.
