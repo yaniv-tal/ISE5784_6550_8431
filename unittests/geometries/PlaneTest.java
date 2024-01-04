@@ -14,8 +14,9 @@ class PlaneTest {
     void testConstructor(){
         // =============== Boundary Values Tests ==================
         assertThrows(IllegalArgumentException.class,
-                () -> new Plane(new Point(0, 0 ,3),new Point (0,0,3), new Point (1,3,3)),
+                () -> new Plane(new Point(1, 0 ,0),new Point (1,0,0), new Point (1,3,3)),
                 "ERROR: constructor does not throw error in illegal definition- 2 correlating points.");
+
         assertThrows(IllegalArgumentException.class,
                 () -> new Plane(new Point(1, 1 ,1),new Point (2,2,2), new Point (0,0,0)),
                 "ERROR: constructor does not throw error in illegal definition - all points on same line.");

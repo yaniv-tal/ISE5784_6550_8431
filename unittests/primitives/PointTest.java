@@ -25,7 +25,6 @@ class PointTest {
         // ============ Equivalence Partitions Tests ==============
         assertEquals(v1,p2.subtract(p1),"ERROR: (point2 - point1) does not work correctly");
         assertThrows(IllegalArgumentException.class, ()-> p1.subtract(p1),"ERROR: (point - itself) does not throw an exception");
-
     }
     /**
      * Test method for {@link primitives.Point#add(primitives.Vector)}.
