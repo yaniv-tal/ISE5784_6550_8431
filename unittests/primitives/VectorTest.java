@@ -74,9 +74,7 @@ class VectorTest {
      * Test method for {@link primitives.Vector#length()}.
      */
     @Test
-    void testLength() {
-        assertEquals(0, v4.length() - 3, "ERROR: length() wrong value");
-    }
+    void testLength() { assertEquals(0, v4.length() - 3, "ERROR: length() wrong value"); }
     /**
      * Test method for {@link primitives.Vector#normalize()}.
      */

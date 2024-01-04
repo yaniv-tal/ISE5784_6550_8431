@@ -45,9 +45,9 @@ public class Vector extends Point {
     }
 
     /**
-     *dotProduct.
+     * dotProduct.
      * @param vec
-     * @return The scalar we got
+     * @return The scalar we got.
      */
     public double dotProduct(Vector vec){
         return this.xyz.d1*vec.xyz.d1 + this.xyz.d2*vec.xyz.d2 + this.xyz.d3*vec.xyz.d3;

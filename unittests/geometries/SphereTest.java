@@ -15,9 +15,8 @@ class SphereTest {
      */
     @Test
     void getNormal() {
-        Point center = new Point(1,1,1);
-        Sphere sphere = new Sphere(3,new Point(1,1,1));
-        Point point = new Point(3,3,2);
-        assertEquals(point.subtract(center).normalize(), sphere.getNormal(point), "ERROR:get normal does not work correctly");
+        Sphere sphere = new Sphere(3,new Point(0,0,0));
+        Point point = new Point(0,0,1);
+        assertEquals(new Vector(0,0,1), sphere.getNormal(point), "ERROR: does not return the correct normal");
     }
 }
