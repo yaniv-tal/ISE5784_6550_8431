@@ -1,5 +1,5 @@
 //Yaniv Tal 216196550 yanivtal@yatmal.co.il
-//Ahuvya Betzalel 329228431 @ahuvyab@yatmal.co.il
+//Ahuvya Betzalel 329228431 ahuvyab@gmail.com
 package test;
 
 import static java.lang.System.out;
