@@ -4,7 +4,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 /**
- * Unit tests for geometries.cylinder class
+ * Unit tests for geometries.Cylinder class
  * @author Yaniv Tal and Ahuvya Betzalel
  */
 class CylinderTest {
@@ -14,5 +14,7 @@ class CylinderTest {
      */
     @Test
     void getNormal() {
+
+
     }
 }
