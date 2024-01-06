@@ -18,7 +18,7 @@ class TubeTest {
     @Test
     void getNormal() {
         // ============ Equivalence Partitions Tests ==============
-        // TC01: אהוביה תשלים
+        // TC01: Test the normal of the side of the tube.
 
         //Creating a tube with radius 1 and a ray starting from (-1, 0, 0) in the direction (1,0,0).
         Tube tube = new Tube(1,new Ray(new Point(-1,0,0),new Vector(1,0,0)));
@@ -29,7 +29,8 @@ class TubeTest {
         assertEquals(expected,tube.getNormal(new Point(0,0,1)),"ERROR: incorrect normal for point on tube.");
 
         // =============== Boundary Values Tests ==================
-        // TC11: אהוביה תשלים
+        // TC11: Test the normal in case that the point is in front of the head of the ray.
+
         // Creating another tube with radius 1 and a ray starting from (0,0,0) in the direction (1,0,0)
         Tube tube1 = new Tube(1, new Ray(new Point(0, 0, 0), new Vector(1, 0,0 )));
 
