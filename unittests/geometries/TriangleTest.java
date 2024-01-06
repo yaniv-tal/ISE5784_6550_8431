@@ -17,16 +17,14 @@ class TriangleTest {
      */
     @Test
     void getNormal() {
-        // Creating a triangle with vertices (1,0,0),(0,1,0),(0,0,1)
-        Triangle triangle = new Triangle(new Point(1, 0, 0), new Point(0, 1, 0), new Point(0, 0, 1));
-
+        // ============ Equivalence Partitions Tests ==============
+        // TC01: Test the normal to the triangle.
+        // Creating a triangle with vertices (1,0,0),(0,1,0),(0,0,0)
+        Triangle triangle = new Triangle(new Point(0, 0, 0), new Point(0, 1, 0),new Point(1, 0, 0));
         // Getting the normal at the given point
-        Vector normal = triangle.getNormal(new Point(0.5, 0.5, 0));
-
-        assertEquals(IllegalArgumentException.class,
-                () -> (new Vector(1, 1, 1)).crossProduct(normal),
-                "ERROR: triangle doesn't return normal in the correct direction.");
-
-        // Checking if the normal is normalized
-        assertEquals(1, triangle.getNormal().length(), "ERROR: plane normalized function does not work correctly");    }
+        Vector normal = new Vector(0, 0, 1);
+        assertEquals(normal, triangle.getNormal(new Point(0.1,0.1,0)), "ERROR: normal to plane does not work correctly");
+        assertEquals(0, new Vector(1, 0, 0).dotProduct(normal), "ERROR: The vector is not orthogonal to the vector in the triangle");
+        assertEquals(1, normal.length(), "ERROR: the normal is not a unit vector");
+    }
 }
