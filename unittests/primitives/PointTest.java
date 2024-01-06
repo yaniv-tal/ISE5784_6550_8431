@@ -23,6 +23,7 @@ class PointTest {
     @Test
     void testSubtract() {
         // ============ Equivalence Partitions Tests ==============
+        //TC01: test deduction of points.
         assertEquals(v1,p2.subtract(p1),"ERROR: (point2 - point1) does not work correctly");
         assertThrows(IllegalArgumentException.class, ()-> p1.subtract(p1),"ERROR: (point - itself) does not throw an exception");
     }
@@ -32,6 +33,7 @@ class PointTest {
     @Test
     void testAdd() {
         // ============ Equivalence Partitions Tests ==============
+        //TC01: test add vector to point.
         assertEquals(p2, p1.add(v1) ,"ERROR: (point + vector) = other point does not work correctly");
         assertEquals(Point.ZERO,p1.add(v1Opposite),"ERROR: (point + vector) = center of coordinates does not work correctly");
     }
@@ -41,7 +43,9 @@ class PointTest {
     @Test
     void testDistanceSquared() {
         // ============ Equivalence Partitions Tests ==============
+        //TC01: test the squared distance to itself equals to zero.
         assertEquals(0, p1.distanceSquared(p1), "ERROR: point squared distance to itself is not zero");
+        //TC02: test the squared distance between points.
         assertEquals(0,p1.distanceSquared(p3) - 9,"ERROR: squared distance between points is wrong");
         assertEquals(0,p3.distanceSquared(p1) - 9,"ERROR: squared distance between points is wrong");
     }
@@ -51,7 +55,9 @@ class PointTest {
     @Test
     void testDistance() {
         // ============ Equivalence Partitions Tests ==============
+        //TC01: test the distance to itself equals to zero.
         assertEquals(0,p1.distance(p1),"ERROR: point distance to itself is not zero");
+        //TC02: test the distance between points.
         assertEquals(0,p1.distance(p3) - 3,"ERROR: distance between points to itself is wrong");
         assertEquals(0,p3.distance(p1) - 3,"ERROR: distance between points to itself is wrong");
     }
