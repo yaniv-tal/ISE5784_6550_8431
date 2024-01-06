@@ -25,6 +25,7 @@ public class Tube extends RadialGeometry {
     @Override
     public Vector getNormal(Point point) {
         double t = aray.getDirection().dotProduct(point.subtract(aray.getHead()));
+
         //A bound case where the point is in front of the ray head.
         if (t == 0) {
             return point.subtract(aray.getHead());

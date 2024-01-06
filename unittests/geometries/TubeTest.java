@@ -29,7 +29,7 @@ class TubeTest {
         assertEquals(expected,tube.getNormal(new Point(0,0,1)),"ERROR: incorrect normal for point on tube.");
 
         // =============== Boundary Values Tests ==================
-        // TC11: Test the normal in case that the point is in front of the head of the ray.
+        // TC02: Test the normal in case that the point is in front of the head of the ray.
 
         // Creating another tube with radius 1 and a ray starting from (0,0,0) in the direction (1,0,0)
         Tube tube1 = new Tube(1, new Ray(new Point(0, 0, 0), new Vector(1, 0,0 )));
@@ -39,6 +39,5 @@ class TubeTest {
 
         // Checking if the actual normal matches the expected normal.
         assertEquals(expected2, tube1.getNormal(new Point(0, 0, 1)), "ERROR: incorrect normal for point on tube in the case that point is in front of the origin of the defining ray.");
-
     }
 }
