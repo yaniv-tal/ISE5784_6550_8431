@@ -17,6 +17,24 @@ class VectorTest {
     Vector v2         = new Vector(-2, -4, -6);
     Vector v3         = new Vector(0, 3, -2);
     Vector v4         = new Vector(1, 2, 2);
+
+    /**
+     * Test method for {@link Vector#Vector(double, double, double)}
+     * and for {@link Vector#Vector(Double3)}
+     */
+    @Test
+    void testConstructor() {
+        // ============ Equivalence Partitions Tests ==============
+        // TC01: Test construct a vector.
+        assertDoesNotThrow(() -> new Vector(1, 1, 1), "Failed constructing a vector");
+        assertDoesNotThrow(() -> new Vector(new Double3(1, 1, 1)),"Failed constructing a vector");
+
+        // =============== Boundary Values Tests ==================
+        // TC02: Test construct the zero vector.
+        assertThrows(IllegalArgumentException.class, () -> new Vector(0, 0, 0), "Constructed zero vector");
+        assertThrows(IllegalArgumentException.class, () -> new Vector(Double3.ZERO), "Constructed zero vector");
+    }
+
     /**
      * Test method for {@link primitives.Vector#add(primitives.Vector)}.
      */
@@ -102,8 +120,9 @@ class VectorTest {
     void testNormalize() {
         // ============ Equivalence Partitions Tests ==============
         //TC01: check the normalized.
-        assertEquals(1,v1.normalize().length(),0.001,"ERROR: the normalized vector is not a unit vector");
-        assertThrows(IllegalArgumentException.class,()->v1.crossProduct(v1.normalize()),"ERROR: the normalized vector is not parallel to the original one");
-        assertTrue(Util.compareSign(v1.dotProduct(v1.normalize()),1),"ERROR: the normalized vector is opposite to the original one");
+        Vector vr = v1.normalize();
+        assertEquals(1,vr.length(),0.001,"ERROR: the normalized vector is not a unit vector");
+        assertThrows(IllegalArgumentException.class,()->v1.crossProduct(vr),"ERROR: the normalized vector is not parallel to the original one");
+        assertTrue(Util.compareSign(v1.dotProduct(vr),1),"ERROR: the normalized vector is opposite to the original one");
     }
 }
