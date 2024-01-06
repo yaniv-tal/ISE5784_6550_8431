@@ -19,8 +19,7 @@ class VectorTest {
     Vector v4         = new Vector(1, 2, 2);
 
     /**
-     * Test method for {@link Vector#Vector(double, double, double)}
-     * and for {@link Vector#Vector(Double3)}
+     * Test method for {@link Vector#Vector(double, double, double)} and for {@link Vector#Vector(Double3)}
      */
     @Test
     void testConstructor() {

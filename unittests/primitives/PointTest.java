@@ -17,6 +17,18 @@ class PointTest {
     Vector v2         = new Vector(-2, -4, -6);
     Vector v3         = new Vector(0, 3, -2);
     Vector v4         = new Vector(1, 2, 2);
+
+    /**
+     * Test method for {@link Point#Point(double, double, double)} and for {@link Point#Point(Double3)}
+     */
+    @Test
+    void testConstructor() {
+        // ============ Equivalence Partitions Tests ==============
+        // TC01: Test construct a Point.
+        assertDoesNotThrow(() -> new Point(1, 1, 1), "Failed constructing a Point");
+        assertDoesNotThrow(() -> new Point(new Double3(1, 1, 1)),"Failed constructing a Point");
+    }
+
     /**
      * Test method for {@link primitives.Point#subtract(primitives.Point)}.
      */
