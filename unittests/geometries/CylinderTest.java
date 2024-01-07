@@ -36,3 +36,4 @@ class CylinderTest {
         assertEquals(direction, cylinder.getNormal(new Point(10, 0, 0)), "TC05 failed: Center of the op base");
     }
 }
+

@@ -25,6 +25,7 @@ class PlaneTest {
         assertThrows(IllegalArgumentException.class,
                 () -> new Plane(new Point(1, 1 ,1),new Point (2,2,2), new Point (3,3,3)),
                 "ERROR: constructor does not throw error in illegal definition - all points on same line.");
+
     }
 
     /**

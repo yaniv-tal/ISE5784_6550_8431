@@ -86,8 +86,8 @@ class VectorTest {
         // ============ Equivalence Partitions Tests ==============
         //TC01; Test the crossProduct for usual vectors.
         Vector vr = v1.crossProduct(v3);
-        assertEquals(0, vr.length() - v1.length() * v3.length(), 0.001, "ERROR: crossProduct() wrong result length");
-        assertEquals(0, vr.dotProduct(v1), "ERROR: crossProduct() result is not orthogonal to its 1st operand");
+        assertEquals(0, vr.length() - v1.length() * v3.length(), 0.001, "ERROR: crossProduct() wrong result length");//correctness check
+        assertEquals(0, vr.dotProduct(v1), "ERROR: crossProduct() result is not orthogonal to its 1st operand");//Checking the orthogonality of the results with the operands
         assertEquals(0, vr.dotProduct(v3), "ERROR: crossProduct() result is not orthogonal to its 2nd operand");
 
         // =============== Boundary Values Tests ==================
