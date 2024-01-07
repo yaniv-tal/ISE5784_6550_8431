@@ -4,6 +4,8 @@ import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
 
+import java.util.List;
+
 /**
  * the class implements a cylinder.
  * @author Yaniv and Ahuvya.
@@ -49,5 +51,10 @@ public class Cylinder extends Tube{
 
         // Return the normal of the specified point on the surface, normalized.
         return point.subtract(p0.add(v.scale(t))).normalize();
+    }
+
+    @Override
+    public List<Point> findIntsersections(Ray ray) {
+        return super.findIntsersections(ray);
     }
 }

@@ -16,7 +16,7 @@ class TubeTest {
      * Test method for {@link geometries.Tube#getNormal(primitives.Point)}.
      */
     @Test
-    void getNormal() {
+    void testGetNormal() {
         // ============ Equivalence Partitions Tests ==============
         // TC01: Test the normal of the side of the tube.
 
@@ -39,5 +39,9 @@ class TubeTest {
 
         // Checking if the actual normal matches the expected normal.
         assertEquals(expected2, tube1.getNormal(new Point(0, 0, 1)), "ERROR: incorrect normal for point on tube in the case that point is in front of the origin of the defining ray.");
+    }
+
+    @Test
+    void testFindIntsersections() {
     }
 }

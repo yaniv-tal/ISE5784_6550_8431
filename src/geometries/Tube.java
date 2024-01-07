@@ -4,6 +4,8 @@ import primitives.Point;
 import primitives.Ray;
 import primitives.Vector;
 
+import java.util.List;
+
 /**
  * the class implements a Tube.
  * @author Yaniv and Ahuvya.
@@ -33,5 +35,10 @@ public class Tube extends RadialGeometry {
 
         //Calculate and return the normal vector fot this point on the tube.
         return point.subtract(aray.getHead().add(aray.getDirection().scale(t))).normalize();
+    }
+
+    @Override
+    public List<Point> findIntsersections(Ray ray) {
+        return null;
     }
 }
