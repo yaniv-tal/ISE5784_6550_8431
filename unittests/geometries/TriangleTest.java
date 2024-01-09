@@ -2,7 +2,10 @@ package geometries;
 
 import org.junit.jupiter.api.Test;
 import primitives.Point;
+import primitives.Ray;
 import primitives.Vector;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -27,4 +30,9 @@ class TriangleTest {
         assertEquals(0, new Vector(1, 0, 0).dotProduct(normal), "ERROR: The vector is not orthogonal to the vector in the triangle");
         assertEquals(1, normal.length(), "ERROR: the normal is not a unit vector");
     }
+
+    @Test
+    void testFindIntsersections() {
+    }
 }
+
