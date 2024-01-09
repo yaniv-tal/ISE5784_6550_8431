@@ -25,7 +25,7 @@ class CylinderTest {
         //TC01: Test the side of the cylinder.
         assertEquals(new Vector(0, 0, 1), cylinder.getNormal(new Point(4, 0, 1)), "TC01 Failed: side of the cylinder");
         //TC02: Test the bottom base.
-        assertEquals(direction, cylinder.getNormal(new Point(0, 0.2, 0.2)), "TC02 Failed: bottom base of the cylinder");//להשלים
+        assertEquals(direction, cylinder.getNormal(new Point(0, 0.2, 0.2)), "TC02 Failed: bottom base of the cylinder");
         //TC03: Test the top base.
         assertEquals(direction, cylinder.getNormal(new Point(5, 0.2, 0.2)), "TC03 Failed: top base of the cylinder");
 
