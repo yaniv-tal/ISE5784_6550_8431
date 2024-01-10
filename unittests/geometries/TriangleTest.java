@@ -36,27 +36,33 @@ class TriangleTest {
      */
     @Test
     void testFindIntersections() {
-        final Point p01 = new Point(-1, 0, 0);
-        final Point p02 = new Point(1, 0, 0);
-        final Point p03 = new Point(0, 1, 0);
-        final Point p04 = new Point(0, 0, 1);
-        final Point p05 = new Point(-1, -1, -1);
-        Triangle triangle = new Triangle(p02,p03,p04);
-        final Vector v01 = new Vector(-1, 0, 0);
-        final Vector v02 = new Vector(1, 0, -1);
-        final Vector v03 = new Vector(1, 1, 1);
-        final Point gp1 = new Point(1, 1, 1);
-        final var exp1 = List.of(gp1);
-
-        assertNull(triangle.findIntersections(new Ray(p01, v01)), "Ray's line out of Plane");
-        assertNull(triangle.findIntersections(new Ray(p02, v01)), "Ray's line out of Plane");
-        assertNull(triangle.findIntersections(new Ray(p02, v02)), "Ray's line does not intersect with the plane");
-        assertNull(triangle.findIntersections(new Ray(p01, v02)), "Ray's line out of Plane");
-        final var result1 = plane.findIntersections(new Ray(p05, v03));//.stream().sorted(Comparator.comparingDouble(p) -> p.distance(p01))).toList();
+        final Point p300 = new Point(1, 0, 0);
+        final Point p030 = new Point(0, 1, 0);
+        final Point p003 = new Point(0, 0, 1);
+        final Point p101 = new Point(1, 0, 1);
+        final Point p301 = new Point(3, 0, 1);
+        final Point p401 = new Point(4, 0, 1);
+        final Point pm1m11 = new Point(-1, -1, 1);
+        final Point p999 = new Point(9, 9, 9);
+        final Vector v00m1 = new Vector(0, 0, -1);
+        final Point p111 = new Point(1, 1, 1);
+        final Point p110 = new Point(1, 1, 0);
+        final var exp1 = List.of(p110);
+        Triangle triangle = new Triangle(p300, p030, p003);
+        // ============ Equivalence Partitions Tests ==============
+        assertNull(triangle.findIntersections(new Ray(pm1m11, v00m1)), "Ray's line out of triangle");
+        assertNull(triangle.findIntersections(new Ray(p999, v00m1)), "Ray's line out of triangle");
+        final var result1 = triangle.findIntersections(new Ray(p111, v00m1));
         assertEquals(1, result1.size(), "Wrong number of points");
         assertEquals(exp1, result1, "Ray crosses Plane");
 
-        //טוב זה טעות לשנות
+        // =============== Boundary Values Tests ==================
+        assertNull(triangle.findIntersections(new Ray(p101, v00m1)), "Ray's line out of triangle");
+        assertNull(triangle.findIntersections(new Ray(p301, v00m1)), "Ray's line out of triangle");
+        assertNull(triangle.findIntersections(new Ray(p401, v00m1)), "Ray's line out of triangle");
+
+
+
     }
 }
 

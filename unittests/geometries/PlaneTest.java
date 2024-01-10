@@ -47,24 +47,39 @@ class PlaneTest {
      */
     @Test
     void testFindIntersections() {
-        final Point p01 = new Point(-1, 0, 0);
-        final Point p02 = new Point(1, 0, 0);
-        final Point p03 = new Point(0, 1, 0);
-        final Point p04 = new Point(0, 0, 1);
-        final Point p05 = new Point(-1, -1, -1);
-        Plane plane = new Plane(p02,p03,p04);
-        final Vector v01 = new Vector(-1, 0, 0);
-        final Vector v02 = new Vector(1, 0, -1);
-        final Vector v03 = new Vector(1, 1, 1);
-        final Point gp1 = new Point(1, 1, 1);
-        final var exp1 = List.of(gp1);
-
-        assertNull(plane.findIntersections(new Ray(p01, v01)), "Ray's line out of Plane");
-        assertNull(plane.findIntersections(new Ray(p02, v01)), "Ray's line out of Plane");
-        assertNull(plane.findIntersections(new Ray(p02, v02)), "Ray's line does not intersect with the plane");
-        assertNull(plane.findIntersections(new Ray(p01, v02)), "Ray's line out of Plane");
-        final var result1 = plane.findIntersections(new Ray(p05, v03));//.stream().sorted(Comparator.comparingDouble(p) -> p.distance(p01))).toList();
+        final Point pm100 = new Point(-1, 0, 0);
+        final Point p100 = new Point(1, 0, 0);
+        final Point p010 = new Point(0, 1, 0);
+        final Point p001 = new Point(0, 0, 1);
+        final Point pm1m1m1 = new Point(-1, -1, -1);
+        final Vector vm100 = new Vector(-1, 0, 0);
+        final Vector v10m1 = new Vector(1, 0, -1);
+        final Vector v111 = new Vector(1, 1, 1);
+        final Vector v100 = new Vector(1, 0, 0);
+        final Point p1p3 = new Point((double) 1/3, (double) 1/3, (double) 1/3);
+        final Point p555 = new Point(5, 5, 5);
+        final var exp2 = List.of(p1p3);
+        final var exp1 = List.of(p100);
+        Plane plane = new Plane(p100,p010,p001);
+        // ============ Equivalence Partitions Tests ==============
+        // TC01:
+        final var result1 = plane.findIntersections(new Ray(pm100, v100));
         assertEquals(1, result1.size(), "Wrong number of points");
         assertEquals(exp1, result1, "Ray crosses Plane");
+        // TC02:
+        assertNull(plane.findIntersections(new Ray(pm100, vm100)), "Ray's line out of Plane");
+        // =============== Boundary Values Tests ==================
+        assertNull(plane.findIntersections(new Ray(p100, v10m1)), "Ray's line does not intersect with the plane");
+        assertNull(plane.findIntersections(new Ray(pm100, v10m1)), "Ray's line out of Plane");
+
+        assertNull(plane.findIntersections(new Ray(p555, v111)), "Ray's line out of Plane");
+        assertNull(plane.findIntersections(new Ray(p010, v111)), "Ray's line out of Plane");
+        final var result2 = plane.findIntersections(new Ray(pm1m1m1, v111));
+        assertEquals(1, result2.size(), "Wrong number of points");
+        assertEquals(exp2, result2, "Ray crosses Plane");
+
+        assertNull(plane.findIntersections(new Ray(p010, vm100)), "Ray's line out of Plane");
+
+        assertNull(plane.findIntersections(new Ray(p100, vm100)), "Ray's line out of Plane");
     }
 }
