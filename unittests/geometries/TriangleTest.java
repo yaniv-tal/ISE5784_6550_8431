@@ -31,10 +31,32 @@ class TriangleTest {
         assertEquals(1, normal.length(), "ERROR: the normal is not a unit vector");
     }
 
+    /**
+     * Test method for {@link geometries.Triangle#findIntersections(primitives.Ray)}.
+     */
     @Test
-    void testFindIntsersections() {
+    void testFindIntersections() {
+        final Point p01 = new Point(-1, 0, 0);
+        final Point p02 = new Point(1, 0, 0);
+        final Point p03 = new Point(0, 1, 0);
+        final Point p04 = new Point(0, 0, 1);
+        final Point p05 = new Point(-1, -1, -1);
+        Triangle triangle = new Triangle(p02,p03,p04);
+        final Vector v01 = new Vector(-1, 0, 0);
+        final Vector v02 = new Vector(1, 0, -1);
+        final Vector v03 = new Vector(1, 1, 1);
+        final Point gp1 = new Point(1, 1, 1);
+        final var exp1 = List.of(gp1);
 
+        assertNull(triangle.findIntersections(new Ray(p01, v01)), "Ray's line out of Plane");
+        assertNull(triangle.findIntersections(new Ray(p02, v01)), "Ray's line out of Plane");
+        assertNull(triangle.findIntersections(new Ray(p02, v02)), "Ray's line does not intersect with the plane");
+        assertNull(triangle.findIntersections(new Ray(p01, v02)), "Ray's line out of Plane");
+        final var result1 = plane.findIntersections(new Ray(p05, v03));//.stream().sorted(Comparator.comparingDouble(p) -> p.distance(p01))).toList();
+        assertEquals(1, result1.size(), "Wrong number of points");
+        assertEquals(exp1, result1, "Ray crosses Plane");
 
+        //טוב זה טעות לשנות
     }
 }
 

@@ -88,6 +88,6 @@ public class PolygonTests {
    }
 
    @Test
-   void findIntsersections() {
+   void findIntersections() {
    }
 }
