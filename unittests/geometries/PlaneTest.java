@@ -63,24 +63,34 @@ class PlaneTest {
         final var exp1 = List.of(p100);
         Plane plane = new Plane(p100, p010, p001);
         // ============ Equivalence Partitions Tests ==============
-        // TC01:
+        // TC01: A ray that starts outside the plane, is not parallel to the plane,
+        // makes a non-right angle with the plane, and cuts the plane
         final var result1 = plane.findIntersections(new Ray(pm100, v100));
         assertEquals(1, result1.size(), "Wrong number of points");
         assertEquals(exp1, result1, "Ray crosses Plane");
-        // TC02:
+        // TC02: A ray that starts outside the plane, is not parallel to the plane,
+        // makes a non-right angle with the plane, and does not intersect the plane
         assertNull(plane.findIntersections(new Ray(pm100, vm100)), "Ray's line out of Plane");
         // =============== Boundary Values Tests ==================
-        assertNull(plane.findIntersections(new Ray(p100, v10m1)), "Ray's line does not intersect with the plane");
+        // **** Group: cases of a ray parallel to the plane
+        // TC11: case of a ray out of the plane
         assertNull(plane.findIntersections(new Ray(pm100, v10m1)), "Ray's line out of Plane");
-
+        // TC12: case of a ray inside the plane
+        assertNull(plane.findIntersections(new Ray(p100, v10m1)), "Ray's line does not intersect with the plane");
+        // **** Group: 3 cases of a ray perpendicular to the plane
+        // TC13: starting "after" the plane
         assertNull(plane.findIntersections(new Ray(p555, v111)), "Ray's line out of Plane");
+        // TC14: starting "inside" the plane
         assertNull(plane.findIntersections(new Ray(p010, v111)), "Ray's line out of Plane");
+        // TC15: starting "before" the plane
         final var result2 = plane.findIntersections(new Ray(pm1m1m1, v111));
         assertEquals(1, result2.size(), "Wrong number of points");
         assertEquals(exp2, result2, "Ray crosses Plane");
-
+        // TC15: One case of a ray that is neither parallel nor perpendicular to the plane but starts inside the plane
         assertNull(plane.findIntersections(new Ray(p010, vm100)), "Ray's line out of Plane");
-
+        // TC16: And one case that is similar to the previous case, but the beginning of the beam is exactly at the "reference point" of
+        //The plane (the point stored in the object of the plane in addition to the normal vector, or
+        //In other words - a given point inside the plane)
         assertNull(plane.findIntersections(new Ray(p100, vm100)), "Ray's line out of Plane");
     }
 }
