@@ -30,6 +30,7 @@ public class Triangle extends Polygon {
         final Vector na = pa.crossProduct(pb).normalize();
         final Vector nb = pa.crossProduct(pc).normalize();
         final Vector nc = pb.crossProduct(pc).normalize();
+
         if (!(na.equals(nb)) || !(nc.equals(na)) || !(nc.equals(nb)))
         {
             return null;
