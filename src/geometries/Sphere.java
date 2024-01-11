@@ -47,9 +47,9 @@ public class Sphere extends RadialGeometry {
         double th = Math.sqrt(radius * radius - d * d);
         double t1 = alignZero(th + tm);
         double t2 = alignZero(th - tm);
-        if (t2<=0)
+        if (t2 <= 0)
             return List.of(ray.getPoint(t1));
-        if (t1<=0)
+        if (t1 <= 0)
             return List.of(ray.getPoint(t2));
         return List.of(ray.getPoint(t2), ray.getPoint(t1));
     }
