@@ -15,18 +15,18 @@ import static org.junit.jupiter.api.Assertions.*;
  */
 class PlaneTest {
     /**
-     * Test method for {@link Plane#Plane(Point, Point, Point)} and for {@link Plane#Plane(Point,Vector)}
+     * Test method for {@link Plane#Plane(Point, Point, Point)} and for {@link Plane#Plane(Point, Vector)}
      */
     @Test
-    void testConstructor(){
+    void testConstructor() {
         // =============== Boundary Values Tests ==================
         // TC01: The first and second points are same.
         assertThrows(IllegalArgumentException.class,
-                () -> new Plane(new Point(1, 0 ,0),new Point (1,0,0), new Point (1,7,9)),
+                () -> new Plane(new Point(1, 0, 0), new Point(1, 0, 0), new Point(1, 7, 9)),
                 "ERROR: constructor does not throw error in illegal definition- 2 correlating points.");
         // TC02: The points are on the same line.
         assertThrows(IllegalArgumentException.class,
-                () -> new Plane(new Point(1, 1 ,1),new Point (2,2,2), new Point (3,3,3)),
+                () -> new Plane(new Point(1, 1, 1), new Point(2, 2, 2), new Point(3, 3, 3)),
                 "ERROR: constructor does not throw error in illegal definition - all points on same line.");
 
     }
@@ -38,10 +38,11 @@ class PlaneTest {
     void testGetNormal() {
         // ============ Equivalence Partitions Tests ==============
         // TC01: Test the normal to the plane.
-        Plane plane = new Plane(new Point(0,0,0),new Point(0,1,0),new Point(1,0,0));
-        assertEquals(new Vector(0,0,1),plane.getNormal(),"ERROR: normal to plane does not work correctly");
+        Plane plane = new Plane(new Point(0, 0, 0), new Point(0, 1, 0), new Point(1, 0, 0));
+        assertEquals(new Vector(0, 0, 1), plane.getNormal(), "ERROR: normal to plane does not work correctly");
         assertEquals(1, plane.getNormal().length(), "ERROR: plane normalized function does not work correctly");
     }
+
     /**
      * Test method for {@link geometries.Plane#findIntersections(primitives.Ray)}.
      */
@@ -56,11 +57,11 @@ class PlaneTest {
         final Vector v10m1 = new Vector(1, 0, -1);
         final Vector v111 = new Vector(1, 1, 1);
         final Vector v100 = new Vector(1, 0, 0);
-        final Point p1p3 = new Point((double) 1/3, (double) 1/3, (double) 1/3);
+        final Point p1p3 = new Point((double) 1 / 3, (double) 1 / 3, (double) 1 / 3);
         final Point p555 = new Point(5, 5, 5);
         final var exp2 = List.of(p1p3);
         final var exp1 = List.of(p100);
-        Plane plane = new Plane(p100,p010,p001);
+        Plane plane = new Plane(p100, p010, p001);
         // ============ Equivalence Partitions Tests ==============
         // TC01:
         final var result1 = plane.findIntersections(new Ray(pm100, v100));

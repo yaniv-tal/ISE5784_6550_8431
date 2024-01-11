@@ -39,14 +39,16 @@ public class Sphere extends RadialGeometry {
             return List.of(head.add(direction.scale(radius)));
         Vector u = center.subtract(head);
         double tm = direction.dotProduct(u);
-        double d = Math.sqrt(u.length() * u.length() - tm * tm);
+        double d = Math.sqrt(u.lengthSquared() - tm * tm);
         if (d >= radius) {
             return null;
         }
 
         double th = Math.sqrt(radius * radius - d * d);
-        double t1 = alignZero(th + tm);
-        double t2 = alignZero(th - tm);
+        double t1 = alignZero(tm + th);
+        double t2 = alignZero(tm - th);
+        if (t2 <= 0 && t1 <= 0)
+            return null;
         if (t2 <= 0)
             return List.of(ray.getPoint(t1));
         if (t1 <= 0)
