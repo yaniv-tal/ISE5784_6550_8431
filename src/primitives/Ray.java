@@ -1,6 +1,9 @@
 package primitives;
 
 import java.util.Objects;
+
+import static primitives.Util.isZero;
+
 /**
  * the class implements a Ray in space .
  * @author Yaniv and Ahuvya.
@@ -12,6 +15,7 @@ public class Ray {
     /**
      * constructor. Gets the head and the direction vector,
      * normalizes the vector and creates the ray.
+     *
      * @param head
      * @param direction
      */
@@ -37,6 +41,12 @@ public class Ray {
 
     public Vector getDirection() {
         return direction;
+    }
+
+    public Point getPoint(double t) {
+        if (isZero(t))
+            return head;
+        return head.add(direction.scale(t));
     }
 
     public Point getHead() {
