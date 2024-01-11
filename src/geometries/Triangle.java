@@ -12,9 +12,10 @@ import java.util.List;
  */
 public class Triangle extends Polygon {
     /**
-     *constructor. Gets an array of vertices,
+     * constructor. Gets an array of vertices,
      * calls the polygon constructor
      * and creates the triangle.
+     *
      * @param vertices
      */
     public Triangle(Point... vertices) {
@@ -24,7 +25,7 @@ public class Triangle extends Polygon {
     @Override
     public List<Point> findIntersections(Ray ray) {
         List<Point> r = plane.findIntersections(ray);
-        if (r==null)
+        if (r == null)
             return null;
         final Vector pa = r.get(1).subtract(vertices.get(0));
         final Vector pb = r.get(1).subtract(vertices.get(1));
@@ -33,9 +34,9 @@ public class Triangle extends Polygon {
         final Vector nb = pa.crossProduct(pc).normalize();
         final Vector nc = pb.crossProduct(pc).normalize();
 
-        if (!(na.equals(nb)) || !(nc.equals(na)) || !(nc.equals(nb)))
-        {
+        if (!(na.equals(nb)) || !(nc.equals(na)) || !(nc.equals(nb))) {
             return null;
         }
+        return r;
     }
 }
