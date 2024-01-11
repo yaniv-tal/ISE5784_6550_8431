@@ -26,7 +26,7 @@ class TriangleTest {
         Triangle triangle = new Triangle(new Point(0, 0, 0), new Point(0, 1, 0), new Point(1, 0, 0));
         // Getting the normal at the given point
         Vector normal = new Vector(0, 0, 1);
-        assertEquals(normal, triangle.getNormal(new Point(0.1,0.1,0)), "ERROR: normal to plane does not work correctly");
+        assertEquals(normal, triangle.getNormal(new Point(0.1, 0.1, 0)), "ERROR: normal to plane does not work correctly");
         assertEquals(0, new Vector(1, 0, 0).dotProduct(normal), "ERROR: The vector is not orthogonal to the vector in the triangle");
         assertEquals(1, normal.length(), "ERROR: the normal is not a unit vector");
     }
@@ -36,9 +36,9 @@ class TriangleTest {
      */
     @Test
     void testFindIntersections() {
-        final Point p300 = new Point(1, 0, 0);
-        final Point p030 = new Point(0, 1, 0);
-        final Point p003 = new Point(0, 0, 1);
+        final Point p300 = new Point(3, 0, 0);
+        final Point p030 = new Point(0, 3, 0);
+        final Point p000 = new Point(0, 0, 0);
         final Point p101 = new Point(1, 0, 1);
         final Point p301 = new Point(3, 0, 1);
         final Point p401 = new Point(4, 0, 1);
@@ -48,7 +48,7 @@ class TriangleTest {
         final Point p111 = new Point(1, 1, 1);
         final Point p110 = new Point(1, 1, 0);
         final var exp1 = List.of(p110);
-        Triangle triangle = new Triangle(p300, p030, p003);
+        Triangle triangle = new Triangle(p300, p030, p000);
         // ============ Equivalence Partitions Tests ==============
         assertNull(triangle.findIntersections(new Ray(pm1m11, v00m1)), "Ray's line out of triangle");
 

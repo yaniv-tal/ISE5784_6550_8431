@@ -6,6 +6,7 @@ import primitives.Vector;
 
 import java.util.List;
 
+import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
 /**
@@ -66,7 +67,7 @@ public class Plane implements Geometry {
         if (isZero(nv))
             return null;
 
-        double t = normal.dotProduct(q.subtract(head)) / nv;
+        double t = alignZero(normal.dotProduct(q.subtract(head)) / nv);
 
         //check that the calculate is positive.
         if (t <= 0)
