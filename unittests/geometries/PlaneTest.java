@@ -92,6 +92,5 @@ class PlaneTest {
         //The plane (the point stored in the object of the plane in addition to the normal vector, or
         //In other words - a given point inside the plane)
         assertNull(plane.findIntersections(new Ray(p100, vm100)), "Ray's line out of Plane");
-
     }
 }
