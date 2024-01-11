@@ -23,10 +23,17 @@ public class Triangle extends Polygon {
 
     @Override
     public List<Point> findIntersections(Ray ray) {
-        final Vector pa = ray.getHead().subtract(vertices.get(1));
-        final Vector pb = ray.getHead().subtract(vertices.get(2));
-        final Vector pc = ray.getHead().subtract(vertices.get(3));
-
-        return null;
+        Point head = ray.getHead();
+        final Vector pa = head.subtract(vertices.get(0));
+        final Vector pb = head.subtract(vertices.get(1));
+        final Vector pc = head.subtract(vertices.get(2));
+        final Vector na = pa.crossProduct(pb).normalize();
+        final Vector nb = pa.crossProduct(pc).normalize();
+        final Vector nc = pb.crossProduct(pc).normalize();
+        if (!(na.equals(nb)) || !(nc.equals(na)) || !(nc.equals(nb)))
+        {
+            return null;
+        }
+        return plane.findIntersections(ray);
     }
 }
