@@ -60,6 +60,7 @@ class PlaneTest {
         final Point p1p3 = new Point((double) 1 / 3, (double) 1 / 3, (double) 1 / 3);
         final Point p555 = new Point(5, 5, 5);
         final var exp2 = List.of(p1p3);
+
         final var exp1 = List.of(p100);
         Plane plane = new Plane(p100, p010, p001);
         // ============ Equivalence Partitions Tests ==============
