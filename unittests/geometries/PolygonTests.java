@@ -6,7 +6,10 @@ import org.junit.jupiter.api.Test;
 
 import geometries.Polygon;
 import primitives.Point;
+import primitives.Ray;
 import primitives.Vector;
+
+import java.util.List;
 
 /**
  * Testing Polygons
@@ -89,5 +92,37 @@ public class PolygonTests {
 
    @Test
    void findIntersections() {
+      final Point p300 = new Point(3, 0, 0);
+      final Point p030 = new Point(0, 3, 0);
+      final Point p000 = new Point(0, 0, 0);
+      final Point p101 = new Point(1, 0, 1);
+      final Point p301 = new Point(3, 0, 1);
+      final Point p401 = new Point(4, 0, 1);
+      final Point pm1m11 = new Point(-1, -1, 1);
+      final Point p999 = new Point(9, 9, 9);
+      final Vector v00m1 = new Vector(0, 0, -1);
+      final Point p111 = new Point(1, 1, 1);
+      final Point p110 = new Point(1, 1, 0);
+      final var exp1 = List.of(p110);
+      //The polygon that was tested
+      Polygon polygon = new Polygon(p300, p030, p000);
+
+      // ============ Equivalence Partitions Tests ==============
+      // TC01: The intersection point with the "contained" plane is outside the polygon - "Against" one of the sides
+      assertNull(polygon.findIntersections(new Ray(p999, v00m1)), "Ray's line out of polygon");
+      // TC02: The intersection point with the "contained" plane is outside the polygon - "Against" one of the vertices
+      assertNull(polygon.findIntersections(new Ray(pm1m11, v00m1)), "Ray's line out of polygon");
+      // TC03: The intersection point with the "contained" plane is inside the polygon
+      final var result1 = polygon.findIntersections(new Ray(p111, v00m1));
+      assertEquals(1, result1.size(), "Wrong number of points");
+      assertEquals(exp1, result1, "Ray crosses Plane");
+
+      // =============== Boundary Values Tests ==================
+      // TC11: The intersection point with the "contained" plane is on one of the sides
+      assertNull(polygon.findIntersections(new Ray(p101, v00m1)), "Ray's line out of polygon");
+      // TC12: The intersection point with the "contained" plane is on one of the vertices
+      assertNull(polygon.findIntersections(new Ray(p301, v00m1)), "Ray's line out of polygon");
+      // TC13: The intersection point with the "contained" plane is on the continuation of one of the sides
+      assertNull(polygon.findIntersections(new Ray(p401, v00m1)), "Ray's line out of polygon");
    }
 }

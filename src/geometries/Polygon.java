@@ -2,6 +2,7 @@ package geometries;
 
 import java.util.List;
 
+import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
 import primitives.Point;
@@ -85,6 +86,35 @@ public class Polygon implements Geometry {
 
    @Override
    public List<Point> findIntersections(Ray ray) {
-      return null;
+      List<Point> intersections = plane.findIntersections(ray);
+
+      // In case there is no intersection point with the plane of the polygon.
+      if (intersections == null)
+         return null;
+
+      //Checks if the intersection point is inside the polygon.
+      Point head = ray.getHead();
+      Vector direction = ray.getDirection();
+      Vector v1 = vertices.get(0).subtract(head);
+      Vector v2 = vertices.get(1).subtract(head);
+      double sign = alignZero(direction.dotProduct(v1.crossProduct(v2)));
+      if (isZero(sign))
+         return null;
+
+      // Boolean variable for checking that all the signs are the same in the calculations for each successive pair of vertices.
+      boolean checkSameSign = (sign > 0);
+      // Go through each successive pair of vertices in the polygon and check if the ray intersects with the polygon.
+      for (int i = vertices.size() - 1; i > 0; --i) {
+         v2 = v1;
+         v1 = vertices.get(i).subtract(head);
+         sign = alignZero(direction.dotProduct(v1.crossProduct(v2)));
+
+         // If the constructed vectors are orthogonal, or the sign isn't the same, the ray does not intersect polygon.
+         if (isZero(sign) || checkSameSign != (sign > 0))
+            return null;
+      }
+
+      // The ray intersects the polygon. returns the intersection point.
+      return intersections;
    }
 }
