@@ -68,7 +68,7 @@ class SphereTest {
         assertNull(sphere.findIntersections(new Ray(p105, v011)), "Ray's line out of sphere");
         // =============== Boundary Values Tests ==================
         // **** Group: Ray's line crosses the sphere (but not the center)
-        // TC11: Ray starts at sphere and goes inside (1 points)
+        // TC11: Ray starts at sphere and goes inside (1 point)
         final var exp3 = List.of(gp2);
         final var result3 = sphere.findIntersections(new Ray(gp1, v310));
         assertEquals(1, result3.size(), "Wrong number of points");
@@ -81,7 +81,7 @@ class SphereTest {
         final var result4 = sphere.findIntersections(new Ray(pm100, v100));
         assertEquals(2, result4.size(), "Wrong number of points");
         assertEquals(exp4, result4, "Ray crosses sphere");
-        // TC14: Ray starts at sphere and goes inside (1 points)
+        // TC14: Ray starts at sphere and goes inside (1 point)
         final var exp5 = List.of(p10m1);
         final var result5 = sphere.findIntersections(new Ray(p101, v00m1));
         assertEquals(1, result5.size(), "Wrong number of points");
@@ -90,7 +90,7 @@ class SphereTest {
         final var result6 = sphere.findIntersections(new Ray(p100p5, v00m1));
         assertEquals(1, result6.size(), "Wrong number of points");
         assertEquals(exp5, result6, "Ray crosses sphere");
-        // TC16: Ray starts at the center (1 points)
+        // TC16: Ray starts at the center (1 point)
         final var result7 = sphere.findIntersections(new Ray(p100, v00m1));
         assertEquals(1, result7.size(), "Wrong number of points");
         assertEquals(exp5, result7, "Ray crosses sphere");

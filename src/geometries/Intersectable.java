@@ -16,6 +16,4 @@ public interface Intersectable {
      * returns a list of intersection points between the ray and the geometry.
      */
     List<Point> findIntersections(Ray ray);
-
-
 }
