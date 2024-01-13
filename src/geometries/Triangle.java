@@ -32,13 +32,13 @@ public class Triangle extends Polygon {
         final Vector v1 = vertices.get(0).subtract(head);
         final Vector v2 = vertices.get(1).subtract(head);
         final Vector v3 = vertices.get(2).subtract(head);
-        final Vector n1 = v1.crossProduct(v2).normalize();
-        final Vector n2 = v2.crossProduct(v3).normalize();
-        final Vector n3 = v3.crossProduct(v1).normalize();
-        Vector v = ray.getDirection();
-        final double sign1 = n1.dotProduct(v);
-        final double sign2 = n2.dotProduct(v);
-        final double sign3 = n3.dotProduct(v);
+        final Vector normal1 = v1.crossProduct(v2).normalize();
+        final Vector normal2 = v2.crossProduct(v3).normalize();
+        final Vector normal3 = v3.crossProduct(v1).normalize();
+        Vector direction = ray.getDirection();
+        final double sign1 = normal1.dotProduct(direction);
+        final double sign2 = normal2.dotProduct(direction);
+        final double sign3 = normal3.dotProduct(direction);
         if ((sign1 == 0) || (sign2 == 0) || (sign3 == 0))
             return null;
         if (((sign1 > 0) && (sign2 > 0) && (sign3 > 0)) || ((sign1 < 0) && (sign2 < 0) && (sign3 < 0)))
