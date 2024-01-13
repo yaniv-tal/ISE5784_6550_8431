@@ -29,19 +29,19 @@ public class Triangle extends Polygon {
             return null;
 
         Point head = ray.getHead();
-        final Vector p1 = vertices.get(0).subtract(head);
-        final Vector p2 = vertices.get(1).subtract(head);
-        final Vector p3 = vertices.get(2).subtract(head);
-        final Vector n1 = p1.crossProduct(p2).normalize();
-        final Vector n2 = p2.crossProduct(p3).normalize();
-        final Vector n3 = p3.crossProduct(p1).normalize();
+        final Vector v1 = vertices.get(0).subtract(head);
+        final Vector v2 = vertices.get(1).subtract(head);
+        final Vector v3 = vertices.get(2).subtract(head);
+        final Vector n1 = v1.crossProduct(v2).normalize();
+        final Vector n2 = v2.crossProduct(v3).normalize();
+        final Vector n3 = v3.crossProduct(v1).normalize();
         Vector v = ray.getDirection();
-        final double s1 = n1.dotProduct(v);
-        final double s2 = n2.dotProduct(v);
-        final double s3 = n3.dotProduct(v);
-        if ((s1 == 0) || (s2 == 0) || (s3 == 0))
+        final double sign1 = n1.dotProduct(v);
+        final double sign2 = n2.dotProduct(v);
+        final double sign3 = n3.dotProduct(v);
+        if ((sign1 == 0) || (sign2 == 0) || (sign3 == 0))
             return null;
-        if (((s1 > 0) && (s2 > 0) && (s3 > 0)) || ((s1 < 0) && (s2 < 0) && (s3 < 0)))
+        if (((sign1 > 0) && (sign2 > 0) && (sign3 > 0)) || ((sign1 < 0) && (sign2 < 0) && (sign3 < 0)))
             return intersections;
         return null;
     }
