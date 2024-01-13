@@ -34,23 +34,28 @@ public class Sphere extends RadialGeometry {
     public List<Point> findIntersections(Ray ray) {
         Point head = ray.getHead();
         Vector direction = ray.getDirection();
+        //In case that the head of the ray is the center of the sphere
         if (center.equals(head))
             return List.of(head.add(direction.scale(radius)));
         Vector u = center.subtract(head);
         double tm = direction.dotProduct(u);
         double d = Math.sqrt(u.lengthSquared() - tm * tm);
+        //If there is no intersection point
         if (d >= radius) {
             return null;
         }
         double th = Math.sqrt(radius * radius - d * d);
         double t1 = alignZero(tm + th);
         double t2 = alignZero(tm - th);
+        //If there are no intersection points:
         if (t2 <= 0 && t1 <= 0)
             return null;
+        //If there is one intersection point:
         if (t2 <= 0)
             return List.of(ray.getPoint(t1));
         if (t1 <= 0)
             return List.of(ray.getPoint(t2));
+        //If there are two intersection points:
         return List.of(ray.getPoint(t2), ray.getPoint(t1));
     }
 }

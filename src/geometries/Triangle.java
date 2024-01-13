@@ -25,10 +25,11 @@ public class Triangle extends Polygon {
     @Override
     public List<Point> findIntersections(Ray ray) {
         List<Point> intersections = plane.findIntersections(ray);
+        //If there is no intersection point with the plane of the triangle
         if (intersections == null)
             return null;
-
         Point head = ray.getHead();
+        //Checks if the intersection point is inside the triangle.
         final Vector v1 = vertices.get(0).subtract(head);
         final Vector v2 = vertices.get(1).subtract(head);
         final Vector v3 = vertices.get(2).subtract(head);
@@ -39,8 +40,7 @@ public class Triangle extends Polygon {
         final double sign1 = normal1.dotProduct(direction);
         final double sign2 = normal2.dotProduct(direction);
         final double sign3 = normal3.dotProduct(direction);
-        if ((sign1 == 0) || (sign2 == 0) || (sign3 == 0))
-            return null;
+        // The ray intersects the triangle. returns the intersection point.
         if (((sign1 > 0) && (sign2 > 0) && (sign3 > 0)) || ((sign1 < 0) && (sign2 < 0) && (sign3 < 0)))
             return intersections;
         return null;
