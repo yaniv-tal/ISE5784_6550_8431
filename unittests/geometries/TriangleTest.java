@@ -48,19 +48,24 @@ class TriangleTest {
         final Point p111 = new Point(1, 1, 1);
         final Point p110 = new Point(1, 1, 0);
         final var exp1 = List.of(p110);
+        //The triangle that was tested
         Triangle triangle = new Triangle(p300, p030, p000);
+
         // ============ Equivalence Partitions Tests ==============
-        assertNull(triangle.findIntersections(new Ray(pm1m11, v00m1)), "Ray's line out of triangle");
-
+        //The intersection point with the "contained" plane is outside the triangle - "Against" one of the sides
         assertNull(triangle.findIntersections(new Ray(p999, v00m1)), "Ray's line out of triangle");
-
+        //The intersection point with the "contained" plane is outside the triangle - "Against" one of the vertices
+        assertNull(triangle.findIntersections(new Ray(pm1m11, v00m1)), "Ray's line out of triangle");
+        //The intersection point with the "contained" plane is inside the triangle
         final var result1 = triangle.findIntersections(new Ray(p111, v00m1));
         assertEquals(1, result1.size(), "Wrong number of points");
         assertEquals(exp1, result1, "Ray crosses Plane");
-
         // =============== Boundary Values Tests ==================
+        //The intersection point with the "contained" plane is on one of the sides
         assertNull(triangle.findIntersections(new Ray(p101, v00m1)), "Ray's line out of triangle");
+        //The intersection point with the "contained" plane is on one of the vertices
         assertNull(triangle.findIntersections(new Ray(p301, v00m1)), "Ray's line out of triangle");
+        //The intersection point with the "contained" plane is on the continuation of one of the sides
         assertNull(triangle.findIntersections(new Ray(p401, v00m1)), "Ray's line out of triangle");
     }
 }
