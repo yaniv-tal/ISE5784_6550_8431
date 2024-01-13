@@ -37,15 +37,15 @@ public class Geometries implements Intersectable {
     @Override
     public List<Point> findIntersections(Ray ray) {
         //Initialize variables to null.
-        List<Point> intersections = null, itemList = null;
+        List<Point> intersections = null;
 
         // loop goes over the geometries and add the intersections into itemList.
         for (var item : geometriesList) {
-            itemList = item.findIntersections(ray);
+            var itemList = item.findIntersections(ray);
             if (itemList != null) {
                 //Create the list for the first item that has intersection points.
                 if (intersections == null)
-                    intersections = new LinkedList<>();
+                    intersections = new LinkedList<Point>();
                 intersections.addAll(itemList);
             }
         }

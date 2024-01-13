@@ -27,7 +27,7 @@ class GeometriesTest {
         assertEquals(3, geometries.findIntersections(new Ray(new Point(1,0,-2),new Vector(0,0,1))).size(), "ERROR: Wrong number of intersections.");
 
         // =============== Boundary Values Tests ==================
-        Geometries geometries1 = new Geometries(sphere, plane, new Triangle(new Point(2,0,0),new Point(0,2,0),new Point(0,-2,0)));
+        Geometries geometries1 = new Geometries(sphere, plane, new Triangle(new Point(2,0,0),new Point(0,2,0),new Point(0,-2,0)),new Polygon(new Point(0,-3,0),new Point(0,3,0),new Point(3,3,0),new Point(3,-3,0)));
         //TC11: Empty list of geometries.
         Geometries geometries2 = new Geometries();
         assertNull(geometries2.findIntersections(new Ray(new Point(0,0,1),new Vector(2,2,18))), "ERROR: Wrong number of intersections.");
@@ -36,6 +36,6 @@ class GeometriesTest {
         //TC13: Only one geometry intersect the ray.
         assertEquals(1,geometries1.findIntersections(new Ray(new Point(0.5,0.5,0.5),new Vector(1,1,0))).size(),"ERROR: Wrong number of intersections.");
         //TC14: All the geometries intersects the ray.
-        assertEquals(4, geometries1.findIntersections(new Ray(new Point(1,0,-2),new Vector(0,0,1))).size(), "ERROR: Wrong number of intersections.");
+        assertEquals(5, geometries1.findIntersections(new Ray(new Point(1,0,-2),new Vector(0,0,1))).size(), "ERROR: Wrong number of intersections.");
     }
 }

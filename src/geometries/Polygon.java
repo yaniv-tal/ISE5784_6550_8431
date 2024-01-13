@@ -86,10 +86,10 @@ public class Polygon implements Geometry {
 
    @Override
    public List<Point> findIntersections(Ray ray) {
-      List<Point> intersections = plane.findIntersections(ray);
+      List<Point> intersection = plane.findIntersections(ray);
 
       // In case there is no intersection point with the plane of the polygon.
-      if (intersections == null)
+      if (intersection == null)
          return null;
 
       //Checks if the intersection point is inside the polygon.
@@ -115,6 +115,6 @@ public class Polygon implements Geometry {
       }
 
       // The ray intersects the polygon. returns the intersection point.
-      return intersections;
+      return intersection;
    }
 }
