@@ -52,20 +52,20 @@ class TriangleTest {
         Triangle triangle = new Triangle(p300, p030, p000);
 
         // ============ Equivalence Partitions Tests ==============
-        //The intersection point with the "contained" plane is outside the triangle - "Against" one of the sides
+        //TC01: The intersection point with the "contained" plane is outside the triangle - "Against" one of the sides
         assertNull(triangle.findIntersections(new Ray(p999, v00m1)), "Ray's line out of triangle");
-        //The intersection point with the "contained" plane is outside the triangle - "Against" one of the vertices
+        //TC02: The intersection point with the "contained" plane is outside the triangle - "Against" one of the vertices
         assertNull(triangle.findIntersections(new Ray(pm1m11, v00m1)), "Ray's line out of triangle");
-        //The intersection point with the "contained" plane is inside the triangle
+        //TC03: The intersection point with the "contained" plane is inside the triangle
         final var result1 = triangle.findIntersections(new Ray(p111, v00m1));
         assertEquals(1, result1.size(), "Wrong number of points");
         assertEquals(exp1, result1, "Ray crosses Plane");
         // =============== Boundary Values Tests ==================
-        //The intersection point with the "contained" plane is on one of the sides
+        //TC11: The intersection point with the "contained" plane is on one of the sides
         assertNull(triangle.findIntersections(new Ray(p101, v00m1)), "Ray's line out of triangle");
-        //The intersection point with the "contained" plane is on one of the vertices
+        //TC12: The intersection point with the "contained" plane is on one of the vertices
         assertNull(triangle.findIntersections(new Ray(p301, v00m1)), "Ray's line out of triangle");
-        //The intersection point with the "contained" plane is on the continuation of one of the sides
+        //TC13: The intersection point with the "contained" plane is on the continuation of one of the sides
         assertNull(triangle.findIntersections(new Ray(p401, v00m1)), "Ray's line out of triangle");
     }
 }
