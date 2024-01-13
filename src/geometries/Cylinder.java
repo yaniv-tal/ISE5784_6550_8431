@@ -6,6 +6,8 @@ import primitives.Vector;
 
 import java.util.List;
 
+import static primitives.Util.isZero;
+
 /**
  * the class implements a cylinder.
  * @author Yaniv and Ahuvya.
@@ -41,16 +43,16 @@ public class Cylinder extends Tube{
 
         //check if the point is in the bottom base.
         double t = v.dotProduct(point.subtract(p0));
-        if (t == 0)
+        if (isZero(t))
             return v;
 
         //check if the point is in the top base.
         double t2 = v.dotProduct(point.subtract(o2));
-        if (t2 == 0)
+        if (isZero(t2))
             return v;
 
         // Return the normal of the specified point on the surface, normalized.
-        return point.subtract(p0.add(v.scale(t))).normalize();
+        return point.subtract(aray.getPoint(t)).normalize();
     }
 
     @Override
