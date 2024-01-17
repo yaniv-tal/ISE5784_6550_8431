@@ -59,8 +59,6 @@ public class Camera implements Cloneable {
     }
 
     /**
-     * להשלים
-     *
      * @param nX - Represents the amount of columns (row width)
      * @param nY - represents the number of rows (column height).
      * @param j  - column number
@@ -99,7 +97,6 @@ public class Camera implements Cloneable {
 
         /**
          * Determining the location of the camera
-         *
          * @param location
          * @return Returns the Builder object
          */
@@ -155,17 +152,20 @@ public class Camera implements Cloneable {
         }
 
         public Camera build() {
+            final String MissingRenderingArgument  = "Missing rendering argument";
+            final String Camera  = "Camera";
+
             //Correctness check, make sure that the vectors and the points are not "NULL".
-            if (camera.p0 == null) throw new MissingResourceException("Missing rendering argument", "Camera", "p0");
-            if (camera.vUp == null) throw new MissingResourceException("Missing rendering argument", "Camera", "vUp");
-            if (camera.vTo == null) throw new MissingResourceException("Missing rendering argument", "Camera", "vTo");
+            if (camera.p0 == null) throw new MissingResourceException(MissingRenderingArgument, Camera, "p0");
+            if (camera.vUp == null) throw new MissingResourceException(MissingRenderingArgument, Camera, "vUp");
+            if (camera.vTo == null) throw new MissingResourceException(MissingRenderingArgument, Camera, "vTo");
             //Correctness check, make sure that the values are not 0.
             if (Util.alignZero(camera.width) == 0)
-                throw new MissingResourceException("Missing rendering argument", "Camera", "width");
+                throw new MissingResourceException(MissingRenderingArgument, Camera, "width");
             if (Util.alignZero(camera.height) == 0)
-                throw new MissingResourceException("Missing rendering argument", "Camera", "height");
+                throw new MissingResourceException(MissingRenderingArgument, Camera, "height");
             if (Util.alignZero(camera.distance) == 0)
-                throw new MissingResourceException("Missing rendering argument", "Camera", "distance");
+                throw new MissingResourceException(MissingRenderingArgument, Camera, "distance");
             //Correctness check, make sure that the values are positives.
             if (Util.alignZero(camera.width) < 0) throw new IllegalArgumentException("The width can't be negative");
             if (Util.alignZero(camera.height) < 0) throw new IllegalArgumentException("The height can't be negative");
