@@ -9,6 +9,9 @@ import primitives.Vector;
 
 import java.util.List;
 
+/**
+ * Integration tests between creating rays from a camera and calculating sections of a ray with geometric bodies
+ */
 public class CameraRayIntegrationTest {
     private final Camera.Builder cameraBuilder = Camera.getBuilder()
             .setDirection(new Vector(0, 0, -1), new Vector(0, -1, 0))
@@ -29,6 +32,9 @@ public class CameraRayIntegrationTest {
     private final Camera camera1 = cameraBuilder.setLocation(Point.ZERO).build();
     private final Camera camera2 = cameraBuilder.setLocation(new Point(0, 0, 0.5)).build();
 
+    /**
+     *Integration tests between creating rays from a camera and calculating sections of a ray with a sphere
+     */
     @Test
     void testSphere() {
         //TC01: 2 intersections.
@@ -48,6 +54,9 @@ public class CameraRayIntegrationTest {
         assertEquals(0, calculateIntersections(sphere, camera1), "ERROR: Wrong number of intersections.");
     }
 
+    /**
+     * Integration tests between creating rays from a camera and calculating sections of a ray with a plane
+     */
     @Test
     void testPlane() {
         //TC01: 9 intersections.
@@ -61,6 +70,9 @@ public class CameraRayIntegrationTest {
         assertEquals(6, calculateIntersections(plane, camera1), "ERROR: Wrong number of intersections.");
     }
 
+    /**
+     * Integration tests between creating rays from a camera and calculating sections of a ray with a triangle
+     */
     @Test
     void testTriangle() {
         //TC01: One intersection.
