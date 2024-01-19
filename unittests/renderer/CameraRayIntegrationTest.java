@@ -10,7 +10,8 @@ import primitives.Vector;
 import java.util.List;
 
 /**
- * Integration tests between creating rays from a camera and calculating sections of a ray with geometric bodies
+ * Integration tests between creating rays from a camera and calculating sections of a ray with geometric bodies.
+ * @author Yaniv and Ahuvya
  */
 public class CameraRayIntegrationTest {
     private final Camera.Builder cameraBuilder = Camera.getBuilder()
