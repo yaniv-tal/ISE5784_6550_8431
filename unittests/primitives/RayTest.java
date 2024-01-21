@@ -34,14 +34,14 @@ class RayTest {
         final Point p999 = new Point(9, 9, 9);
         final Point p110 = new Point(1, 1, 0);
         // ============ Equivalence Partitions Tests ==============
-        //TC01:
-        assertEquals(p110,ray.findClosestPoint(List.of(p999, p110, p401)),"");
+        //TC01: A point in the middle of the list is the one closest to the beginning of the ray
+        assertEquals(p110,ray.findClosestPoint(List.of(p999, p110, p401)),"ERROR: does not return the correct point");
         // =============== Boundary Values Tests ==================
-        //TC11:
-        assertEquals(p110,ray.findClosestPoint(List.of(p110, p999,  p401)),"");
-        //TC12:
-        assertEquals(p110,ray.findClosestPoint(List.of( p999,  p401, p110)),"");
-        //TC13:
-        assertNull(ray.findClosestPoint(null), "");
+        //TC11: empty list
+        assertEquals(p110,ray.findClosestPoint(List.of(p110, p999,  p401)),"ERROR: does not return the correct point");
+        //TC12: The first point is closest to the beginning of the ray
+        assertEquals(p110,ray.findClosestPoint(List.of( p999,  p401, p110)),"ERROR: does not return the correct point");
+        //TC13: The last point is closest to the beginning of the ray
+        assertNull(ray.findClosestPoint(null), "ERROR: There is no point to return");
     }
 }
