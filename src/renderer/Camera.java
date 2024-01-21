@@ -70,8 +70,8 @@ public class Camera implements Cloneable {
         Point pCenter = p0.add(vTo.scale(distance));
 
         //Ratio
-        double Ry = (double) height / nY;
-        double Rx = (double) width / nX;
+        double Ry = height / nY;
+        double Rx = width / nX;
 
         //Pixel[i,j] center
         double yI = -(i - (double) (nY - 1) / 2) * Ry;
@@ -85,8 +85,6 @@ public class Camera implements Cloneable {
         Vector vIJ = pIJ.subtract(p0);
         return new Ray(p0, vIJ);
     }
-
-    ;
 
     /**
      * The class implements a Builder Design Pattern.
@@ -167,9 +165,16 @@ public class Camera implements Cloneable {
             final String Camera  = "Camera";
 
             //Correctness check, make sure that the vectors and the points are not "NULL".
-            if (camera.p0 == null) throw new MissingResourceException(MissingRenderingArgument, Camera, "p0");
-            if (camera.vUp == null) throw new MissingResourceException(MissingRenderingArgument, Camera, "vUp");
-            if (camera.vTo == null) throw new MissingResourceException(MissingRenderingArgument, Camera, "vTo");
+            if (camera.p0 == null)
+                throw new MissingResourceException(MissingRenderingArgument, Camera, "p0");
+            if (camera.vUp == null)
+                throw new MissingResourceException(MissingRenderingArgument, Camera, "vUp");
+            if (camera.vTo == null)
+                throw new MissingResourceException(MissingRenderingArgument, Camera, "vTo");
+            if (camera.rayTracer == null)
+                throw new MissingResourceException(MissingRenderingArgument, Camera, "rayTracer");
+            if (camera.imageWriter == null)
+                throw new MissingResourceException(MissingRenderingArgument, Camera, "imageWriter");
             //Correctness check, make sure that the values are not 0.
             if (Util.alignZero(camera.width) == 0)
                 throw new MissingResourceException(MissingRenderingArgument, Camera, "width");
@@ -200,5 +205,32 @@ public class Camera implements Cloneable {
             }
         }
     }
+    public void renderImage(){
+        throw new UnsupportedOperationException();
+    }
+    public void printGrid(int interval,Color color){
+        ImageWriter imageTest = new ImageWriter("imageTest", 800, 500);
+        //We will go by the pixels we received and create longitude and latitude lines in black
+        for (int j = 0; j < 800; j++) {
+            if (isZero(j % 50))
+                for (int i = 0; i < 500; i++) {
+                    imageTest.writePixel(j, i, color);
+                }
+            else
+                for (int i = 0; i < 500; i++) {
+                    if (isZero(i % 50))
+                        imageTest.writePixel(j, i, color);
+                }
+        }
+        imageTest.writeToImage();
+    }
+
+    public void writeToImage() {
+        if (imageWriter == null) {
+            throw new MissingResourceException("Missing rendering argument", "Camera", "imageWriter");
+        }
+        imageWriter.writeToImage(); //delegate to image writer
+    }
+
 }
 
