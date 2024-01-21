@@ -15,7 +15,8 @@ public class Camera implements Cloneable {
     private Point p0;
     private Vector vTo, vUp, vRight;
     private double width = 0.0, height = 0.0, distance = 0.0;
-
+    private ImageWriter imageWriter;
+    private RayTracerBase rayTracer;
     /**
      * get function for the width of the View Plane.
      *
@@ -102,6 +103,16 @@ public class Camera implements Cloneable {
          */
         public Builder setLocation(Point location) {
             camera.p0 = location;
+            return this;
+        }
+
+        public Builder setImageWriter(ImageWriter imageWriter){
+            this.camera.imageWriter = imageWriter;
+            return this;
+        }
+
+        public Builder setRayTracer(RayTracerBase rayTracer){
+            this.camera.rayTracer = rayTracer;
             return this;
         }
 
