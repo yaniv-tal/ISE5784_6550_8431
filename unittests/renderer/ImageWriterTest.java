@@ -6,6 +6,10 @@ import primitives.Color;
 import static org.junit.jupiter.api.Assertions.*;
 import static primitives.Util.isZero;
 
+/**
+ * Unit tests for renderer.ImageWriter class
+ * @author Yaniv Tal and Ahuvya Betzalel
+ */
 class ImageWriterTest {
     @Test
     void imageWriterTest() {
