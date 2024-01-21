@@ -67,9 +67,16 @@ public class Ray {
         return head;
     }
 
+    /**
+     * A function that works with a ray, gets
+     * @param points - an list of points
+     * @return the point from the list that is closer to the beginning of the ray
+     */
     public Point findClosestPoint( List<Point> points) {
+        //Makes sure the list is not empty
         if(points == null)
             return null;
+        //Arranges the points in order of their distance from the beginning of the ray, and returns the closest one
         return points.stream().sorted(Comparator.comparingDouble(p->p.distance(head))).toList().getFirst();
     }
 }
