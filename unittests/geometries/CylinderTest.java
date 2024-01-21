@@ -23,17 +23,27 @@ class CylinderTest {
 
         // ============ Equivalence Partitions Tests ==============
         //TC01: Test the side of the cylinder.
-        assertEquals(new Vector(0, 0, 1), cylinder.getNormal(new Point(4, 0, 1)), "TC01 Failed: side of the cylinder");
+        assertEquals(new Vector(0, 0, 1),
+                cylinder.getNormal(new Point(4, 0, 1)),
+                "TC01 Failed: side of the cylinder");
         //TC02: Test the bottom base.
-        assertEquals(direction, cylinder.getNormal(new Point(0, 0.2, 0.2)), "TC02 Failed: bottom base of the cylinder");
+        assertEquals(direction,
+                cylinder.getNormal(new Point(0, 0.2, 0.2)),
+                "TC02 Failed: bottom base of the cylinder");
         //TC03: Test the top base.
-        assertEquals(direction, cylinder.getNormal(new Point(5, 0.2, 0.2)), "TC03 Failed: top base of the cylinder");
+        assertEquals(direction,
+                cylinder.getNormal(new Point(5, 0.2, 0.2)),
+                "TC03 Failed: top base of the cylinder");
 
         // =============== Boundary Values Tests ==================
         //TC04: Test the center of the bottom base.
-        assertEquals(direction, cylinder.getNormal(center), "TC04 failed: Center of the bottom base");
+        assertEquals(direction,
+                cylinder.getNormal(center),
+                "TC04 failed: Center of the bottom base");
         //TC05: Test the Center of the top base.
-        assertEquals(direction, cylinder.getNormal(new Point(5, 0, 0)), "TC05 failed: Center of the op base");
+        assertEquals(direction,
+                cylinder.getNormal(new Point(5, 0, 0)),
+                "TC05 failed: Center of the op base");
     }
 }
 
