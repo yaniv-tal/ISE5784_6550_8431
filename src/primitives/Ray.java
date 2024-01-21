@@ -1,5 +1,6 @@
 package primitives;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
@@ -67,6 +68,8 @@ public class Ray {
     }
 
     public Point findClosestPoint( List<Point> points) {
-        return null;
+        if(points == null)
+            return null;
+        return points.stream().sorted(Comparator.comparingDouble(p->p.distance(head))).toList().getFirst();
     }
 }
