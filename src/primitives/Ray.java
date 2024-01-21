@@ -1,5 +1,6 @@
 package primitives;
 
+import java.util.List;
 import java.util.Objects;
 
 import static primitives.Util.isZero;
@@ -63,5 +64,9 @@ public class Ray {
      */
     public Point getHead() {
         return head;
+    }
+
+    public Point findClosestPoint( List<Point> points) {
+        return null;
     }
 }
