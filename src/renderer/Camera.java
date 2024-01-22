@@ -17,6 +17,7 @@ public class Camera implements Cloneable {
     private double width = 0.0, height = 0.0, distance = 0.0;
     private ImageWriter imageWriter;
     private RayTracerBase rayTracer;
+
     /**
      * get function for the width of the View Plane.
      *
@@ -60,11 +61,12 @@ public class Camera implements Cloneable {
     }
 
     /**
+     * creates ray that go threw (i,j) indexes.
      * @param nX - Represents the amount of columns (row width)
      * @param nY - represents the number of rows (column height).
      * @param j  - column number
      * @param i  - row number
-     * @return
+     * @return the created ray
      */
     public Ray constructRay(int nX, int nY, int j, int i) {
         Point pCenter = p0.add(vTo.scale(distance));
@@ -96,6 +98,7 @@ public class Camera implements Cloneable {
 
         /**
          * Determining the location of the camera
+         *
          * @param location
          * @return Returns the Builder object
          */
@@ -104,12 +107,12 @@ public class Camera implements Cloneable {
             return this;
         }
 
-        public Builder setImageWriter(ImageWriter imageWriter){
+        public Builder setImageWriter(ImageWriter imageWriter) {
             this.camera.imageWriter = imageWriter;
             return this;
         }
 
-        public Builder setRayTracer(RayTracerBase rayTracer){
+        public Builder setRayTracer(RayTracerBase rayTracer) {
             this.camera.rayTracer = rayTracer;
             return this;
         }
@@ -161,8 +164,8 @@ public class Camera implements Cloneable {
         }
 
         public Camera build() {
-            final String MissingRenderingArgument  = "Missing rendering argument";
-            final String Camera  = "Camera";
+            final String MissingRenderingArgument = "Missing rendering argument";
+            final String Camera = "Camera";
 
             //Correctness check, make sure that the vectors and the points are not "NULL".
             if (camera.p0 == null)
@@ -205,24 +208,33 @@ public class Camera implements Cloneable {
             }
         }
     }
-    public void renderImage(){
 
+    public void renderImage() {
+        if (rayTracer == null)
+            throw new MissingResourceException("Missing rendering argument", "Camera", "rayTracer");
+        if (imageWriter == null)
+            throw new MissingResourceException("Missing rendering argument", "Camera", "imageWriter");
+        int nX = imageWriter.getNx();
+        int nY = imageWriter.getNy();
+        for (int j = 0; j < nY; j++)
+            for (int i = 0; i < nX; i++) {
+                castRay(nX,nY,i,j);
+            }
         //throw new UnsupportedOperationException();
     }
-    public void printGrid(int interval,Color color){
+    public Camera printGrid(int interval, Color color) {
+        //if (imageWriter == null) {
+        //    throw new MissingResourceException("Missing rendering argument", "Camera", "imageWriter");
+        //}
         //We will go by the pixels we received and create longitude and latitude lines in black
-        for (int j = 0; j < 800; j++) {
-            if (isZero(j % 50))
-                for (int i = 0; i < 500; i++) {
-                    image.writePixel(j, i, color);
-                }
-            else
-                for (int i = 0; i < 500; i++) {
-                    if (isZero(i % 50))
-                        image.writePixel(j, i, color);
-                }
+        for (int j = 0; j < imageWriter.getNy(); j++) {
+            for (int i = 0; i < imageWriter.getNx(); i++) {
+                if (isZero(j % interval) || isZero(i % interval))
+                    imageWriter.writePixel(j, i, color);
+            }
         }
-        image.writeToImage();
+        imageWriter.writeToImage();
+        return this;
     }
 
     public void writeToImage() {
@@ -231,8 +243,9 @@ public class Camera implements Cloneable {
         }
         imageWriter.writeToImage(); //delegate to image writer
     }
-    private void castRay(int Nx, int Ny, int column, int row){
-        imageWriter.writePixel(column,row,
-                rayTracer.traceRay(constructRay(Nx,Ny,column,row)));
+
+    private void castRay(int Nx, int Ny, int column, int row) {
+        imageWriter.writePixel(column, row,
+                rayTracer.traceRay(constructRay(Nx, Ny, column, row)));
     }
 }
