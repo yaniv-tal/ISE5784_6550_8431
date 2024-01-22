@@ -210,7 +210,6 @@ public class Camera implements Cloneable {
         //throw new UnsupportedOperationException();
     }
     public void printGrid(int interval,Color color){
-        ImageWriter image = new ImageWriter("image", 800, 500);
         //We will go by the pixels we received and create longitude and latitude lines in black
         for (int j = 0; j < 800; j++) {
             if (isZero(j % 50))
@@ -237,4 +236,3 @@ public class Camera implements Cloneable {
                 rayTracer.traceRay(constructRay(Nx,Ny,column,row)));
     }
 }
-
