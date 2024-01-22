@@ -206,23 +206,24 @@ public class Camera implements Cloneable {
         }
     }
     public void renderImage(){
-        throw new UnsupportedOperationException();
+
+        //throw new UnsupportedOperationException();
     }
     public void printGrid(int interval,Color color){
-        ImageWriter imageTest = new ImageWriter("imageTest", 800, 500);
+        ImageWriter image = new ImageWriter("image", 800, 500);
         //We will go by the pixels we received and create longitude and latitude lines in black
         for (int j = 0; j < 800; j++) {
             if (isZero(j % 50))
                 for (int i = 0; i < 500; i++) {
-                    imageTest.writePixel(j, i, color);
+                    image.writePixel(j, i, color);
                 }
             else
                 for (int i = 0; i < 500; i++) {
                     if (isZero(i % 50))
-                        imageTest.writePixel(j, i, color);
+                        image.writePixel(j, i, color);
                 }
         }
-        imageTest.writeToImage();
+        image.writeToImage();
     }
 
     public void writeToImage() {
@@ -231,6 +232,9 @@ public class Camera implements Cloneable {
         }
         imageWriter.writeToImage(); //delegate to image writer
     }
-
+    private void castRay(int Nx, int Ny, int column, int row){
+        imageWriter.writePixel(column,row,
+                rayTracer.traceRay(constructRay(Nx,Ny,column,row)));
+    }
 }
 
