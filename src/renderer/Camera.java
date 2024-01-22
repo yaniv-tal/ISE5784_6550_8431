@@ -209,23 +209,24 @@ public class Camera implements Cloneable {
         }
     }
 
-    public void renderImage() {
-        if (rayTracer == null)
-            throw new MissingResourceException("Missing rendering argument", "Camera", "rayTracer");
-        if (imageWriter == null)
-            throw new MissingResourceException("Missing rendering argument", "Camera", "imageWriter");
+    public Camera renderImage() {
+        //if (rayTracer == null)
+        //    throw new MissingResourceException("Missing rendering argument", "Camera", "rayTracer");
+        //if (imageWriter == null)
+        //    throw new MissingResourceException("Missing rendering argument", "Camera", "imageWriter");
         int nX = imageWriter.getNx();
         int nY = imageWriter.getNy();
         for (int j = 0; j < nY; j++)
             for (int i = 0; i < nX; i++) {
                 castRay(nX,nY,i,j);
             }
+        return this;
         //throw new UnsupportedOperationException();
     }
     public Camera printGrid(int interval, Color color) {
-        //if (imageWriter == null) {
-        //    throw new MissingResourceException("Missing rendering argument", "Camera", "imageWriter");
-        //}
+        if (imageWriter == null) {
+            throw new MissingResourceException("Missing rendering argument", "Camera", "imageWriter");
+        }
         //We will go by the pixels we received and create longitude and latitude lines in black
         for (int j = 0; j < imageWriter.getNy(); j++) {
             for (int i = 0; i < imageWriter.getNx(); i++) {
