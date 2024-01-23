@@ -210,10 +210,10 @@ public class Camera implements Cloneable {
     }
 
     public Camera renderImage() {
-        //if (rayTracer == null)
-        //    throw new MissingResourceException("Missing rendering argument", "Camera", "rayTracer");
-        //if (imageWriter == null)
-        //    throw new MissingResourceException("Missing rendering argument", "Camera", "imageWriter");
+        if (rayTracer == null)
+            throw new MissingResourceException("Missing rendering argument", "Camera", "rayTracer");
+        if (imageWriter == null)
+            throw new MissingResourceException("Missing rendering argument", "Camera", "imageWriter");
         int nX = imageWriter.getNx();
         int nY = imageWriter.getNy();
         for (int j = 0; j < nY; j++)
