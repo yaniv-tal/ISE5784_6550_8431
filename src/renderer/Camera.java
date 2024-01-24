@@ -62,6 +62,7 @@ public class Camera implements Cloneable {
 
     /**
      * creates ray that go threw (i,j) indexes.
+     *
      * @param nX - Represents the amount of columns (row width)
      * @param nY - represents the number of rows (column height).
      * @param j  - column number
@@ -98,6 +99,7 @@ public class Camera implements Cloneable {
 
         /**
          * Determining the location of the camera
+         *
          * @param location
          * @return Returns the Builder object
          */
@@ -108,6 +110,7 @@ public class Camera implements Cloneable {
 
         /**
          * set the ImageWriter
+         *
          * @param imageWriter
          * @return Returns the Builder object
          */
@@ -118,6 +121,7 @@ public class Camera implements Cloneable {
 
         /**
          * set the RayTracer
+         *
          * @param rayTracer
          * @return Returns the Builder object
          */
@@ -128,6 +132,7 @@ public class Camera implements Cloneable {
 
         /**
          * Determining the Direction of the camera
+         *
          * @param to vector
          * @param up vector
          * @return Returns the Builder object
@@ -173,6 +178,7 @@ public class Camera implements Cloneable {
 
         /**
          * build the camera and Checking the correctness
+         *
          * @return camera
          */
         public Camera build() {
@@ -223,6 +229,7 @@ public class Camera implements Cloneable {
 
     /**
      * Performs the rendering by calling the cast ray function
+     *
      * @return this camera
      */
     public Camera renderImage() {
@@ -235,15 +242,16 @@ public class Camera implements Cloneable {
         //Goes through the entire vp and calls the cast ray function that will color the pixel
         for (int j = 0; j < nY; j++)
             for (int i = 0; i < nX; i++) {
-                castRay(nX,nY,i,j);
+                castRay(nX, nY, i, j);
             }
         return this;
     }
 
     /**
-     *create longitude and latitude lines
+     * create longitude and latitude lines
+     *
      * @param interval - The size
-     * @param color - the color of the lines
+     * @param color    - the color of the lines
      * @return this camera
      */
     public Camera printGrid(int interval, Color color) {
@@ -253,7 +261,7 @@ public class Camera implements Cloneable {
         //We will go by the pixels we received and create longitude and latitude lines
         for (int j = 0; j < imageWriter.getNy(); j++) {
             for (int i = 0; i < imageWriter.getNx(); i++) {
-                if (isZero(j % interval) || isZero(i % interval))
+                if (isZero(j % interval) || isZero(i % interval) || i == (imageWriter.getNx() - 1) || j == (imageWriter.getNy() - 1))
                     imageWriter.writePixel(j, i, color);
             }
         }
@@ -273,10 +281,11 @@ public class Camera implements Cloneable {
 
     /**
      * Colors the pixel by calculating the intersection point and its color
+     *
      * @param Nx
      * @param Ny
      * @param column - coordinates
-     * @param row - coordinates
+     * @param row    - coordinates
      */
     private void castRay(int Nx, int Ny, int column, int row) {
         imageWriter.writePixel(column, row,
