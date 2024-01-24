@@ -98,7 +98,6 @@ public class Camera implements Cloneable {
 
         /**
          * Determining the location of the camera
-         *
          * @param location
          * @return Returns the Builder object
          */
@@ -107,11 +106,21 @@ public class Camera implements Cloneable {
             return this;
         }
 
+        /**
+         * set the ImageWriter
+         * @param imageWriter
+         * @return Returns the Builder object
+         */
         public Builder setImageWriter(ImageWriter imageWriter) {
             this.camera.imageWriter = imageWriter;
             return this;
         }
 
+        /**
+         * set the RayTracer
+         * @param rayTracer
+         * @return Returns the Builder object
+         */
         public Builder setRayTracer(RayTracerBase rayTracer) {
             this.camera.rayTracer = rayTracer;
             return this;
@@ -119,7 +128,6 @@ public class Camera implements Cloneable {
 
         /**
          * Determining the Direction of the camera
-         *
          * @param to vector
          * @param up vector
          * @return Returns the Builder object
@@ -163,6 +171,10 @@ public class Camera implements Cloneable {
             return this;
         }
 
+        /**
+         * build the camera and Checking the correctness
+         * @return camera
+         */
         public Camera build() {
             final String MissingRenderingArgument = "Missing rendering argument";
             final String Camera = "Camera";
@@ -209,6 +221,10 @@ public class Camera implements Cloneable {
         }
     }
 
+    /**
+     * Performs the rendering by calling the cast ray function
+     * @return this camera
+     */
     public Camera renderImage() {
         if (rayTracer == null)
             throw new MissingResourceException("Missing rendering argument", "Camera", "rayTracer");
@@ -216,18 +232,25 @@ public class Camera implements Cloneable {
             throw new MissingResourceException("Missing rendering argument", "Camera", "imageWriter");
         int nX = imageWriter.getNx();
         int nY = imageWriter.getNy();
+        //Goes through the entire vp and calls the cast ray function that will color the pixel
         for (int j = 0; j < nY; j++)
             for (int i = 0; i < nX; i++) {
                 castRay(nX,nY,i,j);
             }
         return this;
-        //throw new UnsupportedOperationException();
     }
+
+    /**
+     *create longitude and latitude lines
+     * @param interval - The size
+     * @param color - the color of the lines
+     * @return this camera
+     */
     public Camera printGrid(int interval, Color color) {
         if (imageWriter == null) {
             throw new MissingResourceException("Missing rendering argument", "Camera", "imageWriter");
         }
-        //We will go by the pixels we received and create longitude and latitude lines in black
+        //We will go by the pixels we received and create longitude and latitude lines
         for (int j = 0; j < imageWriter.getNy(); j++) {
             for (int i = 0; i < imageWriter.getNx(); i++) {
                 if (isZero(j % interval) || isZero(i % interval))
@@ -238,6 +261,9 @@ public class Camera implements Cloneable {
         return this;
     }
 
+    /**
+     * Calling the method "writeToImage" of "imageWriter"
+     */
     public void writeToImage() {
         if (imageWriter == null) {
             throw new MissingResourceException("Missing rendering argument", "Camera", "imageWriter");
@@ -245,6 +271,13 @@ public class Camera implements Cloneable {
         imageWriter.writeToImage(); //delegate to image writer
     }
 
+    /**
+     * Colors the pixel by calculating the intersection point and its color
+     * @param Nx
+     * @param Ny
+     * @param column - coordinates
+     * @param row - coordinates
+     */
     private void castRay(int Nx, int Ny, int column, int row) {
         imageWriter.writePixel(column, row,
                 rayTracer.traceRay(constructRay(Nx, Ny, column, row)));
