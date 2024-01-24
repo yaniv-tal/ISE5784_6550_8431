@@ -9,7 +9,9 @@ import primitives.Color;
  * @author Yaniv and Ahuvya.
  */
 public class Scene {
+    //Scene's name
     public String name;
+    //background Color
     public Color background = Color.BLACK;
     public AmbientLight ambientLight = AmbientLight.NONE;
     public Geometries geometries = new Geometries();
