@@ -32,7 +32,7 @@ class TriangleTest {
     }
 
     /**
-     * Test method for {@link geometries.Triangle#findIntersections(primitives.Ray)}.
+     * Test method for {@link Triangle#findIntersections(Ray)}.
      */
     @Test
     void testFindIntersections() {
@@ -47,26 +47,26 @@ class TriangleTest {
         final Vector v00m1 = new Vector(0, 0, -1);
         final Point p111 = new Point(1, 1, 1);
         final Point p110 = new Point(1, 1, 0);
-        final var exp1 = List.of(p110);
         //The triangle that was tested
         Triangle triangle = new Triangle(p300, p030, p000);
+        final var exp1 = List.of(new Intersectable.GeoPoint(triangle,p110));
 
         // ============ Equivalence Partitions Tests ==============
         //TC01: The intersection point with the "contained" plane is outside the triangle - "Against" one of the sides
-        assertNull(triangle.findIntersections(new Ray(p999, v00m1)), "Ray's line out of triangle");
+        assertNull(triangle.findGeoIntersections(new Ray(p999, v00m1)), "Ray's line out of triangle");
         //TC02: The intersection point with the "contained" plane is outside the triangle - "Against" one of the vertices
-        assertNull(triangle.findIntersections(new Ray(pm1m11, v00m1)), "Ray's line out of triangle");
+        assertNull(triangle.findGeoIntersections(new Ray(pm1m11, v00m1)), "Ray's line out of triangle");
         //TC03: The intersection point with the "contained" plane is inside the triangle
-        final var result1 = triangle.findIntersections(new Ray(p111, v00m1));
+        final var result1 = triangle.findGeoIntersections(new Ray(p111, v00m1));
         assertEquals(1, result1.size(), "Wrong number of points");
         assertEquals(exp1, result1, "Ray crosses Plane");
         // =============== Boundary Values Tests ==================
         //TC11: The intersection point with the "contained" plane is on one of the sides
-        assertNull(triangle.findIntersections(new Ray(p101, v00m1)), "Ray's line out of triangle");
+        assertNull(triangle.findGeoIntersections(new Ray(p101, v00m1)), "Ray's line out of triangle");
         //TC12: The intersection point with the "contained" plane is on one of the vertices
-        assertNull(triangle.findIntersections(new Ray(p301, v00m1)), "Ray's line out of triangle");
+        assertNull(triangle.findGeoIntersections(new Ray(p301, v00m1)), "Ray's line out of triangle");
         //TC13: The intersection point with the "contained" plane is on the continuation of one of the sides
-        assertNull(triangle.findIntersections(new Ray(p401, v00m1)), "Ray's line out of triangle");
+        assertNull(triangle.findGeoIntersections(new Ray(p401, v00m1)), "Ray's line out of triangle");
     }
 }
 

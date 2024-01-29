@@ -42,6 +42,6 @@ class TubeTest {
     }
 
     @Test
-    void testFindIntsersections() {
+    void testFindGeoIntersections() {
     }
 }

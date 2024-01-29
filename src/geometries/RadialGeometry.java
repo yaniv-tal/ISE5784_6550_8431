@@ -10,7 +10,7 @@ import java.util.List;
  * @author Yaniv and Ahuvya.
  */
 
-public abstract class RadialGeometry implements Geometry{
+public abstract class RadialGeometry extends Geometry{
     protected final double radius;
 
     /**
