@@ -86,7 +86,7 @@ public class Polygon extends Geometry {
 
    @Override
    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
-      List<GeoPoint> intersection = plane.findGeoIntersections(ray);
+      List<Point> intersection = plane.findIntersections(ray);
 
       // In case there is no intersection point with the plane of the polygon.
       if (intersection == null)
@@ -115,6 +115,6 @@ public class Polygon extends Geometry {
       }
 
       // The ray intersects the polygon. returns the intersection point.
-      return intersection;
+      return List.of(new GeoPoint(this,intersection.getFirst()));
    }
 }

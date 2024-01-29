@@ -23,9 +23,9 @@ public class Triangle extends Polygon {
 
     @Override
     public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
-        List<GeoPoint> intersections = plane.findGeoIntersections(ray);
+        List<Point> intersection = plane.findIntersections(ray);
         //If there is no intersection point with the plane of the triangle
-        if (intersections == null)
+        if (intersection == null)
             return null;
         Point head = ray.getHead();
         //Checks if the intersection point is inside the triangle.
@@ -41,7 +41,7 @@ public class Triangle extends Polygon {
         final double sign3 = normal3.dotProduct(direction);
         // The ray intersects the triangle. returns the intersection point.
         if (((sign1 > 0) && (sign2 > 0) && (sign3 > 0)) || ((sign1 < 0) && (sign2 < 0) && (sign3 < 0)))
-            return intersections;
+            return List.of(new GeoPoint(this,intersection.getFirst()));
         return null;
     }
 }
