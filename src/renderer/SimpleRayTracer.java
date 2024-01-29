@@ -40,8 +40,8 @@ public class SimpleRayTracer extends RayTracerBase{
      * @return color
      */
     private Color calcColor(GeoPoint gp) {
-        return scene.ambientLight.getIntensity()
-                .add(gp.geometry.getEmission());
+        return scene.ambientLight.getIntensity().add(gp.geometry.getEmission());
     }
+
 }
 

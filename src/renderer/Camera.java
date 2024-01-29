@@ -80,9 +80,9 @@ public class Camera implements Cloneable {
         double yI = -(i - (double) (nY - 1) / 2) * Ry;
         double xJ = (j - (double) (nX - 1) / 2) * Rx;
         Point pIJ = pCenter;
-        if (xJ != 0)
+        if (!isZero(xJ))
             pIJ = pIJ.add(vRight.scale(xJ));
-        if (yI != 0)
+        if (!isZero(yI))
             pIJ = pIJ.add(vUp.scale(yI));
 
         Vector vIJ = pIJ.subtract(p0);
@@ -265,7 +265,6 @@ public class Camera implements Cloneable {
                     imageWriter.writePixel(j, i, color);
             }
         }
-        imageWriter.writeToImage();
         return this;
     }
 
