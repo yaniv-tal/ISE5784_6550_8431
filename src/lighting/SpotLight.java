@@ -12,14 +12,16 @@ public class SpotLight extends PointLight {
         this.direction = direction.normalize();
     }
 
+    @Override
     public SpotLight setKC(double kC) {
         return (SpotLight) super.setKC(kC);
     }
-
+    @Override
     public SpotLight setKL(double kL) {
         return (SpotLight) super.setKL(kL);
     }
 
+    @Override
     public SpotLight setKQ(double kQ) {
         return (SpotLight) super.setKQ(kQ);
     }
