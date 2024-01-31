@@ -33,7 +33,7 @@ public class SpotLight extends PointLight {
 
     @Override
     public Vector getL(Point p) {
-        return direction.normalize();
+        return super.getL(p);
     }
 
 
