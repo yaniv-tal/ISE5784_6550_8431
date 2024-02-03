@@ -194,4 +194,39 @@ public class LightsTests {
          .writeToImage();
    }
 
+
+   /** Produce a picture of a sphere lighted by a spotlight, PointLight and Directional light. */
+   @Test
+   public void sphereAllLights() {
+      Geometry       sphere10                  = new Sphere(SPHERE_RADIUS, sphereCenter)
+              .setEmission(new Color(255,255,0)).setMaterial(new Material().setKD(KD).setKS(KS).setNShininess(SHININESS));
+      scene1.geometries.add(sphere10);
+      scene1.lights.add(new SpotLight(new Color(0,0,255), sphereLightPosition, new Vector(1,1,-0.5))
+              .setKL(0.000000001).setKQ(0.0000000001));
+      scene1.lights.add(new DirectionalLight(new Color(255,0,0), new Vector(2,1,-1)));
+      scene1.lights.add(new PointLight(new Color(0,0,255), new Point(25,25,-10))
+              .setKL(0.000001).setKQ(0.00000001));
+
+      camera1.setImageWriter(new ImageWriter("allLightsSphere", 500, 500))
+              .build()
+              .renderImage()
+              .writeToImage();
+   }
+
+   /** Produce a picture of a triangles lighted by a spotlight, PointLight and Directional light. */
+   @Test
+   public void triangleAllLights() {
+      scene2.geometries.add(triangle1, triangle2);
+      scene2.lights.add(new SpotLight(trianglesLightColor, trianglesLightPosition, trianglesLightDirection)
+              .setKL(0.001).setKQ(0.0001));
+      scene2.lights.add(new DirectionalLight(trianglesLightColor, trianglesLightDirection));
+      scene2.lights.add(new PointLight(trianglesLightColor, trianglesLightPosition)
+              .setKL(0.001).setKQ(0.0002));
+
+      camera2.setImageWriter(new ImageWriter("allLightsTriangle", 500, 500))
+              .build()
+              .renderImage()
+              .writeToImage();
+   }
+
 }
