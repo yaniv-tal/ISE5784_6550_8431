@@ -25,7 +25,6 @@ public class SimpleRayTracer extends RayTracerBase {
 
     /**
      * ray intersection color calculations.
-     *
      * @param ray
      * @return the color of the intersection point.
      */
@@ -41,6 +40,7 @@ public class SimpleRayTracer extends RayTracerBase {
     /**
      * Calculating the color of a point
      * @param intersection
+     * @param ray
      * @return color
      */
     private Color calcColor(GeoPoint intersection, Ray ray) {
@@ -48,6 +48,12 @@ public class SimpleRayTracer extends RayTracerBase {
                 .add(calcLocalEffects(intersection, ray));
     }
 
+    /**
+     * A method that will help for the color calculation
+     * @param gp
+     * @param ray
+     * @return The effect of light
+     */
     private Color calcLocalEffects(GeoPoint gp, Ray ray) {
         Color color = gp.geometry.getEmission();
         Vector n = gp.geometry.getNormal(gp.point);
@@ -67,9 +73,25 @@ public class SimpleRayTracer extends RayTracerBase {
         return color;
     }
 
+    /**
+     * auxiliary method
+     * @param material
+     * @param nl
+     * @return Calculation according to the Fong model
+     */
     private Double3 calcDiffusive(Material material, double nl) {
         return material.kD.scale(nl < 0 ? -nl : nl);
     }
+
+    /**
+     * auxiliary method
+     * @param material
+     * @param n
+     * @param l
+     * @param nl
+     * @param v
+     * @return Calculation according to the Fong model
+     */
     private Double3 calcSpecular(Material material, Vector n, Vector l, double nl, Vector v) {
         Vector r = l.subtract(n.scale(2 * nl));
         double minusVr = -r.dotProduct(v);

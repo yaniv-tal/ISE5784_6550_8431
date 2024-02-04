@@ -17,9 +17,9 @@ public interface LightSource {
     public Color getIntensity(Point p);
 
     /**
-     *
-     * @param p
-     * @return
+     * calculate the direction of the lighting.
+     * @param p - point
+     * @return the direction of the lighting.
      */
     public Vector getL(Point p);
 }

@@ -3,10 +3,18 @@ package lighting;
 import primitives.Color;
 import primitives.Point;
 import primitives.Vector;
-
+/**
+ * A class for representing spot light
+ */
 public class SpotLight extends PointLight {
     private Vector direction;
 
+    /**
+     * constructor
+     * @param intensity
+     * @param position
+     * @param direction
+     */
     public SpotLight(Color intensity, Point position, Vector direction) {
         super(intensity, position);
         this.direction = direction.normalize();

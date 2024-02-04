@@ -13,18 +13,18 @@ import java.util.Objects;
 public abstract class Intersectable {
 
     /**
-     *
+     * At this stage: calls the "findGeoIntersectionsHelper" method
      * @param ray
-     * @return
+     * @return Answer of findGeoIntersectionsHelper
      */
     public final List<GeoPoint> findGeoIntersections(Ray ray){
         return findGeoIntersectionsHelper(ray);
     }
 
     /**
-     *
+     * find intersections points.
      * @param ray
-     * @return
+     * @return list of intersection points between the ray and the geometry.
      */
     public final List<Point> findIntersections(Ray ray) {
         var geoList = findGeoIntersections(ray);
@@ -33,24 +33,29 @@ public abstract class Intersectable {
     /**
      * find intersections points.
      * @param ray
-     * returns a list of intersection points between the ray and the geometry.
+     * returns a list of intersection "geopoints" between the ray and the geometry.
      */
     protected abstract List<GeoPoint> findGeoIntersectionsHelper(Ray ray);
 
     /**
-     *
+     * A class of point and geometric object
      * @author Yaniv and Ahuvya.
      */
     public static class GeoPoint {
         /**
-         *
+         * Geometric object
          */
         public Geometry geometry;
         /**
-         *
+         * point (on the geometry)
          */
         public Point point;
 
+        /**
+         * constructor
+         * @param geometry
+         * @param point
+         */
         public GeoPoint(Geometry geometry, Point point) {
             this.geometry = geometry;
             this.point = point;

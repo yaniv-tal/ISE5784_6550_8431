@@ -1,11 +1,14 @@
 package primitives;
 
 /**
- *
+ * class for the material of the object
  */
 public class Material {
+    //Material properties
     public Double3 kD = Double3.ZERO;
+    //Material properties
     public Double3 kS = Double3.ZERO;
+    //the shine
     public int nShininess = 0;
 
     /**
