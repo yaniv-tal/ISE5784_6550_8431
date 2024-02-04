@@ -1,7 +1,8 @@
 package primitives;
 
 /**
- * class for the material of the object
+ * class for the material of the object.
+ * @author Yaniv and Ahuvya.
  */
 public class Material {
     //Material properties

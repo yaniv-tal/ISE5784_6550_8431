@@ -5,7 +5,8 @@ import primitives.Point;
 import primitives.Vector;
 
 /**
- * A class for representing point light
+ * A class for representing point light.
+ * @author Yaniv and Ahuvya.
  */
 public class PointLight extends Light implements LightSource {
     private Point position;

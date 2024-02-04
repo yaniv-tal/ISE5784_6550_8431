@@ -5,7 +5,8 @@ import primitives.Point;
 import primitives.Vector;
 
 /**
- * A class for representing directional light
+ * A class for representing directional light.
+ * @author Yaniv and Ahuvya.
  */
 public class DirectionalLight extends Light implements LightSource {
     private Vector direction;

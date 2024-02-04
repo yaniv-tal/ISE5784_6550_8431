@@ -70,9 +70,9 @@ public class Ray {
 
 
     /**
-     * A function that works with a ray, gets
+     * function for find the closest point to the head of the ray
      * @param points - a list of points
-     * @return the point from the list that is closer to the beginning of the ray
+     * @return the closest point to the head of the ray from the list.
      */
     public Point findClosestPoint(List<Point> points) {
         return points == null || points.isEmpty() ? null
@@ -80,9 +80,9 @@ public class Ray {
     }
 
     /**
-     * A function that works with a ray, gets
+     * function for find the closest point to the head of the ray
      * @param points - a list of "geopoints"
-     * @return the "geopoints" from the list that is closer to the beginning of the ray
+     * @return the closest point to the head of the ray from the list.
      */
     public GeoPoint findClosestGeoPoint(List<GeoPoint> points){
         //Makes sure the list is not empty
