@@ -23,7 +23,7 @@ public class CameraRayIntegrationTest {
         int sumOfIntersections = 0;
         for (int i = 0; i < 3; i++)
             for (int j = 0; j < 3; j++) {
-                var intersections = geometry.findGeoIntersections(camera.constructRay(3, 3, j, i));
+                var intersections = geometry.findIntersections(camera.constructRay(3, 3, j, i));
                 if (intersections != null)
                     sumOfIntersections += intersections.size();
             }

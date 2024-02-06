@@ -43,10 +43,10 @@ class PlaneTest {
     }
 
     /**
-     * Test method for {@link Intersectable#findIntersections(Ray)}.
+     * Test method for {@link Intersectable#findGeoIntersections(Ray)}.
      */
     @Test
-    void testFindIntersections() {
+    void testFindGeoIntersections() {
         final Point pm100 = new Point(-1, 0, 0);
         final Point p100 = new Point(1, 0, 0);
         final Point p010 = new Point(0, 1, 0);

@@ -35,13 +35,13 @@ public class Geometries extends Intersectable {
     }
 
     @Override
-    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
+    public List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) {
         //Initialize variables to null.
         List<GeoPoint> intersections = null;
 
         // loop goes over the geometries and add the intersections into itemList.
         for (var item : geometriesList) {
-            var itemList = item.findGeoIntersectionsHelper(ray);
+            var itemList = item.findGeoIntersectionsHelper(ray,maxDistance);
             if (itemList != null) {
                 //Create the list for the first item that has intersection points.
                 if (intersections == null)

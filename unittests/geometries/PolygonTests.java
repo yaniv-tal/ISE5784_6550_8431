@@ -89,8 +89,12 @@ public class PolygonTests {
                       "Polygon's normal is not orthogonal to one of the edges");
    }
 
+
+   /**
+    * Test method for {@link Intersectable#findGeoIntersections(Ray)}.
+    */
    @Test
-   void findIntersections() {
+   void findGeoIntersections() {
       final Point p300 = new Point(3, 0, 0);
       final Point p030 = new Point(0, 3, 0);
       final Point p000 = new Point(0, 0, 0);

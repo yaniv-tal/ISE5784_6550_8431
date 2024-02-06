@@ -32,7 +32,7 @@ class TriangleTest {
     }
 
     /**
-     * Test method for {@link Triangle#findIntersections(Ray)}.
+     * Test method for {@link Triangle#findGeoIntersections(Ray)}.
      */
     @Test
     void testFindIntersections() {

@@ -17,10 +17,9 @@ public abstract class Intersectable {
      * @param ray
      * @return Answer of findGeoIntersectionsHelper
      */
-    public final List<GeoPoint> findGeoIntersections(Ray ray){
-        return findGeoIntersectionsHelper(ray);
+    public final List<GeoPoint> findGeoIntersections(Ray ray) {
+        return findGeoIntersections(ray, Double.POSITIVE_INFINITY);
     }
-
     /**
      * find intersections points.
      * @param ray
@@ -30,12 +29,22 @@ public abstract class Intersectable {
         var geoList = findGeoIntersections(ray);
         return geoList == null ? null : geoList.stream().map(gp -> gp.point).toList();
     }
+
+    /**
+     *
+     * @param ray
+     * @param maxDistance
+     * @return
+     */
+    public final List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
+        return findGeoIntersectionsHelper(ray, maxDistance);
+    }
     /**
      * find intersections points.
      * @param ray
      * returns a list of intersection "geopoints" between the ray and the geometry.
      */
-    protected abstract List<GeoPoint> findGeoIntersectionsHelper(Ray ray);
+    protected abstract List<GeoPoint> findGeoIntersectionsHelper(Ray ray,double maxDistance);
 
     /**
      * A class of point and geometric object

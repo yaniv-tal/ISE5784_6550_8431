@@ -85,11 +85,17 @@ public class Polygon extends Geometry {
    public Vector getNormal(Point point) { return plane.getNormal(); }
 
    @Override
-   public List<GeoPoint> findGeoIntersectionsHelper(Ray ray) {
-      List<Point> intersection = plane.findIntersections(ray);
+   public List<GeoPoint> findGeoIntersectionsHelper(Ray ray,double maxDistance) {
+      List<GeoPoint> intersection = plane.findGeoIntersections(ray, maxDistance);
 
       // In case there is no intersection point with the plane of the polygon.
       if (intersection == null)
+         return null;
+
+      //check that intersection point is closer to ray origin than
+      // max distance parameter
+      double distance = intersection.getFirst().point.distance(ray.getHead());
+      if(alignZero(distance-maxDistance)>0)
          return null;
 
       //Checks if the intersection point is inside the polygon.
@@ -115,6 +121,6 @@ public class Polygon extends Geometry {
       }
 
       // The ray intersects the polygon. returns the intersection point.
-      return List.of(new GeoPoint(this,intersection.getFirst()));
+      return List.of(new GeoPoint(this,intersection.getFirst().point));
    }
 }

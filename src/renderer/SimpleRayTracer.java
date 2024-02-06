@@ -8,6 +8,7 @@ import scene.Scene;
 import java.util.List;
 
 import static primitives.Util.alignZero;
+import static primitives.Util.isZero;
 
 /**
  * class for ray intersection color calculations.
@@ -16,12 +17,34 @@ import static primitives.Util.alignZero;
 public class SimpleRayTracer extends RayTracerBase {
     /**
      * copy constructor. uses the father constructor
-     *
      * @param scene
      */
     public SimpleRayTracer(Scene scene) {
         super(scene);
     }
+
+    /**
+     *
+     */
+    private static final double DELTA = 0.1;
+
+
+    /**
+     * Shading test method
+     * @param gp - the point and the object
+     * @param l - light Direction
+     * @param n - normal
+     * @return Is there shading - "true" or "false"
+     */
+    private boolean unshaded(GeoPoint gp, LightSource lightSource, Vector l, Vector n, double nl) {
+        Vector lightDirection = l.scale(-1); // from point to light source
+        Vector epsVector = n.scale(nl < 0 ? DELTA : -DELTA);
+        Point point = gp.point.add(epsVector);
+        Ray lightRay = new Ray(point, lightDirection);
+        List<GeoPoint> intersections = scene.geometries.findGeoIntersections(lightRay, lightSource.getDistance(gp.point));
+        return intersections == null;
+    }
+
 
     /**
      * ray intersection color calculations.
@@ -65,7 +88,8 @@ public class SimpleRayTracer extends RayTracerBase {
         for (LightSource lightSource : scene.lights) {
             Vector l = lightSource.getL(gp.point);
             double nl = alignZero(n.dotProduct(l));
-            if (nl * nv > 0) { // sign(nl) == sing(nv)
+            if ((nl * nv > 0)
+            && unshaded(gp, lightSource, l, n, nl)){ // sign(nl) == sing(nv)
                 Color iL = lightSource.getIntensity(gp.point);
                 color = color.add(iL.scale(calcDiffusive(material, nl).add(calcSpecular(material, n, l, nl, v))));
             }
