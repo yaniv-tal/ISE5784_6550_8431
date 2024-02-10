@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import org.junit.jupiter.api.Test;
 import primitives.Point;
 import primitives.Vector;
+import scene.Scene;
 
 import java.util.List;
 
@@ -17,7 +18,10 @@ public class CameraRayIntegrationTest {
     private final Camera.Builder cameraBuilder = Camera.getBuilder()
             .setDirection(new Vector(0, 0, -1), new Vector(0, -1, 0))
             .setVpSize(3, 3)
-            .setVpDistance(1);
+            .setVpDistance(1)
+            .setRayTracer(new SimpleRayTracer(new Scene("Test")))
+            .setImageWriter(new ImageWriter("Test", 1, 1));
+
 
     private int calculateIntersections(Geometry geometry, Camera camera) {
         int sumOfIntersections = 0;

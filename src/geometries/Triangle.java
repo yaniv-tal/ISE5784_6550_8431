@@ -25,7 +25,7 @@ public class Triangle extends Polygon {
 
     @Override
     public List<GeoPoint> findGeoIntersectionsHelper(Ray ray,double maxDistance) {
-        List<GeoPoint> intersection = plane.findGeoIntersections(ray,maxDistance);
+        List<GeoPoint> intersection = plane.findGeoIntersections(ray, maxDistance);
         //If there is no intersection point with the plane of the triangle
         if (intersection == null)
             return null;
@@ -33,7 +33,7 @@ public class Triangle extends Polygon {
         //check that intersection point is closer to ray origin than
         // max distance parameter
         double distance = intersection.getFirst().point.distance(ray.getHead());
-        if(alignZero(distance-maxDistance)>0)
+        if (alignZero(distance - maxDistance) > 0)
             return null;
 
         Point head = ray.getHead();
@@ -50,7 +50,7 @@ public class Triangle extends Polygon {
         final double sign3 = normal3.dotProduct(direction);
         // The ray intersects the triangle. returns the intersection point.
         if (((sign1 > 0) && (sign2 > 0) && (sign3 > 0)) || ((sign1 < 0) && (sign2 < 0) && (sign3 < 0)))
-            return List.of(new GeoPoint(this,intersection.getFirst().point));
+            return List.of(new GeoPoint(this, intersection.getFirst().point));
         return null;
     }
 }

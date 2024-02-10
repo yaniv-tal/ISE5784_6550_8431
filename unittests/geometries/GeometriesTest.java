@@ -25,7 +25,11 @@ class GeometriesTest {
         assertEquals(3, geometries.findGeoIntersections(new Ray(new Point(1,0,-2),new Vector(0,0,1))).size(), "ERROR: Wrong number of intersections.");
 
         // =============== Boundary Values Tests ==================
-        Geometries geometries1 = new Geometries(sphere, plane, new Triangle(new Point(2,0,0),new Point(0,2,0),new Point(0,-2,0)),new Polygon(new Point(0,-3,0),new Point(0,3,0),new Point(3,3,0),new Point(3,-3,0)));
+        Geometries geometries1 = new Geometries(
+                sphere,
+                plane,
+                new Triangle(new Point(2,0,0),new Point(0,2,0),new Point(0,-2,0)),
+                new Polygon(new Point(0,-3,0),new Point(0,3,0),new Point(3,3,0),new Point(3,-3,0)));
         //TC11: Empty list of geometries.
         Geometries geometries2 = new Geometries();
         assertNull(geometries2.findGeoIntersections(new Ray(new Point(0,0,1),new Vector(2,2,18))), "ERROR: Wrong number of intersections.");

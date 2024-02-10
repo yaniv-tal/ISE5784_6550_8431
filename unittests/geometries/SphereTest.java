@@ -30,7 +30,7 @@ class SphereTest {
     }
 
     /**
-     * Test method for {@link Intersectable#findIntersections(Ray)}.
+     * Test method for {@link Intersectable#findGeoIntersections(Ray)}.
      */
     @Test
     void testFindIntersections() {

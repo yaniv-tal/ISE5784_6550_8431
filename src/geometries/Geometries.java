@@ -16,10 +16,12 @@ public class Geometries extends Intersectable {
     /**
      * Default constructor that creates an empty list of geometries.
      */
-    public Geometries() {}
+    public Geometries() {
+    }
 
     /**
      * constructor. get a list of geometries and add them to geometries list.
+     *
      * @param geometries the given list of geometries.
      */
     public Geometries(Intersectable... geometries) {
@@ -28,6 +30,7 @@ public class Geometries extends Intersectable {
 
     /**
      * add a list of geometries to the list.
+     *
      * @param geometries the given list of geometries.
      */
     public void add(Intersectable... geometries) {
@@ -41,7 +44,7 @@ public class Geometries extends Intersectable {
 
         // loop goes over the geometries and add the intersections into itemList.
         for (var item : geometriesList) {
-            var itemList = item.findGeoIntersectionsHelper(ray,maxDistance);
+            var itemList = item.findGeoIntersectionsHelper(ray, maxDistance);
             if (itemList != null) {
                 //Create the list for the first item that has intersection points.
                 if (intersections == null)
