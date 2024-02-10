@@ -11,6 +11,10 @@ public class Material {
     public Double3 kS = Double3.ZERO;
     //the shine
     public int nShininess = 0;
+    //The attenuation coefficient of transparency
+    public Double3 kT = Double3.ZERO;
+    //The attenuation coefficient of reflection
+    public Double3 kR = Double3.ZERO;
 
     /**
      * setter for the field 'kD'.
@@ -48,6 +52,34 @@ public class Material {
      */
     public Material setNShininess(int nShininess) {
         this.nShininess = nShininess;
+        return this;
+    }
+    /**
+     * setter for the field 'kT'.
+     * @param kT represents the attenuation coefficient of transparency
+     * @return the Material.
+     */
+    public Material setKT(Double3 kT) {
+        this.kT = kT;
+        return this;
+    }
+
+    public Material setKT(Double kT) {
+        this.kT = new Double3(kT);
+        return this;
+    }
+    /**
+     * setter for the field 'kR'.
+     * @param kR represents the attenuation coefficient of reflection
+     * @return the Material.
+     */
+    public Material setKR(Double3 kR) {
+        this.kR = kR;
+        return this;
+    }
+
+    public Material setKR(Double kR) {
+        this.kR = new Double3(kR);
         return this;
     }
 }

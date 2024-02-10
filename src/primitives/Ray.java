@@ -14,6 +14,7 @@ import static primitives.Util.isZero;
 public class Ray {
     private final Point head;
     private final Vector direction;
+    private static final double DELTA = 0.1;
 
     /**
      * constructor. Gets the head and the direction vector,
@@ -23,6 +24,17 @@ public class Ray {
      */
     public Ray(Point head, Vector direction) {
         this.head = head;
+        this.direction = direction.normalize();
+    }
+
+    /**
+     *
+     */
+    public Ray(Point point, Vector direction, Vector normal) {
+        if (isZero(normal.dotProduct(direction)))
+                throw new IllegalArgumentException("Vector zero is not valid");
+        Vector epsVector = normal.scale(normal.dotProduct(direction) < 0 ? DELTA : -DELTA);
+        this.head = point.add(epsVector);
         this.direction = direction.normalize();
     }
 
