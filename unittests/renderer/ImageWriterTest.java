@@ -15,7 +15,7 @@ class ImageWriterTest {
     void imageWriterTest() {
         ImageWriter imageTest = new ImageWriter("imageTest", 800, 500);
         //We will go by the pixels we received and create longitude and latitude lines in black
-        for (int j = 0; j < 800; j++) {
+        for (int j = 0; j < 800; j+= 50) {
             if (isZero(j % 50))
                 for (int i = 0; i < 500; i++) {
                     imageTest.writePixel(j, i, Color.BLACK);

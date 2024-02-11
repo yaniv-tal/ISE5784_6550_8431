@@ -8,8 +8,6 @@ import primitives.Point;
 import primitives.Vector;
 import scene.Scene;
 
-import java.util.List;
-
 /**
  * Integration tests between creating rays from a camera and calculating sections of a ray with geometric bodies.
  * @author Yaniv and Ahuvya
@@ -23,11 +21,11 @@ public class CameraRayIntegrationTest {
             .setImageWriter(new ImageWriter("Test", 1, 1));
 
 
-    private int calculateIntersections(Geometry geometry, Camera camera) {
+    private int calculateIntersections(Geometry geometry, Camera camera, int nX, int nY) {
         int sumOfIntersections = 0;
-        for (int i = 0; i < 3; i++)
-            for (int j = 0; j < 3; j++) {
-                var intersections = geometry.findIntersections(camera.constructRay(3, 3, j, i));
+        for (int i = 0; i < nX; i++)
+            for (int j = 0; j < nY; j++) {
+                var intersections = geometry.findIntersections(camera.constructRay(nX, nY, j, i));
                 if (intersections != null)
                     sumOfIntersections += intersections.size();
             }
@@ -44,19 +42,19 @@ public class CameraRayIntegrationTest {
     void testSphere() {
         //TC01: 2 intersections.
         Sphere sphere = new Sphere(1, new Point(0, 0, -3));
-        assertEquals(2, calculateIntersections(sphere, camera1), "ERROR: Wrong number of intersections.");
+        assertEquals(2, calculateIntersections(sphere, camera1, 3, 3), "ERROR: Wrong number of intersections.");
         //TC02: 18 intersections.
         sphere = new Sphere(2.5, new Point(0, 0, -2.5));
-        assertEquals(18, calculateIntersections(sphere, camera2), "ERROR: Wrong number of intersections.");
+        assertEquals(18, calculateIntersections(sphere, camera2, 3, 3), "ERROR: Wrong number of intersections.");
         //TC03: 10 intersections.
         sphere = new Sphere(2, new Point(0, 0, -2));
-        assertEquals(10, calculateIntersections(sphere, camera2), "ERROR: Wrong number of intersections.");
+        assertEquals(10, calculateIntersections(sphere, camera2, 3, 3), "ERROR: Wrong number of intersections.");
         //TC04: 9 intersections.
         sphere = new Sphere(4, new Point(0, 0, -1.5));
-        assertEquals(9, calculateIntersections(sphere, camera1), "ERROR: Wrong number of intersections.");
+        assertEquals(9, calculateIntersections(sphere, camera1, 3, 3), "ERROR: Wrong number of intersections.");
         //TC05: no intersections.
         sphere = new Sphere(0.5, new Point(0, 0, 1));
-        assertEquals(0, calculateIntersections(sphere, camera1), "ERROR: Wrong number of intersections.");
+        assertEquals(0, calculateIntersections(sphere, camera1, 3, 3), "ERROR: Wrong number of intersections.");
     }
 
     /**
@@ -66,13 +64,13 @@ public class CameraRayIntegrationTest {
     void testPlane() {
         //TC01: 9 intersections.
         Plane plane = new Plane(new Point(0, 0, -2.5), new Vector(0, 0, 1));
-        assertEquals(9, calculateIntersections(plane, camera1), "ERROR: Wrong number of intersections.");
+        assertEquals(9, calculateIntersections(plane, camera1, 3, 3), "ERROR: Wrong number of intersections.");
         //TC02: 9 intersections.
         plane = new Plane(new Point(0, 0, -2), new Vector(0, -1, 3));
-        assertEquals(9, calculateIntersections(plane, camera1), "ERROR: Wrong number of intersections.");
+        assertEquals(9, calculateIntersections(plane, camera1, 3, 3), "ERROR: Wrong number of intersections.");
         //TC03: 6 intersections.
         plane = new Plane(new Point(0, 0, -2.5), new Vector(0, -1, 1));
-        assertEquals(6, calculateIntersections(plane, camera1), "ERROR: Wrong number of intersections.");
+        assertEquals(6, calculateIntersections(plane, camera1, 3, 3), "ERROR: Wrong number of intersections.");
     }
 
     /**
@@ -82,9 +80,9 @@ public class CameraRayIntegrationTest {
     void testTriangle() {
         //TC01: One intersection.
         Triangle triangle = new Triangle(new Point(0, 1, -2), new Point(1, -1, -2), new Point(-1, -1, -2));
-        assertEquals(1, calculateIntersections(triangle, camera1), "ERROR: Wrong number of intersections.");
+        assertEquals(1, calculateIntersections(triangle, camera1, 3, 3), "ERROR: Wrong number of intersections.");
         //TC02: 2 intersections.
         triangle = new Triangle(new Point(0, 20, -2), new Point(1, -1, -2), new Point(-1, -1, -2));
-        assertEquals(2, calculateIntersections(triangle, camera1), "ERROR: Wrong number of intersections.");
+        assertEquals(2, calculateIntersections(triangle, camera1, 3, 3), "ERROR: Wrong number of intersections.");
     }
 }
