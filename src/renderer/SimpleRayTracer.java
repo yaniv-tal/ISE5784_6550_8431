@@ -42,7 +42,8 @@ public class SimpleRayTracer extends RayTracerBase {
     private Double3 transparency(GeoPoint geoPoint, LightSource lightSource, Vector l, Vector n) {
         Vector lightDirection = l.scale(-1); // from point to light source
         Ray lightRay = new Ray(geoPoint.point, lightDirection, n);
-        List<GeoPoint> intersections = scene.geometries.findGeoIntersections(lightRay);
+        double lightD = lightSource.getDistance(geoPoint.point);
+        List<GeoPoint> intersections = scene.geometries.findGeoIntersections(lightRay, lightD);
         if (intersections == null)
             return Double3.ONE;
         Double3 ktr = Double3.ONE;
@@ -98,9 +99,7 @@ public class SimpleRayTracer extends RayTracerBase {
         double nv = alignZero(normal.dotProduct(rayDirection));
         if(isZero(nv))
             return null;
-        return new Ray(gp.point,
-                rayDirection.subtract(normal.scale(2* nv)),
-                normal);
+        return new Ray(gp.point, rayDirection.subtract(normal.scale(2* nv)), normal);
     }
 
     private Ray constructRefractedRay(GeoPoint gp, Vector rayDirection, Vector normal) {
@@ -113,7 +112,8 @@ public class SimpleRayTracer extends RayTracerBase {
         if (kkx.lowerThan(MIN_CALC_COLOR_K))
             return Color.BLACK;
         GeoPoint closestIntersection = findClosestIntersection(ray);
-        return closestIntersection == null ? scene.background.scale(kx) : calcColor(closestIntersection, ray, level - 1, kkx).scale(kx);
+        return (closestIntersection == null ? scene.background : calcColor(closestIntersection, ray, level - 1, kkx))
+                .scale(kx);
     }
 
     /**

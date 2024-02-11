@@ -31,11 +31,12 @@ public class Ray {
      *
      */
     public Ray(Point point, Vector direction, Vector normal) {
+        this.direction = direction.normalize();
         if (isZero(normal.dotProduct(direction)))
                 throw new IllegalArgumentException("Vector zero is not valid");
-        Vector epsVector = normal.scale(normal.dotProduct(direction) < 0 ? DELTA : -DELTA);
+        Vector epsVector = normal.scale(normal.dotProduct(direction) > 0 ? DELTA : -DELTA);
         this.head = point.add(epsVector);
-        this.direction = direction.normalize();
+
     }
 
     @Override
