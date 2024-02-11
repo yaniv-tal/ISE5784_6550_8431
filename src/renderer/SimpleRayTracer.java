@@ -135,7 +135,7 @@ public class SimpleRayTracer extends RayTracerBase {
             double nl = alignZero(n.dotProduct(l));
             if (nl * nv > 0) { // sign(nl) == sing(nv)
                 Double3 ktr = transparency(geoPoint, lightSource, l, n);
-                if (ktr.product(k).greaterThan(MIN_CALC_COLOR_K)) {
+                if (!ktr.product(k).lowerThan(MIN_CALC_COLOR_K)) {
                     Color iL = lightSource.getIntensity(geoPoint.point).scale(ktr);
                     color = color.add(iL.scale(calcDiffusive(material, nl).add(calcSpecular(material, n, l, nl, v))));
                 }
