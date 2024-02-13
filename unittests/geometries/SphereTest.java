@@ -16,6 +16,9 @@ class SphereTest {
     private final Point p100 = new Point(1, 0, 0);
     private final Vector v001 = new Vector(0, 0, 1);
 
+    private final Sphere sphere = new Sphere(1d, p100);
+
+
     /**
      * Test method for {@link geometries.Sphere#getNormal(primitives.Point)}.
      */
@@ -118,5 +121,20 @@ class SphereTest {
         // **** Group: Special cases
         // TC22: Ray's line is outside, ray is orthogonal to ray start to sphere's center line
         assertNull(sphere.findGeoIntersections(new Ray(p300, v001)), "Ray's line out of sphere");
+    }
+
+    /**
+     * Test method for
+     * {@link geometries.Sphere#findGeoIntersections(Ray, double)}.
+     */
+    @Test
+    void testDistanceIntersections() {
+        Sphere sphere = new Sphere(1d, Point.ZERO);
+        // ============ Equivalence Partitions Tests ==============
+        // EP02: there are some intersections farther than max distance
+        assertEquals(1, sphere.findGeoIntersections(new Ray(new Point(0, 0, -5), Vector.Z), 5).size(), "farther than maxDistance");
+        // =============== Boundary Values Tests ==================
+        // BV01: there is intersections on max distance
+        assertEquals(1, sphere.findGeoIntersections(new Ray(new Point(0, 0, -5), Vector.Z), 4).size(), "at max distance");
     }
 }

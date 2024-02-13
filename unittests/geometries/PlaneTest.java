@@ -93,4 +93,19 @@ class PlaneTest {
         //In other words - a given point inside the plane)
         assertNull(plane.findGeoIntersections(new Ray(p100, vm100)), "Ray's line out of Plane");
     }
+
+    /**
+     * Test method for
+     * {@link geometries.Plane#findGeoIntersections(Ray, double)}.
+     */
+    @Test
+    void testDistanceIntersections() {
+        Plane plane = new Plane(new Point(1, 1, 0), new Point(1, -1, 0), new Point(-1, -1, 0));
+        // ============ Equivalence Partitions Tests ==============
+        // EP02: there are intersections farther than max distance
+        assertNull(plane.findGeoIntersections(new Ray(new Point(0, 0, -10), Vector.Z), 9), "farther than maxDistance");
+        // =============== Boundary Values Tests ==================
+        // BV01: there is intersections on max distance
+        assertEquals(1, plane.findGeoIntersections(new Ray(new Point(0, 0, -10), Vector.Z), 10).size(), "at max distance");
+    }
 }

@@ -68,5 +68,22 @@ class TriangleTest {
         //TC13: The intersection point with the "contained" plane is on the continuation of one of the sides
         assertNull(triangle.findGeoIntersections(new Ray(p401, v00m1)), "Ray's line out of triangle");
     }
+
+    /**
+     * Test method for
+     * {@link geometries.Triangle#findGeoIntersections(Ray, double)}.
+     */
+    @Test
+    void testDistanceIntersections() {
+        Triangle triangle = new Triangle(new Point(0, 4, 0), new Point(-2, -2, 0), new Point(2, -2, 0));
+        // ============ Equivalence Partitions Tests ==============
+        // EP02: there are intersections farther than max distance
+        assertNull(triangle.findGeoIntersections(new Ray(new Point(0, 0, -10), Vector.Z), 9), "farther than maxDistance");
+        // =============== Boundary Values Tests ==================
+        // BV01: there is intersections on max distance
+        assertEquals(1, triangle.findGeoIntersections(new Ray(new Point(0, 0, -10), Vector.Z), 10).size(), "at max distance");
+    }
+
+
 }
 

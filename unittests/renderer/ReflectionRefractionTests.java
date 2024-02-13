@@ -98,4 +98,5 @@ public class ReflectionRefractionTests {
          .renderImage()
          .writeToImage();
    }
+
 }

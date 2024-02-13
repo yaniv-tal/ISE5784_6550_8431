@@ -129,4 +129,20 @@ public class PolygonTests {
       // TC13: The intersection point with the "contained" plane is on the continuation of one of the sides
       assertNull(polygon.findGeoIntersections(new Ray(p401, v00m1)), "Ray's line out of polygon");
    }
+
+
+   /**
+    * Test method for
+    * {@link geometries.Polygon#findGeoIntersections(Ray, double)}.
+    */
+   @Test
+   void testDistanceIntersections() {
+      Polygon testPolygon = new Polygon(new Point(1, 1, 0), new Point(1, -1, 0), new Point(-1, -1, 0), new Point(-1, 1, 0));
+      // ============ Equivalence Partitions Tests ==============
+      // EP02: there are intersections farther than max distance
+      assertNull(testPolygon.findGeoIntersections(new Ray(new Point(0, 0, -10), Vector.Z), 9), "farther than maxDistance");
+      // =============== Boundary Values Tests ==================
+      // BV01: there is intersections on max distance
+      assertEquals(1, testPolygon.findGeoIntersections(new Ray(new Point(0, 0, -10), Vector.Z), 10).size(), "at max distance");
+   }
 }

@@ -40,4 +40,23 @@ class GeometriesTest {
         //TC14: All the geometries intersects the ray.
         assertEquals(5, geometries1.findGeoIntersections(new Ray(new Point(1,0,-2),new Vector(0,0,1))).size(), "ERROR: Wrong number of intersections.");
     }
+
+    /**
+     * Test method for
+     * {@link geometries.Geometries#findGeoIntersections(Ray, double)}.
+     */
+    @Test
+    void testDistanceIntersections() {
+        Sphere sphere = new Sphere(1, new Point(0, 0, 1));
+        Triangle triangle = new Triangle(new Point(2, -2, 0), new Point(2, 2, 0), new Point(2, 0, 2));
+        Plane plane = new Plane(new Point(9, 0, 0), Vector.Y);
+        Polygon polygon = new Polygon(new Point(6, -2, 0), new Point(6, 2, 0), new Point(6, 2, 2), new Point(6, -2, 2));
+        Geometries geometries = new Geometries(sphere, triangle, plane, polygon);
+        // ============ Equivalence Partitions Tests ==============
+        // TC01: there are intersections farther than max distance
+        assertEquals(3,
+                geometries.findGeoIntersections(new Ray(new Point(-5, 0, 1), Vector.X), 7).size(),
+                "farther than maxDistance");
+}
+
 }
