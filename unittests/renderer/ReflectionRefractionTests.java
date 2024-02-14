@@ -2,6 +2,9 @@ package renderer;
 
 import static java.awt.Color.*;
 
+import geometries.Plane;
+import geometries.Polygon;
+import lighting.PointLight;
 import org.junit.jupiter.api.Test;
 
 import geometries.Sphere;
@@ -99,4 +102,72 @@ public class ReflectionRefractionTests {
          .writeToImage();
    }
 
+   @Test
+   void impressiveImage(){
+      Scene scene1 = new Scene("10 geometries test");
+      Camera.Builder cameraBuilder1 = Camera.getBuilder()
+              .setDirection(Vector.X,Vector.Y)
+              .setRayTracer(new SimpleRayTracer(scene1));
+
+
+      scene1.geometries.add(
+              new Sphere(10, Point.ZERO)
+                      .setEmission(new Color(CYAN))
+                      .setMaterial(new Material().setNShininess(50).setKT(0.6).setKS(0.5).setKD(0.5)),
+
+              new Plane(new Point(0,0,-40),Vector.Z)
+                      .setEmission(new Color(GREEN))
+                      .setMaterial(new Material().setKS(0.5).setKD(0.5).setKR(0.8).setNShininess(20)),
+
+              new Polygon(new Point(15,15,30),new Point(15,-15,30),new Point(-15,-15,30),new Point(-15,15,30))
+                      .setEmission(new Color(206,206,206))
+                      .setMaterial(new Material().setNShininess(50).setKD(0.5).setKS(0.5)),
+
+              new Triangle(new Point(15,15,30),new Point(15,-15,30),new Point(0,0,9))
+                      .setEmission(new Color(243,73,90))
+                      .setMaterial(new Material().setKS(0.5).setKD(0.5).setNShininess(40).setKR(0.4)),
+
+              new Triangle(new Point(15,-15,30),new Point(-15,-15,30),new Point(0,0,9))
+                      .setEmission(new Color(79,73,243))
+                      .setMaterial(new Material().setKS(0.5).setKD(0.5).setNShininess(40).setKR(0.4)),
+
+              new Triangle(new Point(-15,-15,30),new Point(-15,15,30),new Point(0,0,9))
+                      .setEmission(new Color(247,255,0))
+                      .setMaterial(new Material().setKS(0.5).setKD(0.5).setNShininess(40).setKR(0.4)),
+
+              new Triangle(new Point(-15,15,30),new Point(15,15,30),new Point(0,0,9))
+                      .setEmission(new Color(253,209,89))
+                      .setMaterial(new Material().setKS(0.5).setKD(0.5).setNShininess(40).setKR(0.4)),
+
+              new Sphere(2, new Point(0,0,-30))
+                      .setEmission(new Color(WHITE))
+                      .setMaterial(new Material().setNShininess(50).setKT(0.6).setKS(0.5).setKD(0.5)),
+
+              new Sphere(3, new Point(15,0,10))
+                      .setEmission(new Color(WHITE))
+                      .setMaterial(new Material().setNShininess(50).setKT(0.6).setKS(0.5).setKD(0.5)),
+
+              new Sphere(3, new Point(-15,0,10))
+                      .setEmission(new Color(WHITE))
+                      .setMaterial(new Material().setNShininess(50).setKT(0.6).setKS(0.5).setKD(0.5)));
+
+
+      //scene1.setAmbientLight(new AmbientLight(new Color(WHITE), 0.15));
+      scene1.lights.add(
+              new PointLight(new Color(RED),Point.ZERO)
+                      .setKL(4E-5).setKQ(2E-7));
+      scene1.lights.add(new SpotLight(new Color(ORANGE),new Point(15,0,10),Point.ZERO.subtract(new Point(15,0,10)))
+                      .setKL(4E-5).setKQ(2E-7));
+      scene1.lights.add(new SpotLight(new Color(YELLOW),new Point(-15,0,10),Point.ZERO.subtract(new Point(-15,0,10)))
+                      .setKL(4E-5).setKQ(2E-7));
+
+      cameraBuilder1.setLocation(new Point(200, 200, 1000)).setVpDistance(1000)
+              .setVpSize(200, 200)
+              .setImageWriter(new ImageWriter("geometriesImpressiveImage", 600, 600))
+              .build()
+              .renderImage()
+              .writeToImage();
+
+
+   }
 }
