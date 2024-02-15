@@ -134,11 +134,11 @@ public class ReflectionRefractionTests {
                       .setMaterial(new Material().setKS(0.5).setKD(0.5).setNShininess(60).setKR(1d)),
 
               new Sphere(2, new Point(0,0,-30))
-                      .setEmission(new Color(YELLOW))
+                      .setEmission(new Color(ORANGE))
                       .setMaterial(new Material().setNShininess(50).setKT(0.6).setKS(0.5).setKD(0.5)),
 
               new Sphere(3, new Point(15,0,10))
-                      .setEmission(new Color(ORANGE))
+                      .setEmission(new Color(YELLOW))
                       .setMaterial(new Material().setNShininess(60).setKT(0.6).setKS(0.5).setKD(0.5)),
 
               new Sphere(3, new Point(-15,0,10))
@@ -146,11 +146,26 @@ public class ReflectionRefractionTests {
                       .setMaterial(new Material().setNShininess(60).setKT(0.6).setKS(0.5).setKD(0.5)),
 
               new Sphere(3, new Point(0,15,10))
-              .setEmission(new Color(ORANGE))
-              .setMaterial(new Material().setNShininess(60).setKT(0.6).setKS(0.5).setKD(0.5)),
+                      .setEmission(new Color(YELLOW))
+                      .setMaterial(new Material().setNShininess(60).setKT(0.6).setKS(0.5).setKD(0.5)),
 
               new Sphere(3, new Point(0,-15,10))
                       .setEmission(new Color(YELLOW))
+                      .setMaterial(new Material().setNShininess(60).setKT(0.6).setKS(0.5).setKD(0.5)),
+              new Sphere(3, new Point(10.6,10.6,10))
+                      .setEmission(new Color(ORANGE))
+                      .setMaterial(new Material().setNShininess(60).setKT(0.6).setKS(0.5).setKD(0.5)),
+
+              new Sphere(3, new Point(10.6,-10.6,10))
+                      .setEmission(new Color(ORANGE))
+                      .setMaterial(new Material().setNShininess(60).setKT(0.6).setKS(0.5).setKD(0.5)),
+
+              new Sphere(3, new Point(-10.6,-10.6,10))
+                      .setEmission(new Color(ORANGE))
+                      .setMaterial(new Material().setNShininess(60).setKT(0.6).setKS(0.5).setKD(0.5)),
+
+              new Sphere(3, new Point(-10.6,10.6,10))
+                      .setEmission(new Color(ORANGE))
                       .setMaterial(new Material().setNShininess(60).setKT(0.6).setKS(0.5).setKD(0.5)));
 
 
