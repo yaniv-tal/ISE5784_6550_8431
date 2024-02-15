@@ -104,70 +104,76 @@ public class ReflectionRefractionTests {
 
    @Test
    void impressiveImage(){
-      Scene scene1 = new Scene("10 geometries test");
-      Camera.Builder cameraBuilder1 = Camera.getBuilder()
-              .setDirection(Vector.X,Vector.Y)
-              .setRayTracer(new SimpleRayTracer(scene1));
-
-
-      scene1.geometries.add(
+      scene.geometries.add(
               new Sphere(10, Point.ZERO)
-                      .setEmission(new Color(CYAN))
-                      .setMaterial(new Material().setNShininess(50).setKT(0.6).setKS(0.5).setKD(0.5)),
+                      .setEmission(new Color(BLUE))
+                      .setMaterial(new Material().setNShininess(60).setKT(0.6).setKS(0.5).setKD(0.5)),
 
               new Plane(new Point(0,0,-40),Vector.Z)
-                      .setEmission(new Color(GREEN))
-                      .setMaterial(new Material().setKS(0.5).setKD(0.5).setKR(0.8).setNShininess(20)),
+                      .setEmission(new Color(RED))
+                      .setMaterial(new Material().setKS(0.5).setKD(0.5).setKR(1d).setNShininess(60)),
 
               new Polygon(new Point(15,15,30),new Point(15,-15,30),new Point(-15,-15,30),new Point(-15,15,30))
-                      .setEmission(new Color(206,206,206))
-                      .setMaterial(new Material().setNShininess(50).setKD(0.5).setKS(0.5)),
+                      .setEmission(new Color(CYAN))
+                      .setMaterial(new Material().setNShininess(60).setKD(0.5).setKS(0.5)),
 
               new Triangle(new Point(15,15,30),new Point(15,-15,30),new Point(0,0,9))
-                      .setEmission(new Color(243,73,90))
-                      .setMaterial(new Material().setKS(0.5).setKD(0.5).setNShininess(40).setKR(0.4)),
+                      .setEmission(new Color(29,186,218))
+                      .setMaterial(new Material().setKS(0.5).setKD(0.5).setNShininess(60).setKR(1d)),
 
               new Triangle(new Point(15,-15,30),new Point(-15,-15,30),new Point(0,0,9))
-                      .setEmission(new Color(79,73,243))
-                      .setMaterial(new Material().setKS(0.5).setKD(0.5).setNShininess(40).setKR(0.4)),
+                      .setEmission(new Color(29,186,218))
+                      .setMaterial(new Material().setKS(0.5).setKD(0.5).setNShininess(60).setKR(1d)),
 
               new Triangle(new Point(-15,-15,30),new Point(-15,15,30),new Point(0,0,9))
-                      .setEmission(new Color(247,255,0))
-                      .setMaterial(new Material().setKS(0.5).setKD(0.5).setNShininess(40).setKR(0.4)),
+                      .setEmission(new Color(29,186,218))
+                      .setMaterial(new Material().setKS(0.5).setKD(0.5).setNShininess(60).setKR(1d)),
 
               new Triangle(new Point(-15,15,30),new Point(15,15,30),new Point(0,0,9))
-                      .setEmission(new Color(253,209,89))
-                      .setMaterial(new Material().setKS(0.5).setKD(0.5).setNShininess(40).setKR(0.4)),
+                      .setEmission(new Color(29,186,218))
+                      .setMaterial(new Material().setKS(0.5).setKD(0.5).setNShininess(60).setKR(1d)),
 
               new Sphere(2, new Point(0,0,-30))
-                      .setEmission(new Color(WHITE))
+                      .setEmission(new Color(YELLOW))
                       .setMaterial(new Material().setNShininess(50).setKT(0.6).setKS(0.5).setKD(0.5)),
 
               new Sphere(3, new Point(15,0,10))
-                      .setEmission(new Color(WHITE))
-                      .setMaterial(new Material().setNShininess(50).setKT(0.6).setKS(0.5).setKD(0.5)),
+                      .setEmission(new Color(ORANGE))
+                      .setMaterial(new Material().setNShininess(60).setKT(0.6).setKS(0.5).setKD(0.5)),
 
               new Sphere(3, new Point(-15,0,10))
-                      .setEmission(new Color(WHITE))
-                      .setMaterial(new Material().setNShininess(50).setKT(0.6).setKS(0.5).setKD(0.5)));
+                      .setEmission(new Color(YELLOW))
+                      .setMaterial(new Material().setNShininess(60).setKT(0.6).setKS(0.5).setKD(0.5)),
+
+              new Sphere(3, new Point(0,15,10))
+              .setEmission(new Color(ORANGE))
+              .setMaterial(new Material().setNShininess(60).setKT(0.6).setKS(0.5).setKD(0.5)),
+
+              new Sphere(3, new Point(0,-15,10))
+                      .setEmission(new Color(YELLOW))
+                      .setMaterial(new Material().setNShininess(60).setKT(0.6).setKS(0.5).setKD(0.5)));
 
 
-      //scene1.setAmbientLight(new AmbientLight(new Color(WHITE), 0.15));
-      scene1.lights.add(
-              new PointLight(new Color(RED),Point.ZERO)
+      scene.setAmbientLight(new AmbientLight(new Color(WHITE), 0.15));
+      scene.lights.add(
+                 new PointLight(new Color(BLUE),Point.ZERO)
                       .setKL(4E-5).setKQ(2E-7));
-      scene1.lights.add(new SpotLight(new Color(ORANGE),new Point(15,0,10),Point.ZERO.subtract(new Point(15,0,10)))
+      scene.lights.add(new SpotLight(new Color(171,0,255),new Point(15,0,10),Point.ZERO.subtract(new Point(15,0,10)))
                       .setKL(4E-5).setKQ(2E-7));
-      scene1.lights.add(new SpotLight(new Color(YELLOW),new Point(-15,0,10),Point.ZERO.subtract(new Point(-15,0,10)))
+      scene.lights.add(new SpotLight(new Color(171,0,255),new Point(-15,0,10),Point.ZERO.subtract(new Point(-15,0,10)))
                       .setKL(4E-5).setKQ(2E-7));
+      Camera.Builder cameraBuilder1 = Camera.getBuilder()
+              .setRayTracer(new SimpleRayTracer(scene))
+              .setVpSize(900, 900);
 
-      cameraBuilder1.setLocation(new Point(200, 200, 1000)).setVpDistance(1000)
-              .setVpSize(200, 200)
-              .setImageWriter(new ImageWriter("geometriesImpressiveImage", 600, 600))
-              .build()
-              .renderImage()
-              .writeToImage();
-
+      Camera camera = cameraBuilder1.setLocation(new Point(40, 70, 90))
+              .setDirection(new Vector(-1,-1,-2),new Vector(-1,-1,1))
+              .setVpDistance(965)
+              .setImageWriter(new ImageWriter("geometriesImpressiveImage", 9000, 9000))
+              .build();
+      camera.renderImage();
+      camera.writeToImage();
 
    }
+
 }
