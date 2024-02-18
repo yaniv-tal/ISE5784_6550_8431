@@ -28,7 +28,10 @@ public class Ray {
     }
 
     /**
-     *
+     * constructor.
+     * @param point
+     * @param direction
+     * @param normal
      */
     public Ray(Point point, Vector direction, Vector normal) {
         this.direction = direction.normalize();

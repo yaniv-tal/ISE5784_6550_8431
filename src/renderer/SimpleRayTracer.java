@@ -26,7 +26,7 @@ public class SimpleRayTracer extends RayTracerBase {
     }
 
     /**
-     *
+     *Recursion stopping conditions of transparency\ reflection
      */
     private static final int MAX_CALC_COLOR_LEVEL = 10;
     private static final double MIN_CALC_COLOR_K = 0.001;
@@ -35,9 +35,10 @@ public class SimpleRayTracer extends RayTracerBase {
     /**
      * Shading test method
      * @param geoPoint - the point and the object
-     * @param l - light Direction
+     * @param lightSource
+     * @param l- light Direction
      * @param n - normal
-     * @return Is there shading - "true" or "false"
+     * @return Is there shading
      */
     private Double3 transparency(GeoPoint geoPoint, LightSource lightSource, Vector l, Vector n) {
         Vector lightDirection = l.scale(-1); // from point to light source
@@ -59,7 +60,7 @@ public class SimpleRayTracer extends RayTracerBase {
     /**
      * ray intersection color calculations.
      * @param ray
-     * @return the color of the intersection point.
+     * @return the color of the intersection point (if there is, if not - background).
      */
     @Override
     public Color traceRay(Ray ray) {
@@ -78,16 +79,26 @@ public class SimpleRayTracer extends RayTracerBase {
     }
 
     /**
-     * Calculating the color of a point
+     * helps to Calculate the color of a point
      * @param intersection
      * @param ray
-     * @return color
+     * @param level - Recursion stopping conditions
+     * @param k
+     * @return color with the GlobalEffects
      */
     private Color calcColor(GeoPoint intersection, Ray ray, int level, Double3 k) {
         Color color = calcLocalEffects(intersection, ray, k);
         return 1 == level ? color : color.add(calcGlobalEffects(intersection, ray, level, k));
     }
 
+    /**
+     * helps to Calculate the color of a point
+     * @param geoPoint
+     * @param ray
+     * @param level  - Recursion stopping conditions
+     * @param k
+     * @return color with the GlobalEffects in this level (with transparency and reflection(
+     */
     private Color calcGlobalEffects(GeoPoint geoPoint, Ray ray, int level, Double3 k) {
         Vector normal = geoPoint.geometry.getNormal(geoPoint.point);
         Material material = geoPoint.geometry.getMaterial();
@@ -95,6 +106,13 @@ public class SimpleRayTracer extends RayTracerBase {
                 .add(calcGlobalEffect(constructReflectedRay(geoPoint, ray.getDirection(), normal), material.kR, level, k));
     }
 
+    /**
+     * Auxiliary method for calculating the color according to the Fong model
+     * @param gp - geoPoint
+     * @param rayDirection
+     * @param normal
+     * @return A ray that we will check its intersection with the geometry
+     */
     private Ray constructReflectedRay(GeoPoint gp, Vector rayDirection, Vector normal) {
         double nv = alignZero(normal.dotProduct(rayDirection));
         if(isZero(nv))
@@ -102,11 +120,26 @@ public class SimpleRayTracer extends RayTracerBase {
         return new Ray(gp.point, rayDirection.subtract(normal.scale(2* nv)), normal);
     }
 
+    /**
+     * Auxiliary method for calculating the color according to the Fong model
+     * @param gp - geoPoint
+     * @param rayDirection
+     * @param normal
+     * @return A ray that we will check its intersection with the geometry
+     */
     private Ray constructRefractedRay(GeoPoint gp, Vector rayDirection, Vector normal) {
         return new Ray(gp.point,rayDirection,normal);
     }
 
-
+    /**
+     * Calculates the color of the point of intersection with the ray,
+     * as long as the recursion meets the conditions
+     * @param ray
+     * @param kx
+     * @param level
+     * @param k
+     * @return color
+     */
     private Color calcGlobalEffect(Ray ray, Double3 kx, int level, Double3 k) {
         Double3 kkx = kx.product(k);
         if (kkx.lowerThan(MIN_CALC_COLOR_K))
@@ -170,9 +203,9 @@ public class SimpleRayTracer extends RayTracerBase {
     }
 
     /**
-     *
+     * find Closest Intersection
      * @param ray
-     * @return
+     * @return Closest Intersection (of the ray and the geometry)
      */
     private GeoPoint findClosestIntersection(Ray ray){
         // check if ray constructed through the pixel intersects any of geometries
