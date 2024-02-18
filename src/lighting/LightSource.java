@@ -9,6 +9,7 @@ import primitives.Vector;
  * @author Yaniv and Ahuvya.
  */
 public interface LightSource {
+
     /**
      * function for get the light intensity in a point.
      * @param p represents the getting point.
