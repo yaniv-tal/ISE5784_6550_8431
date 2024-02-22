@@ -13,7 +13,7 @@ import static primitives.Util.isZero;
  * @author Yaniv and Ahuvya.
  */
 public class Camera implements Cloneable {
-    public boolean useAntiAliasing = true;
+    public boolean useAntiAliasing = false;
     private Point p0;
     private Vector vTo, vUp, vRight;
     private double width = 0.0, height = 0.0, distance = 0.0;
@@ -84,9 +84,9 @@ public class Camera implements Cloneable {
 
         Point pIJ = pCenter;
         if (!isZero(xJ))
-            pIJ.add(vRight.scale(xJ));
+            pIJ = pIJ.add(vRight.scale(xJ));
         if (!isZero(yI))
-            pIJ.add(vUp.scale(yI));
+            pIJ = pIJ.add(vUp.scale(yI));
 
         return pIJ;
     }
@@ -102,6 +102,16 @@ public class Camera implements Cloneable {
      */
     public Ray constructRay(int nX, int nY, int j, int i) {
         return new Ray(p0, pixelCenter(nX, nY, j, i).subtract(p0));
+    }
+
+    public void setAliasingRays(int rootNumberOfRays) {
+        if (pixel == Blackboard.oneRay)
+            pixel = new Blackboard(rootNumberOfRays, width / imageWriter.getNx(), height / imageWriter.getNy());
+        else {
+            pixel.setRootNumberOfRays(rootNumberOfRays);
+            pixel.setWidth(width / imageWriter.getNx());
+            pixel.setHeight(height / imageWriter.getNy());
+        }
     }
 
     /**
@@ -133,6 +143,7 @@ public class Camera implements Cloneable {
             this.camera.imageWriter = imageWriter;
             return this;
         }
+
 
         /**
          * set the RayTracer
@@ -191,8 +202,10 @@ public class Camera implements Cloneable {
             return this;
         }
 
-        public Builder setUseAntiAliasing(boolean useAntiAliasing) {
+        public Builder setUseAntiAliasing(boolean useAntiAliasing, int numOfRays) {
             this.camera.useAntiAliasing = useAntiAliasing;
+            if(useAntiAliasing)
+                camera.setAliasingRays(numOfRays);
             return this;
         }
 
@@ -320,21 +333,6 @@ public class Camera implements Cloneable {
             color = rayTracer.traceRay(ray);
 
         imageWriter.writePixel(j, i, color);
-    }
-
-    /**
-     * setter for anti aliasing effect
-     *
-     * @param rootNumberOfRays number of rays in the beam
-     */
-    public void setAntiAliasing(int rootNumberOfRays) {
-        if (pixel == Blackboard.oneRay)
-            pixel = new Blackboard(rootNumberOfRays, width / imageWriter.getNx(), height / imageWriter.getNy());
-        else {
-            pixel.setRootNumberOfRays(rootNumberOfRays);
-            pixel.setWidth(width / imageWriter.getNx());
-            pixel.setHeight(height / imageWriter.getNy());
-        }
     }
 
     //calculate the average color created by the ray beam

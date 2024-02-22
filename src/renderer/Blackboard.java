@@ -45,6 +45,7 @@ public class Blackboard {
         this.height = height;
     }
 
+
     public void setRootNumberOfRays(int rootNumberOfRays) {
         this.rootNumberOfRays = (rootNumberOfRays == 0 ? 1 : rootNumberOfRays);
     }
@@ -76,7 +77,7 @@ public class Blackboard {
                     double yMove = random(0, Ry);
                     double xMove = random(0, Rx);
                     if (!isZero(xJ) || !isZero(xMove))
-                        pIJ.add(vRight.scale(xJ + xMove));
+                        pIJ = pIJ.add(vRight.scale(xJ + xMove));
                     if (!isZero(yI) || !isZero(yMove))
                         pIJ = pIJ.add(vUp.scale(yI + yMove));
                     grid.addLast(pIJ);
