@@ -13,6 +13,7 @@ import static primitives.Util.isZero;
  * @author Yaniv and Ahuvya.
  */
 public class Camera implements Cloneable {
+    public boolean useAntiAliasing = true;
     private Point p0;
     private Vector vTo, vUp, vRight;
     private double width = 0.0, height = 0.0, distance = 0.0;
@@ -55,7 +56,6 @@ public class Camera implements Cloneable {
 
     /**
      * function for a new Builder object.
-     *
      * @return a new Builder object.
      */
     public static Builder getBuilder() {
@@ -81,6 +81,7 @@ public class Camera implements Cloneable {
         //Pixel[i,j] center
         double yI = -(i - (double) (nY - 1) / 2) * Ry;
         double xJ = (j - (double) (nX - 1) / 2) * Rx;
+
         Point pIJ = pCenter;
         if (!isZero(xJ))
             pIJ.add(vRight.scale(xJ));
@@ -190,6 +191,14 @@ public class Camera implements Cloneable {
             return this;
         }
 
+        public Builder setUseAntiAliasing(boolean useAntiAliasing) {
+            this.camera.useAntiAliasing = useAntiAliasing;
+            return this;
+        }
+
+        public boolean getUseAntiAliasing() {
+            return this.camera.useAntiAliasing;
+        }
         /**
          * build the camera and Checking the correctness
          *
@@ -303,21 +312,21 @@ public class Camera implements Cloneable {
     private void castRay(int nX, int nY, int j, int i) {
         Ray ray = constructRay(nX, nY, j, i);
         Color color;
-        if (pixel.getUseAntiAliasing()) {
+        if (pixel.rayBeam()) {
             pixel.setGrid(pixelCenter(nX, nY, j, i), vUp, vRight);
             color = colorAverage(pixel.grid, p0);
-        } else
+        }
+        else
             color = rayTracer.traceRay(ray);
-
 
         imageWriter.writePixel(j, i, color);
     }
 
-        /**
-         * setter for anti aliasing effect
-         *
-         * @param rootNumberOfRays number of rays in the beam
-         */
+    /**
+     * setter for anti aliasing effect
+     *
+     * @param rootNumberOfRays number of rays in the beam
+     */
     public void setAntiAliasing(int rootNumberOfRays) {
         if (pixel == Blackboard.oneRay)
             pixel = new Blackboard(rootNumberOfRays, width / imageWriter.getNx(), height / imageWriter.getNy());

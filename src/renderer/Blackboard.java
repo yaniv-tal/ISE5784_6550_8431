@@ -24,16 +24,6 @@ public class Blackboard {
      */
     public List<Point> grid;
 
-    private boolean useAntiAliasing  = false;
-
-    public Blackboard setUseAntiAliasing(boolean useAntiAliasing) {
-        this.useAntiAliasing = useAntiAliasing;
-        return this;
-    }
-
-    public boolean getUseAntiAliasing() {
-        return useAntiAliasing;
-    }
     public void setWidth(double width) {
         this.width = width;
     }
@@ -59,8 +49,17 @@ public class Blackboard {
         this.rootNumberOfRays = (rootNumberOfRays == 0 ? 1 : rootNumberOfRays);
     }
 
+    /**
+     * checks if there is ray beam to create.
+     * @return true / false
+     */
+    public boolean rayBeam() {
+        return (rootNumberOfRays != 1);
+    }
+
+
     public void setGrid(Point pCenter, Vector vUp, Vector vRight) {
-        if (rootNumberOfRays == 1 || !useAntiAliasing)
+        if (rootNumberOfRays == 1)
             grid = List.of(pCenter);
         else {
             grid = new LinkedList<Point>();
