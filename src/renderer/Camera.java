@@ -2,6 +2,7 @@ package renderer;
 
 import primitives.*;
 
+import java.util.List;
 import java.util.MissingResourceException;
 import java.util.prefs.PreferenceChangeEvent;
 
@@ -17,6 +18,7 @@ public class Camera implements Cloneable {
     private double width = 0.0, height = 0.0, distance = 0.0;
     private ImageWriter imageWriter;
     private RayTracerBase rayTracer;
+    private Blackboard pixel = Blackboard.oneRay;
 
     /**
      * get function for the width of the View Plane.
@@ -61,15 +63,15 @@ public class Camera implements Cloneable {
     }
 
     /**
-     * creates ray that go threw (i,j) indexes.
+     * give the center point of pixel i,j
      *
-     * @param nX - Represents the amount of columns (row width)
-     * @param nY - represents the number of rows (column height).
-     * @param j  - column number
-     * @param i  - row number
-     * @return the created ray
+     * @param nX number of columns
+     * @param nY number of rows
+     * @param j  pixel's column
+     * @param i  pixel's row
+     * @return the point
      */
-    public Ray constructRay(int nX, int nY, int j, int i) {
+    private Point pixelCenter(int nX, int nY, int j, int i) {
         Point pCenter = p0.add(vTo.scale(distance));
 
         //Ratio
@@ -81,12 +83,24 @@ public class Camera implements Cloneable {
         double xJ = (j - (double) (nX - 1) / 2) * Rx;
         Point pIJ = pCenter;
         if (!isZero(xJ))
-            pIJ = pIJ.add(vRight.scale(xJ));
+            pIJ.add(vRight.scale(xJ));
         if (!isZero(yI))
-            pIJ = pIJ.add(vUp.scale(yI));
+            pIJ.add(vUp.scale(yI));
 
-        Vector vIJ = pIJ.subtract(p0);
-        return new Ray(p0, vIJ);
+        return pIJ;
+    }
+
+    /**
+     * creates ray that go threw (i,j) indexes.
+     *
+     * @param nX - Represents the amount of columns (row width)
+     * @param nY - represents the number of rows (column height).
+     * @param j  - column number
+     * @param i  - row number
+     * @return the created ray
+     */
+    public Ray constructRay(int nX, int nY, int j, int i) {
+        return new Ray(p0, pixelCenter(nX, nY, j, i).subtract(p0));
     }
 
     /**
@@ -279,15 +293,49 @@ public class Camera implements Cloneable {
     }
 
     /**
-     * Colors the pixel by calculating the intersection point and its color
+     * cast a ray through pixel and set color to the pixel
      *
-     * @param Nx
-     * @param Ny
-     * @param column - coordinates
-     * @param row    - coordinates
+     * @param nX number of columns
+     * @param nY number of rows
+     * @param j  pixel's column
+     * @param i  pixel's row
      */
-    private void castRay(int Nx, int Ny, int column, int row) {
-        imageWriter.writePixel(column, row,
-                rayTracer.traceRay(constructRay(Nx, Ny, column, row)));
+    private void castRay(int nX, int nY, int j, int i) {
+        Ray ray = constructRay(nX, nY, j, i);
+        Color color;
+        if (pixel.getUseAntiAliasing()) {
+            pixel.setGrid(pixelCenter(nX, nY, j, i), vUp, vRight);
+            color = colorAverage(pixel.grid, p0);
+        } else
+            color = rayTracer.traceRay(ray);
+
+
+        imageWriter.writePixel(j, i, color);
     }
+
+        /**
+         * setter for anti aliasing effect
+         *
+         * @param rootNumberOfRays number of rays in the beam
+         */
+    public void setAntiAliasing(int rootNumberOfRays) {
+        if (pixel == Blackboard.oneRay)
+            pixel = new Blackboard(rootNumberOfRays, width / imageWriter.getNx(), height / imageWriter.getNy());
+        else {
+            pixel.setRootNumberOfRays(rootNumberOfRays);
+            pixel.setWidth(width / imageWriter.getNx());
+            pixel.setHeight(height / imageWriter.getNy());
+        }
+    }
+
+    //calculate the average color created by the ray beam
+    private Color colorAverage(List<Point> list, Point point) {
+        Color color = Color.BLACK;
+        for (Point p : list)
+            color = color.add(rayTracer.traceRay(new Ray(point, p.subtract(point))));
+        return color.reduce(list.size());
+    }
+
+
+
 }

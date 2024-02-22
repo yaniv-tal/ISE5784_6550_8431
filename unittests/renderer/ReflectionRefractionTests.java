@@ -47,6 +47,9 @@ public class ReflectionRefractionTests {
          .writeToImage();
    }
 
+
+
+
    /** Produce a picture of a sphere lighted by a spot light */
    @Test
    public void twoSpheresOnMirrors() {
