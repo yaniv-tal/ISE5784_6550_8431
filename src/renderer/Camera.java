@@ -345,6 +345,4 @@ public class Camera implements Cloneable {
         return color.reduce(list.size());
     }
 
-
-
 }
