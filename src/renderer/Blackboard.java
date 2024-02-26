@@ -9,10 +9,16 @@ import java.util.List;
 
 import static primitives.Util.isZero;
 import static primitives.Util.random;
-
+/**
+ * Responsible for the points of the pixel,
+ * through which color test rays will pass
+ * @author Yaniv and Ahuvya.
+ */
 public class Blackboard {
+    //initialization value
     public static final Blackboard oneRay = new Blackboard(0, 0, 0);
-    private int rootNumberOfRays = 1;
+
+    private int rootNumberOfRays=1;
 
     // Width of the grid
     private double width = 0;
@@ -24,6 +30,10 @@ public class Blackboard {
      */
     public List<Point> grid;
 
+    /**
+     * setter and getter
+     * @param width
+     */
     public void setWidth(double width) {
         this.width = width;
     }
@@ -32,12 +42,15 @@ public class Blackboard {
         this.height = height;
     }
 
+    public void setRootNumberOfRays(int rootNumberOfRays) {
+        this.rootNumberOfRays = (rootNumberOfRays == 0 ? 1 : rootNumberOfRays);
+    }
+
     /**
-     * Constructs a Blackboard
-     *
+     * Constructor
      * @param rootNumberOfRays The number of rays originating from the root point.
-     * @param width            The width of the  grid.
-     * @param height           The height of the  grid.
+     * @param width - The width of the  grid.
+     * @param height - The height of the  grid.
      */
     public Blackboard(int rootNumberOfRays, double width, double height) {
         this.rootNumberOfRays = (rootNumberOfRays == 0 ? 1 : rootNumberOfRays);
@@ -45,35 +58,35 @@ public class Blackboard {
         this.height = height;
     }
 
-
-    public void setRootNumberOfRays(int rootNumberOfRays) {
-        this.rootNumberOfRays = (rootNumberOfRays == 0 ? 1 : rootNumberOfRays);
-    }
-
     /**
      * checks if there is ray beam to create.
-     * @return true / false
+     * @return  if there is ray beam
      */
     public boolean rayBeam() {
         return (rootNumberOfRays != 1);
     }
 
-
+    /**
+     * Creates a grid of points through which the rays passed
+     * @param pCenter
+     * @param vUp
+     * @param vRight
+     */
     public void setGrid(Point pCenter, Vector vUp, Vector vRight) {
         if (rootNumberOfRays == 1)
             grid = List.of(pCenter);
         else {
             grid = new LinkedList<Point>();
-
-            //Ratio
             double Ry = height / rootNumberOfRays;
             double Rx = width / rootNumberOfRays;
 
             for (int i = 0; i < rootNumberOfRays; i++) {
                 for (int j = 0; j < rootNumberOfRays; j++) {
-                    double yI = -(i - (double) (rootNumberOfRays - 1) / 2) * Ry - Ry / 2;
+                    //Calculate the coordinates
+                    double yI = -(i - (double) (rootNumberOfRays - 1) / 2) * Ry - Ry / 2; //Calculate the coordinates
                     double xJ = (j - (double) (rootNumberOfRays - 1) / 2) * Rx - Rx / 2;
                     Point pIJ = pCenter;
+                    //move randomly
                     double yMove = random(0, Ry);
                     double xMove = random(0, Rx);
                     if (!isZero(xJ) || !isZero(xMove))
@@ -86,4 +99,5 @@ public class Blackboard {
         }
 
     }
+
 }

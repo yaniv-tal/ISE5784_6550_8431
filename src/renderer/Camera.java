@@ -335,7 +335,12 @@ public class Camera implements Cloneable {
         imageWriter.writePixel(j, i, color);
     }
 
-    //calculate the average color created by the ray beam
+    /**
+     * calculate the average color created by the ray beam
+     * @param list The list of points
+     * @param point Camera location
+     * @return the average color
+     */
     private Color colorAverage(List<Point> list, Point point) {
         Color color = Color.BLACK;
         for (Point p : list)

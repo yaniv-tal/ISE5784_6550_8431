@@ -3,12 +3,14 @@ package lighting;
 import primitives.Color;
 import primitives.Point;
 import primitives.Vector;
+import java.util.List;
 
 /**
  * interface of light source.
  * @author Yaniv and Ahuvya.
  */
 public interface LightSource {
+
 
     /**
      * function for get the light intensity in a point.
@@ -30,4 +32,11 @@ public interface LightSource {
      * @return The distance of the point from the light source
      */
     double getDistance(Point point);
+
+    /**
+     * Gets vectors from the point to the light source
+     * @param p - point
+     * @return list of the vectors who created
+     */
+    public List<Vector> getLBeam(Point p);
 }
