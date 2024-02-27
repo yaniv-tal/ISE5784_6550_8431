@@ -176,7 +176,6 @@ public class SimpleRayTracer extends RayTracerBase {
         for (LightSource lightSource : scene.lights) {
             List<Vector> vectors = (!useSoftShadow) ? List.of(lightSource.getL(geoPoint.point)) : lightSource.getLBeam(geoPoint.point);
             //Vector l = lightSource.getL(geoPoint.point);
-
             Color tempColor = Color.BLACK;
             for(Vector l : vectors) {
                 double nl = alignZero(n.dotProduct(l));

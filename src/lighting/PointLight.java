@@ -101,7 +101,7 @@ public class PointLight extends Light implements LightSource {
 
     @Override
     public List<Vector> getLBeam(Point p) {
-//        if (lengthOfTheSide == 0) return List.of(getL(p));
+//        if (lengthOfTheSide == 0) return List.of(getL(p).scale(-1));
 //        List<Vector> vectors = new LinkedList<>();
 //        Vector vTo = getL(p);
 //        Vector vUp = new Vector(vTo.getZ(), 0 ,-vTo.getX()).normalize();
@@ -112,7 +112,9 @@ public class PointLight extends Light implements LightSource {
 //
 //        blackboard.setGrid(position,vUp,vRight);
 //        for (Point i : blackboard.grid)
-//            vectors.add(p.subtract(i).normalize());
+//            vectors.add(i.subtract(p).normalize());
+//        return vectors;
+
 
 //        if (lengthOfTheSide == 0) return List.of(getL(p));
 //        List<Vector> vectors = new LinkedList<>();
@@ -134,6 +136,8 @@ public class PointLight extends Light implements LightSource {
 //                vectors.add(p.subtract(startPoint.add(v0).add(v1)).normalize());
 //            }
 //        }
+
+
 
 
         if (lengthOfTheSide == 0) return List.of(getL(p));
