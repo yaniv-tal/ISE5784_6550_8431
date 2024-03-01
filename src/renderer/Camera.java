@@ -13,8 +13,6 @@ import static primitives.Util.isZero;
  */
 public class Camera implements Cloneable {
     public boolean useAntiAliasing = false;
-    public boolean useSoftShadows = false;
-
     private Point p0;
     private Vector vTo, vUp, vRight;
     private double width = 0.0, height = 0.0, distance = 0.0;
@@ -105,24 +103,9 @@ public class Camera implements Cloneable {
         return new Ray(p0, pixelCenter(nX, nY, j, i).subtract(p0));
     }
 
-    public void setAliasingRays(int rootNumberOfRays) {
-        if (blackboardAntiAliasing == Blackboard.oneRay)
-            blackboardAntiAliasing = new Blackboard(rootNumberOfRays, width / imageWriter.getNx(), height / imageWriter.getNy());
-        else {
-            blackboardAntiAliasing.setRootNumberOfRays(rootNumberOfRays);
-            blackboardAntiAliasing.setWidth(width / imageWriter.getNx());
-            blackboardAntiAliasing.setHeight(height / imageWriter.getNy());
-        }
-    }
+    public void setAliasingRays(int rootNumberOfRays,double width1, double height1) {
 
-    public void setSoftShadows(int rootNumberOfRays) {
-//        if (blackboardAntiAliasing == Blackboard.oneRay)
-//            blackboardAntiAliasing = new Blackboard(rootNumberOfRays, width / imageWriter.getNx(), height / imageWriter.getNy());
-//        else {
-//            blackboardAntiAliasing.setRootNumberOfRays(rootNumberOfRays);
-//            blackboardAntiAliasing.setWidth(width / imageWriter.getNx());
-//            blackboardAntiAliasing.setHeight(height / imageWriter.getNy());
-//        }
+        blackboardAntiAliasing = new Blackboard(rootNumberOfRays, width1, height1);
     }
 
     /**
@@ -211,10 +194,10 @@ public class Camera implements Cloneable {
             return this;
         }
 
-        public Builder setUseAntiAliasing(boolean useAntiAliasing, int numOfRays) {
+        public Builder setUseAntiAliasing(boolean useAntiAliasing, int rootNumberOfRays , double width1, double height1) {
             this.camera.useAntiAliasing = useAntiAliasing;
             if(useAntiAliasing)
-                camera.setAliasingRays(numOfRays);
+                camera.setAliasingRays(rootNumberOfRays,width1,height1);
             return this;
         }
 
@@ -222,15 +205,15 @@ public class Camera implements Cloneable {
             return this.camera.useAntiAliasing;
         }
 
-        public Builder setUseSoftShadows(boolean useSoftShadows, int numOfRays) {
-            this.camera.useSoftShadows = useSoftShadows;
+        public Builder setUseSoftShadows(boolean useSoftShadows, int rootNumberOfRays,double width1, double height1) {
+            this.camera.rayTracer.useSoftShadow = useSoftShadows;
             if(useSoftShadows)
-                camera.setSoftShadows(numOfRays);
+                camera.rayTracer.blackboardSoftShadows = new Blackboard(rootNumberOfRays, width1, height1);
             return this;
         }
 
         public boolean getUseSoftShadows() {
-            return this.camera.useSoftShadows;
+            return this.camera.rayTracer.useSoftShadow;
         }
 
         /**

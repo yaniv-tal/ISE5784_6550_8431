@@ -4,6 +4,7 @@ import primitives.Color;
 import primitives.Point;
 import primitives.Vector;
 import java.util.List;
+import renderer.Blackboard;
 
 /**
  * interface of light source.
@@ -38,5 +39,5 @@ public interface LightSource {
      * @param p - point
      * @return list of the vectors who created
      */
-    public List<Vector> getLBeam(Point p);
+    public List<Vector> getLBeam(Point p,Blackboard blackboardSoftShadows);
 }

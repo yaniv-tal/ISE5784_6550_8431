@@ -22,20 +22,8 @@ public class PointLight extends Light implements LightSource {
     private double kL = 0;
     //Factors for attenuation with distance (d)
     private double kQ = 0;
-    /**
-     * square edge size parameter
-     */
-    private int lengthOfTheSide = 8;
-
-    /**
-     * The amount of rays of the soft shadow.
-     */
-    public static int softShadowsRays = 36;
-
-
     protected double narrowBeam = 1;
 
-    private Blackboard blackboard = Blackboard.oneRay;
 
     /**
      * constructor
@@ -100,17 +88,14 @@ public class PointLight extends Light implements LightSource {
     }
 
     @Override
-    public List<Vector> getLBeam(Point p) {
-        if (lengthOfTheSide == 0) return List.of(getL(p).scale(1));
+    public List<Vector> getLBeam(Point p,Blackboard blackboardSoftShadows) {
+        if (!blackboardSoftShadows.rayBeam() ) return List.of(getL(p));
         List<Vector> vectors = new LinkedList<>();
         Vector vTo = getL(p);
         Vector vUp = new Vector(vTo.getZ(), 0 ,-vTo.getX()).normalize();
         Vector vRight = vTo.crossProduct(vUp).normalize();
-        blackboard.setRootNumberOfRays(9);
-        blackboard.setWidth(3);
-        blackboard.setHeight(3);
-        blackboard.setGrid(position,vUp,vRight);
-        for (Point i : blackboard.grid)
+        blackboardSoftShadows.setGrid(position,vUp,vRight);
+        for (Point i : blackboardSoftShadows.grid)
             vectors.add(p.subtract(i).normalize());
         return vectors;
     }

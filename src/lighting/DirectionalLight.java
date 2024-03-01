@@ -3,6 +3,7 @@ package lighting;
 import primitives.Color;
 import primitives.Point;
 import primitives.Vector;
+import renderer.Blackboard;
 
 import java.util.List;
 
@@ -39,7 +40,7 @@ public class DirectionalLight extends Light implements LightSource {
     }
 
     @Override
-    public List<Vector> getLBeam(Point p) {
+    public List<Vector> getLBeam(Point p, Blackboard blackboardSoftShadows) {
         return List.of(getL(p));
     }
 

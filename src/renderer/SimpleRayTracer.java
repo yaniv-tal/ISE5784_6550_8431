@@ -31,17 +31,8 @@ public class SimpleRayTracer extends RayTracerBase {
     private static final int MAX_CALC_COLOR_LEVEL = 10;
     private static final double MIN_CALC_COLOR_K = 0.001;
 
-    private boolean useSoftShadow = true;
-
-
-
-    public boolean isUseSoftShadow() {
+    public boolean getUseSoftShadow() {
         return useSoftShadow;
-    }
-
-    public SimpleRayTracer setUseSoftShadow(boolean useSoftShadow) {
-        this.useSoftShadow = useSoftShadow;
-        return this;
     }
 
     /**
@@ -176,7 +167,7 @@ public class SimpleRayTracer extends RayTracerBase {
             return color;
         Material material = geoPoint.geometry.getMaterial();
         for (LightSource lightSource : scene.lights) {
-            List<Vector> vectors = (!useSoftShadow) ? List.of(lightSource.getL(geoPoint.point)) : lightSource.getLBeam(geoPoint.point);
+            List<Vector> vectors = (!useSoftShadow) ? List.of(lightSource.getL(geoPoint.point)) : lightSource.getLBeam(geoPoint.point, blackboardSoftShadows);
             Color tempColor = Color.BLACK;
             for(Vector l : vectors) {
                 double nl = alignZero(n.dotProduct(l));

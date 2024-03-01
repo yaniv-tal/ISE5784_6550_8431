@@ -10,7 +10,8 @@ import scene.Scene;
  */
 public abstract class RayTracerBase {
     protected Scene scene;
-
+    protected boolean useSoftShadow = false;
+    protected Blackboard blackboardSoftShadows = Blackboard.oneRay;
     /**
      * copy constructor.
      * @param scene
@@ -19,4 +20,5 @@ public abstract class RayTracerBase {
         this.scene = scene;
     }
     public abstract Color traceRay(Ray ray);
+    public abstract boolean getUseSoftShadow();
 }
