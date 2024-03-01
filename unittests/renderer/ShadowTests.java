@@ -104,8 +104,8 @@ public class ShadowTests {
                        new SpotLight(new Color(700, 400, 400), new Point(40, 40, 115), new Vector(-1, -1, -4)) //
                           .setKL(4E-4).setKQ(2E-5));
       camera.setImageWriter(new ImageWriter("shadowTrianglesSphere", 600, 600))
-              .setUseSoftShadows(true,3,1,1)
-              .setUseAntiAliasing(true,3,1,1)
+              .setUseSoftShadows(true,8,3,3)
+              .setUseAntiAliasing(true,6,1,1)
          .build()
          .renderImage()
          .writeToImage();
