@@ -4,7 +4,6 @@ import primitives.*;
 
 import java.util.List;
 import java.util.MissingResourceException;
-import java.util.prefs.PreferenceChangeEvent;
 
 import static primitives.Util.isZero;
 
@@ -14,12 +13,14 @@ import static primitives.Util.isZero;
  */
 public class Camera implements Cloneable {
     public boolean useAntiAliasing = false;
+    public boolean useSoftShadows = false;
+
     private Point p0;
     private Vector vTo, vUp, vRight;
     private double width = 0.0, height = 0.0, distance = 0.0;
     private ImageWriter imageWriter;
     private RayTracerBase rayTracer;
-    private Blackboard pixel = Blackboard.oneRay;
+    private Blackboard blackboardAntiAliasing = Blackboard.oneRay;
 
     /**
      * get function for the width of the View Plane.
@@ -105,13 +106,23 @@ public class Camera implements Cloneable {
     }
 
     public void setAliasingRays(int rootNumberOfRays) {
-        if (pixel == Blackboard.oneRay)
-            pixel = new Blackboard(rootNumberOfRays, width / imageWriter.getNx(), height / imageWriter.getNy());
+        if (blackboardAntiAliasing == Blackboard.oneRay)
+            blackboardAntiAliasing = new Blackboard(rootNumberOfRays, width / imageWriter.getNx(), height / imageWriter.getNy());
         else {
-            pixel.setRootNumberOfRays(rootNumberOfRays);
-            pixel.setWidth(width / imageWriter.getNx());
-            pixel.setHeight(height / imageWriter.getNy());
+            blackboardAntiAliasing.setRootNumberOfRays(rootNumberOfRays);
+            blackboardAntiAliasing.setWidth(width / imageWriter.getNx());
+            blackboardAntiAliasing.setHeight(height / imageWriter.getNy());
         }
+    }
+
+    public void setSoftShadows(int rootNumberOfRays) {
+//        if (blackboardAntiAliasing == Blackboard.oneRay)
+//            blackboardAntiAliasing = new Blackboard(rootNumberOfRays, width / imageWriter.getNx(), height / imageWriter.getNy());
+//        else {
+//            blackboardAntiAliasing.setRootNumberOfRays(rootNumberOfRays);
+//            blackboardAntiAliasing.setWidth(width / imageWriter.getNx());
+//            blackboardAntiAliasing.setHeight(height / imageWriter.getNy());
+//        }
     }
 
     /**
@@ -147,7 +158,6 @@ public class Camera implements Cloneable {
 
         /**
          * set the RayTracer
-         *
          * @param rayTracer
          * @return Returns the Builder object
          */
@@ -190,7 +200,6 @@ public class Camera implements Cloneable {
 
         /**
          * to set the distance between camera and view plane
-         *
          * @param distance
          * @return Returns the Builder object
          */
@@ -212,9 +221,20 @@ public class Camera implements Cloneable {
         public boolean getUseAntiAliasing() {
             return this.camera.useAntiAliasing;
         }
+
+        public Builder setUseSoftShadows(boolean useSoftShadows, int numOfRays) {
+            this.camera.useSoftShadows = useSoftShadows;
+            if(useSoftShadows)
+                camera.setSoftShadows(numOfRays);
+            return this;
+        }
+
+        public boolean getUseSoftShadows() {
+            return this.camera.useSoftShadows;
+        }
+
         /**
          * build the camera and Checking the correctness
-         *
          * @return camera
          */
         public Camera build() {
@@ -325,9 +345,9 @@ public class Camera implements Cloneable {
     private void castRay(int nX, int nY, int j, int i) {
         Ray ray = constructRay(nX, nY, j, i);
         Color color;
-        if (pixel.rayBeam()) {
-            pixel.setGrid(pixelCenter(nX, nY, j, i), vUp, vRight);
-            color = colorAverage(pixel.grid, p0);
+        if (blackboardAntiAliasing.rayBeam() && useAntiAliasing) {
+            blackboardAntiAliasing.setGrid(pixelCenter(nX, nY, j, i), vUp, vRight);
+            color = colorAverage(blackboardAntiAliasing.grid, p0);
         }
         else
             color = rayTracer.traceRay(ray);

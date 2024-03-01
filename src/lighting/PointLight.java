@@ -25,7 +25,7 @@ public class PointLight extends Light implements LightSource {
     /**
      * square edge size parameter
      */
-    private int lengthOfTheSide = 9;
+    private int lengthOfTheSide = 8;
 
     /**
      * The amount of rays of the soft shadow.
@@ -101,69 +101,17 @@ public class PointLight extends Light implements LightSource {
 
     @Override
     public List<Vector> getLBeam(Point p) {
-//        if (lengthOfTheSide == 0) return List.of(getL(p).scale(-1));
-//        List<Vector> vectors = new LinkedList<>();
-//        Vector vTo = getL(p);
-//        Vector vUp = new Vector(vTo.getZ(), 0 ,-vTo.getX()).normalize();
-//        Vector vRight = vTo.crossProduct(vUp).normalize();
-//        blackboard.setRootNumberOfRays(3);
-//        blackboard.setWidth(9);
-//        blackboard.setHeight(9);
-//
-//        blackboard.setGrid(position,vUp,vRight);
-//        for (Point i : blackboard.grid)
-//            vectors.add(i.subtract(p).normalize());
-//        return vectors;
-
-
-//        if (lengthOfTheSide == 0) return List.of(getL(p));
-//        List<Vector> vectors = new LinkedList<>();
-//        Vector v0, v1;
-//        Vector vTo = getL(p);
-//        Vector vUp = new Vector(vTo.getZ(), 0 ,-vTo.getX()).normalize();
-//        Vector vRight = vTo.crossProduct(vUp).normalize();
-//        double divided = Math.sqrt(softShadowsRays);
-//        Point startPoint = position.add(vTo.normalize().scale(-lengthOfTheSide / 2.0))
-//                .add(vRight.normalize().scale(-lengthOfTheSide / 2.0));
-//
-//        // A loop that runs as the number of vectors and in each of its runs it brings a vector around the lamp
-//        for (double i = 0; i < lengthOfTheSide; i += lengthOfTheSide / divided) {
-//            for (double j = 0; j < lengthOfTheSide; j += lengthOfTheSide / divided) {
-//                v0 = vTo.normalize()
-//                        .scale(random(i, i + lengthOfTheSide / divided));
-//                v1 = vRight.normalize()
-//                        .scale(random(j, j + lengthOfTheSide / divided));
-//                vectors.add(p.subtract(startPoint.add(v0).add(v1)).normalize());
-//            }
-//        }
-
-
-
-
-        if (lengthOfTheSide == 0) return List.of(getL(p));
+        if (lengthOfTheSide == 0) return List.of(getL(p).scale(1));
         List<Vector> vectors = new LinkedList<>();
-        Vector v0, v1;
-        // A variable that tells how many divide each side
-        double divided = Math.sqrt(softShadowsRays);
-        // plane of the light
-        Plane plane = new Plane(position, getL(p));
-        // vectors of the plane
-        List<Vector> vectorsOfThePlane = plane.findVectorsOfPlane();
-
-        // Starting point of the square around the lighting
-        Point startPoint = position.add(vectorsOfThePlane.get(0).normalize().scale(-lengthOfTheSide / 2.0))
-                .add(vectorsOfThePlane.get(1).normalize().scale(-lengthOfTheSide / 2.0));
-
-        // A loop that runs as the number of vectors and in each of its runs it brings a vector around the lamp
-        for (double i = 0; i < lengthOfTheSide; i += lengthOfTheSide / divided) {
-            for (double j = 0; j < lengthOfTheSide; j += lengthOfTheSide / divided) {
-                v0 = vectorsOfThePlane.get(0).normalize()
-                        .scale(random(i, i + lengthOfTheSide / divided));
-                v1 = vectorsOfThePlane.get(1).normalize()
-                        .scale(random(j, j + lengthOfTheSide / divided));
-                vectors.add(p.subtract(startPoint.add(v0).add(v1)).normalize());
-            }
-        }
+        Vector vTo = getL(p);
+        Vector vUp = new Vector(vTo.getZ(), 0 ,-vTo.getX()).normalize();
+        Vector vRight = vTo.crossProduct(vUp).normalize();
+        blackboard.setRootNumberOfRays(9);
+        blackboard.setWidth(3);
+        blackboard.setHeight(3);
+        blackboard.setGrid(position,vUp,vRight);
+        for (Point i : blackboard.grid)
+            vectors.add(p.subtract(i).normalize());
         return vectors;
     }
 }

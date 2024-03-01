@@ -33,6 +33,8 @@ public class SimpleRayTracer extends RayTracerBase {
 
     private boolean useSoftShadow = true;
 
+
+
     public boolean isUseSoftShadow() {
         return useSoftShadow;
     }
@@ -175,7 +177,6 @@ public class SimpleRayTracer extends RayTracerBase {
         Material material = geoPoint.geometry.getMaterial();
         for (LightSource lightSource : scene.lights) {
             List<Vector> vectors = (!useSoftShadow) ? List.of(lightSource.getL(geoPoint.point)) : lightSource.getLBeam(geoPoint.point);
-            //Vector l = lightSource.getL(geoPoint.point);
             Color tempColor = Color.BLACK;
             for(Vector l : vectors) {
                 double nl = alignZero(n.dotProduct(l));
@@ -184,7 +185,8 @@ public class SimpleRayTracer extends RayTracerBase {
                     if (!ktr.product(k).lowerThan(MIN_CALC_COLOR_K)) {
                         Color lightIntensity = lightSource.getIntensity(geoPoint.point)
                                 .scale(ktr);
-                        tempColor = tempColor.add(lightIntensity.scale(calcDiffusive(material, nl).add(calcSpecular(material, n, l, nl, v))));
+                        tempColor = tempColor.add(lightIntensity.scale(calcDiffusive(material, nl)
+                                .add(calcSpecular(material, n, l, nl, v))));
                     }
                 }
 
@@ -195,40 +197,6 @@ public class SimpleRayTracer extends RayTracerBase {
         }
         return color;
     }
-//    private Color calcLocalEffects(GeoPoint geoPoint, Ray ray, Double3 k) {
-//        Double3 kd = geoPoint.geometry.getMaterial().kD;
-//        Double3 ks = geoPoint.geometry.getMaterial().kS;
-//        int nShininess = geoPoint.geometry.getMaterial().nShininess;
-//
-//        double nv = n.dotProduct(v);
-//        if (nv == 0)
-//            return color;
-//
-//        for (LightSource lightSource : scene.lights) {
-//            List<Vector> vectors = (!useSoftShadow) ? List.of(lightSource.getL(geoPoint.point))
-//                    : lightSource.getLBeam(geoPoint.point);
-//
-//            Color tempColor = Color.BLACK;
-//            for(Vector l : vectors) {
-//                double nl = n.dotProduct(l);
-//                if (nl * nv > 0) { // sign(nl) == sing(nv)
-//                    Double3 ktr = transparency(geoPoint, lightSource, l, n);
-//                    if(!ktr.product(k).lowerThan(MIN_CALC_COLOR_K)) {
-//                        Color lightIntensity = lightSource.getIntensity(geoPoint.point)
-//                                .scale(ktr);
-//
-//                        tempColor = tempColor.add(calcDiffusive(kd, l, n, lightIntensity),
-//                                calcSpecular(ks, l, n, v, nShininess, lightIntensity));
-//                    }
-//                }
-//            }
-//            int reduceBy = vectors.size();
-//            color = color.add((!useSoftShadow) ? tempColor :
-//                    tempColor.reduce(reduceBy > 0 ? reduceBy : 1));
-//        }
-//        return color;
-//    }
-
     /**
      * auxiliary method
      * @param material

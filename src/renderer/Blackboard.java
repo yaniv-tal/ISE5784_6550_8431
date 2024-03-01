@@ -16,7 +16,7 @@ import static primitives.Util.random;
  */
 public class Blackboard {
     //initialization value
-    public static final Blackboard oneRay = new Blackboard(0, 0, 0);
+    public static final Blackboard oneRay = new Blackboard(1, 0, 0);
 
     private int rootNumberOfRays=1;
 
@@ -79,7 +79,6 @@ public class Blackboard {
             grid = new LinkedList<Point>();
             double Ry = height / rootNumberOfRays;
             double Rx = width / rootNumberOfRays;
-
             for (int i = 0; i < rootNumberOfRays; i++) {
                 for (int j = 0; j < rootNumberOfRays; j++) {
                     //Calculate the coordinates
