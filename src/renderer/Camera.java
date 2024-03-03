@@ -326,15 +326,16 @@ public class Camera implements Cloneable {
      * @param i  pixel's row
      */
     private void castRay(int nX, int nY, int j, int i) {
-        Ray ray = constructRay(nX, nY, j, i);
         Color color;
         if (blackboardAntiAliasing.rayBeam() && useAntiAliasing) {
+
             blackboardAntiAliasing.setGrid(pixelCenter(nX, nY, j, i), vUp, vRight);
             color = colorAverage(blackboardAntiAliasing.grid, p0);
         }
-        else
+        else {
+            Ray ray = constructRay(nX, nY, j, i);
             color = rayTracer.traceRay(ray);
-
+        }
         imageWriter.writePixel(j, i, color);
     }
 
