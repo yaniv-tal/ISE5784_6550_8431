@@ -2,6 +2,7 @@ package renderer;
 
 import primitives.*;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.MissingResourceException;
 
@@ -19,6 +20,17 @@ public class Camera implements Cloneable {
     private ImageWriter imageWriter;
     private RayTracerBase rayTracer;
     private Blackboard blackboardAntiAliasing = Blackboard.oneRay;
+
+    /** Pixel manager for supporting:
+     * <ul>
+     * <li>multi-threading</li>
+     * <li>debug print of progress percentage in Console window/tab</li>
+     * <ul>
+     */
+    private PixelManager pixelManager;
+
+    private int threadsCount = 0;
+    private double printInterval = 0;
 
     /**
      * get function for the width of the View Plane.
@@ -212,6 +224,17 @@ public class Camera implements Cloneable {
             return this;
         }
 
+        public Builder setThreadsCount(int threadsCount) {
+            this.camera.threadsCount= threadsCount;
+            return this;
+        }
+
+        public Builder setPrintInterval(double printInterval) {
+            this.camera.printInterval= printInterval;
+            return this;
+        }
+
+
         public boolean getUseSoftShadows() {
             return this.camera.rayTracer.useSoftShadow;
         }
@@ -278,11 +301,28 @@ public class Camera implements Cloneable {
             throw new MissingResourceException("Missing rendering argument", "Camera", "imageWriter");
         int nX = imageWriter.getNx();
         int nY = imageWriter.getNy();
+
+        pixelManager = new PixelManager(nY, nX, printInterval);
         //Goes through the entire vp and calls the cast ray function that will color the pixel
-        for (int j = 0; j < nY; j++)
-            for (int i = 0; i < nX; i++) {
-                castRay(nX, nY, i, j);
-            }
+        if (threadsCount == 0)
+            for (int i = 0; i < nY; ++i)
+                for (int j = 0; j < nX; ++j)
+                    castRay(nX, nY, j, i);
+        else { // see further... option 2
+            var threads = new LinkedList<Thread>(); // list of threads
+            while (threadsCount-- > 0) // add appropriate number of threads
+                threads.add(new Thread(() -> { // add a thread with its code
+                    PixelManager.Pixel pixel; // current pixel(row,col)
+                    // allocate pixel(row,col) in loop until there are no more pixels
+                    while ((pixel = pixelManager.nextPixel()) != null)
+                        // cast ray through pixel (and color it – inside castRay)
+                        castRay(nX, nY, pixel.col(), pixel.row());
+                }));
+            // start all the threads
+            for (var thread : threads) thread.start();
+            // wait until all the threads have finished
+            try { for (var thread : threads) thread.join(); } catch (InterruptedException ignore) {}
+        }
         return this;
     }
 
@@ -337,6 +377,7 @@ public class Camera implements Cloneable {
             color = rayTracer.traceRay(ray);
         }
         imageWriter.writePixel(j, i, color);
+        pixelManager.pixelDone();
     }
 
     /**

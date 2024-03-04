@@ -189,8 +189,10 @@ public class ReflectionRefractionTests {
               .setDirection(new Vector(-1,-1,-2),new Vector(-1,-1,1))
               .setVpDistance(965)
               .setImageWriter(new ImageWriter("geometriesImpressiveImage", 1000, 1000))
-              .setUseAntiAliasing(true,9,1,1)
-              .setUseSoftShadows(true,9,1,1)
+              .setUseAntiAliasing(true,9,3,3)
+              .setUseSoftShadows(false,9,1,1)
+              .setPrintInterval(0.1)
+              .setThreadsCount(2)
               .build();
       camera.renderImage();
       camera.writeToImage();

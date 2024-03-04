@@ -18,7 +18,7 @@ public class Blackboard {
     //initialization value
     public static final Blackboard oneRay = new Blackboard(1, 0, 0);
 
-    private int rootNumberOfRays=1;
+    private int rootNumberOfRays = 1;
 
     // Width of the grid
     private double width = 0;
@@ -32,6 +32,7 @@ public class Blackboard {
 
     /**
      * setter and getter
+     *
      * @param width
      */
     public void setWidth(double width) {
@@ -46,11 +47,24 @@ public class Blackboard {
         this.rootNumberOfRays = (rootNumberOfRays == 0 ? 1 : rootNumberOfRays);
     }
 
+    public void setGridSides(Point pCenter, Vector vUp, Vector vRight, double k) { //k=1 in the beginning.
+
+        grid = new LinkedList<Point>();
+        double Ry = (height / rootNumberOfRays) / k;
+        double Rx = (width / rootNumberOfRays) / k;
+        //Calculate the coordinate
+        Point pIJ = pCenter.add(vUp.scale(Ry/2)).add(vRight.scale(Rx/2));
+        grid.addLast(pIJ);
+    }
+
+
+
     /**
      * Constructor
+     *
      * @param rootNumberOfRays The number of rays originating from the root point.
-     * @param width - The width of the  grid.
-     * @param height - The height of the  grid.
+     * @param width            - The width of the  grid.
+     * @param height           - The height of the  grid.
      */
     public Blackboard(int rootNumberOfRays, double width, double height) {
         this.rootNumberOfRays = (rootNumberOfRays == 0 ? 1 : rootNumberOfRays);
@@ -60,7 +74,8 @@ public class Blackboard {
 
     /**
      * checks if there is ray beam to create.
-     * @return  if there is ray beam
+     *
+     * @return if there is ray beam
      */
     public boolean rayBeam() {
         return (rootNumberOfRays != 1);
@@ -68,6 +83,7 @@ public class Blackboard {
 
     /**
      * Creates a grid of points through which the rays passed
+     *
      * @param pCenter
      * @param vUp
      * @param vRight
@@ -98,5 +114,4 @@ public class Blackboard {
         }
 
     }
-
 }
