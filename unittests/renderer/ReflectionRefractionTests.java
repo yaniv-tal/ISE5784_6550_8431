@@ -42,7 +42,7 @@ public class ReflectionRefractionTests {
       cameraBuilder.setLocation(new Point(0, 0, 1000)).setVpDistance(1000)
          .setVpSize(150, 150)
          .setImageWriter(new ImageWriter("refractionTwoSpheres", 500, 500))
-         .setUseAntiAliasing(true,9,1,1)
+         .setUseAntiAliasing(true,9)
          .build()
          .renderImage()
          .writeToImage();
@@ -188,9 +188,9 @@ public class ReflectionRefractionTests {
       Camera camera = cameraBuilder1.setLocation(new Point(40, 70, 90))
               .setDirection(new Vector(-1,-1,-2),new Vector(-1,-1,1))
               .setVpDistance(965)
-              .setImageWriter(new ImageWriter("geometriesImpressiveImage", 1000, 1000))
-              .setUseAntiAliasing(true,9,3,3)
-              .setUseSoftShadows(false,9,1,1)
+              .setImageWriter(new ImageWriter("geometriesImpressiveImage", 500, 500))
+              .setUseAntiAliasing(true,3)
+              .setUseSoftShadows(true,3,1,1)
               .setPrintInterval(0.1)
               .setThreadsCount(2)
               .build();

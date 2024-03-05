@@ -167,6 +167,7 @@ public class SimpleRayTracer extends RayTracerBase {
             return color;
         Material material = geoPoint.geometry.getMaterial();
         for (LightSource lightSource : scene.lights) {
+            Blackboard blackboardSoftShadows = new Blackboard(numRayOfSoftShadows, softShadowsW, softShadowsH);
             List<Vector> vectors = (!useSoftShadow) ? List.of(lightSource.getL(geoPoint.point)) : lightSource.getLBeam(geoPoint.point, blackboardSoftShadows);
             Color tempColor = Color.BLACK;
             for(Vector l : vectors) {

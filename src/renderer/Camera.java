@@ -10,6 +10,7 @@ import static primitives.Util.isZero;
 
 /**
  * The class implements a camera.
+ *
  * @author Yaniv and Ahuvya.
  */
 public class Camera implements Cloneable {
@@ -19,9 +20,12 @@ public class Camera implements Cloneable {
     private double width = 0.0, height = 0.0, distance = 0.0;
     private ImageWriter imageWriter;
     private RayTracerBase rayTracer;
-    private Blackboard blackboardAntiAliasing = Blackboard.oneRay;
 
-    /** Pixel manager for supporting:
+    private int numberOfAntiAlising = 0;
+
+
+    /**
+     * Pixel manager for supporting:
      * <ul>
      * <li>multi-threading</li>
      * <li>debug print of progress percentage in Console window/tab</li>
@@ -67,6 +71,7 @@ public class Camera implements Cloneable {
 
     /**
      * function for a new Builder object.
+     *
      * @return a new Builder object.
      */
     public static Builder getBuilder() {
@@ -115,9 +120,9 @@ public class Camera implements Cloneable {
         return new Ray(p0, pixelCenter(nX, nY, j, i).subtract(p0));
     }
 
-    public void setAliasingRays(int rootNumberOfRays,double width1, double height1) {
+    public void setAliasingRays(int rootNumberOfRays) {
 
-        blackboardAntiAliasing = new Blackboard(rootNumberOfRays, width1, height1);
+        this.numberOfAntiAlising = rootNumberOfRays;
     }
 
     /**
@@ -153,6 +158,7 @@ public class Camera implements Cloneable {
 
         /**
          * set the RayTracer
+         *
          * @param rayTracer
          * @return Returns the Builder object
          */
@@ -195,6 +201,7 @@ public class Camera implements Cloneable {
 
         /**
          * to set the distance between camera and view plane
+         *
          * @param distance
          * @return Returns the Builder object
          */
@@ -206,10 +213,10 @@ public class Camera implements Cloneable {
             return this;
         }
 
-        public Builder setUseAntiAliasing(boolean useAntiAliasing, int rootNumberOfRays , double width1, double height1) {
+        public Builder setUseAntiAliasing(boolean useAntiAliasing, int rootNumberOfRays) {
             this.camera.useAntiAliasing = useAntiAliasing;
-            if(useAntiAliasing)
-                camera.setAliasingRays(rootNumberOfRays,width1,height1);
+            if (useAntiAliasing)
+                camera.setAliasingRays(rootNumberOfRays);
             return this;
         }
 
@@ -217,20 +224,22 @@ public class Camera implements Cloneable {
             return this.camera.useAntiAliasing;
         }
 
-        public Builder setUseSoftShadows(boolean useSoftShadows, int rootNumberOfRays,double width1, double height1) {
+        public Builder setUseSoftShadows(boolean useSoftShadows, int rootNumberOfRays, double width1, double height1) {
             this.camera.rayTracer.useSoftShadow = useSoftShadows;
-            if(useSoftShadows)
-                camera.rayTracer.blackboardSoftShadows = new Blackboard(rootNumberOfRays, width1, height1);
+            this.camera.rayTracer.numRayOfSoftShadows = rootNumberOfRays;
+            this.camera.rayTracer.softShadowsW = width1;
+            this.camera.rayTracer.softShadowsH = height1;
+
             return this;
         }
 
         public Builder setThreadsCount(int threadsCount) {
-            this.camera.threadsCount= threadsCount;
+            this.camera.threadsCount = threadsCount;
             return this;
         }
 
         public Builder setPrintInterval(double printInterval) {
-            this.camera.printInterval= printInterval;
+            this.camera.printInterval = printInterval;
             return this;
         }
 
@@ -241,6 +250,7 @@ public class Camera implements Cloneable {
 
         /**
          * build the camera and Checking the correctness
+         *
          * @return camera
          */
         public Camera build() {
@@ -321,7 +331,10 @@ public class Camera implements Cloneable {
             // start all the threads
             for (var thread : threads) thread.start();
             // wait until all the threads have finished
-            try { for (var thread : threads) thread.join(); } catch (InterruptedException ignore) {}
+            try {
+                for (var thread : threads) thread.join();
+            } catch (InterruptedException ignore) {
+            }
         }
         return this;
     }
@@ -367,12 +380,13 @@ public class Camera implements Cloneable {
      */
     private void castRay(int nX, int nY, int j, int i) {
         Color color;
-        if (blackboardAntiAliasing.rayBeam() && useAntiAliasing) {
 
+        if (useAntiAliasing) {
+
+            Blackboard blackboardAntiAliasing = new Blackboard(numberOfAntiAlising, this.width/nX,this.height/nY);
             blackboardAntiAliasing.setGrid(pixelCenter(nX, nY, j, i), vUp, vRight);
             color = colorAverage(blackboardAntiAliasing.grid, p0);
-        }
-        else {
+        } else {
             Ray ray = constructRay(nX, nY, j, i);
             color = rayTracer.traceRay(ray);
         }
@@ -382,15 +396,19 @@ public class Camera implements Cloneable {
 
     /**
      * calculate the average color created by the ray beam
-     * @param list The list of points
+     *
+     * @param list  The list of points
      * @param point Camera location
      * @return the average color
      */
     private Color colorAverage(List<Point> list, Point point) {
+        if (list == null || list.isEmpty()) {
+            // Handle the case where the list is null or empty
+            return Color.BLACK; // Or any other appropriate default color
+        }
         Color color = Color.BLACK;
         for (Point p : list)
             color = color.add(rayTracer.traceRay(new Ray(point, p.subtract(point))));
         return color.reduce(list.size());
     }
-
 }

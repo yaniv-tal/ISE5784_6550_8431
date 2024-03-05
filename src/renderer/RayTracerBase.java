@@ -9,9 +9,11 @@ import scene.Scene;
  * @author Yaniv and Ahuvya.
  */
 public abstract class RayTracerBase {
+    public int numRayOfSoftShadows;
+    public double softShadowsW;
+    public double softShadowsH;
     protected Scene scene;
     protected boolean useSoftShadow = false;
-    protected Blackboard blackboardSoftShadows = Blackboard.oneRay;
     /**
      * copy constructor.
      * @param scene
