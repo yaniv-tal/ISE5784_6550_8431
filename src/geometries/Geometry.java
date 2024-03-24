@@ -4,6 +4,7 @@ import primitives.Color;
 import primitives.Material;
 import primitives.Point;
 import primitives.Vector;
+import java.util.List;
 
 /**
  * interface of geometric shapes.
@@ -55,5 +56,6 @@ public abstract class Geometry extends Intersectable{
      * @return The normal (vertical) vector to the body at this point.
      */
     public abstract Vector getNormal(Point point);
+
 }
 

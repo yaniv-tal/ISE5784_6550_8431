@@ -85,4 +85,5 @@ public abstract class Intersectable {
                     '}';
         }
     }
+    public abstract List<Point> findBVHPoints();
 }

@@ -75,4 +75,9 @@ public class Plane extends Geometry {
             return List.of(new GeoPoint(this, ray.getPoint(t)));
         return null;
     }
+
+    @Override
+    public List<Point> findBVHPoints() {
+        return null;
+    }
 }

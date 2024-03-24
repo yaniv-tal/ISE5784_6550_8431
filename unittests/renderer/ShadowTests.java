@@ -107,7 +107,7 @@ public class ShadowTests {
               .setUseSoftShadows(true,4,6,6)
               .setUseAntiAliasing(true,4)
               .setPrintInterval(0.1)
-              .setThreadsCount(8)
+              .setThreadsCount(3)
          .build()
          .renderImage()
          .writeToImage();

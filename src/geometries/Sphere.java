@@ -31,6 +31,8 @@ public class Sphere extends RadialGeometry {
         return point.subtract(center).normalize();
     }
 
+
+
     @Override
     public List<GeoPoint> findGeoIntersectionsHelper(Ray ray, double maxDistance) {
         Point head = ray.getHead();
@@ -66,5 +68,10 @@ public class Sphere extends RadialGeometry {
 
         //If there are no intersection points:
         return null;
+    }
+    @Override
+    public List<Point> findBVHPoints() {
+        return List.of(new Point(center.getX()-radius,center.getY()-radius,center.getZ()-radius),
+                new Point(center.getX()+radius,center.getY()+radius,center.getZ()+radius));
     }
 }

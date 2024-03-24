@@ -41,4 +41,9 @@ public class Tube extends RadialGeometry {
     public List<GeoPoint> findGeoIntersectionsHelper(Ray ray,double maxDistance) {
         return null;
     }
+
+    @Override
+    public List<Point> findBVHPoints() {
+        return null;
+    }
 }

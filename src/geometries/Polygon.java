@@ -123,4 +123,25 @@ public class Polygon extends Geometry {
       // The ray intersects the polygon. returns the intersection point.
       return List.of(new GeoPoint(this,intersection.getFirst().point));
    }
+
+   @Override
+   public List<Point> findBVHPoints() {
+      if (vertices == null)
+         return null;
+      double minX = Double.POSITIVE_INFINITY;
+      double minY = Double.POSITIVE_INFINITY;
+      double minZ = Double.POSITIVE_INFINITY;
+      double maxX = Double.NEGATIVE_INFINITY;
+      double maxY = Double.NEGATIVE_INFINITY;
+      double maxZ = Double.NEGATIVE_INFINITY;
+      for (Point v : vertices) {
+         minX = Math.min(minX, v.getX());
+         minY = Math.min(minY, v.getY());
+         minZ = Math.min(minZ, v.getZ());
+         maxX = Math.max(maxX, v.getX());
+         maxY = Math.max(maxY, v.getY());
+         maxZ = Math.max(maxZ, v.getZ());
+      }
+      return List.of(new Point(minX,minY,minZ),new Point(maxX,maxY,maxZ));
+   }
 }
