@@ -101,4 +101,8 @@ public class Geometries extends Intersectable {
         }
         return true;
     }
+
+    public List<Intersectable> getGeometries() {
+        return geometriesList;
+    }
 }
