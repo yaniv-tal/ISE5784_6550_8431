@@ -78,6 +78,12 @@ public class Plane extends Geometry {
 
     @Override
     public List<Point> findBVHPoints() {
-        return null;
+        double minX = Double.POSITIVE_INFINITY;
+        double minY = Double.POSITIVE_INFINITY;
+        double minZ = Double.POSITIVE_INFINITY;
+        double maxX = Double.NEGATIVE_INFINITY;
+        double maxY = Double.NEGATIVE_INFINITY;
+        double maxZ = Double.NEGATIVE_INFINITY;
+        return List.of(new Point(minX,minY,minZ),new Point(maxX,maxY,maxZ));
     }
 }

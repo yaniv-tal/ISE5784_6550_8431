@@ -24,28 +24,28 @@ public class ReflectionRefractionTests {
    private final Scene          scene         = new Scene("Test scene");
    /** Camera builder for the tests with triangles */
    private final Camera.Builder cameraBuilder = Camera.getBuilder()
-      .setDirection(new Vector(0,0,-1),new Vector(0,1,0))
-      .setRayTracer(new SimpleRayTracer(scene));
+           .setDirection(new Vector(0,0,-1),new Vector(0,1,0))
+           .setRayTracer(new SimpleRayTracer(scene));
 
    /** Produce a picture of a sphere lighted by a spot light */
    @Test
    public void twoSpheres() {
       scene.geometries.add(
-                           new Sphere(50d, new Point(0, 0, -50)).setEmission(new Color(BLUE))
-                              .setMaterial(new Material().setKD(0.4).setKS(0.3).setNShininess(100).setKT(0.3)),
-                           new Sphere(25d, new Point(0, 0, -50)).setEmission(new Color(RED))
-                              .setMaterial(new Material().setKD(0.5).setKS(0.5).setNShininess(100)));
+              new Sphere(50d, new Point(0, 0, -50)).setEmission(new Color(BLUE))
+                      .setMaterial(new Material().setKD(0.4).setKS(0.3).setNShininess(100).setKT(0.3)),
+              new Sphere(25d, new Point(0, 0, -50)).setEmission(new Color(RED))
+                      .setMaterial(new Material().setKD(0.5).setKS(0.5).setNShininess(100)));
       scene.lights.add(
-                       new SpotLight(new Color(1000, 600, 0), new Point(-100, -100, 500), new Vector(-1, -1, -2))
-                          .setKL(0.0004).setKQ(0.0000006));
+              new SpotLight(new Color(1000, 600, 0), new Point(-100, -100, 500), new Vector(-1, -1, -2))
+                      .setKL(0.0004).setKQ(0.0000006));
 
       cameraBuilder.setLocation(new Point(0, 0, 1000)).setVpDistance(1000)
-         .setVpSize(150, 150)
-         .setImageWriter(new ImageWriter("refractionTwoSpheres", 500, 500))
-         .setUseAntiAliasing(true,9)
-         .build()
-         .renderImage()
-         .writeToImage();
+              .setVpSize(150, 150)
+              .setImageWriter(new ImageWriter("refractionTwoSpheres", 500, 500))
+              .setUseAntiAliasing(true,9)
+              .build()
+              .renderImage()
+              .writeToImage();
    }
 
 
@@ -55,29 +55,29 @@ public class ReflectionRefractionTests {
    @Test
    public void twoSpheresOnMirrors() {
       scene.geometries.add(
-                           new Sphere(400d, new Point(-950, -900, -1000)).setEmission(new Color(0, 50, 100))
-                              .setMaterial(new Material().setKD(0.25).setKS(0.25).setNShininess(20)
-                                 .setKT(new Double3(0.5, 0, 0))),
-                           new Sphere( 200d,new Point(-950, -900, -1000)).setEmission(new Color(100, 50, 20))
-                              .setMaterial(new Material().setKD(0.25).setKS(0.25).setNShininess(20)),
-                           new Triangle(new Point(1500, -1500, -1500), new Point(-1500, 1500, -1500),
-                                        new Point(670, 670, 3000))
-                              .setEmission(new Color(20, 20, 20))
-                              .setMaterial(new Material().setKR(1d)),
-                           new Triangle(new Point(1500, -1500, -1500), new Point(-1500, 1500, -1500),
-                                        new Point(-1500, -1500, -2000))
-                              .setEmission(new Color(20, 20, 20))
-                              .setMaterial(new Material().setKR(new Double3(0.5, 0, 0.4))));
+              new Sphere(400d, new Point(-950, -900, -1000)).setEmission(new Color(0, 50, 100))
+                      .setMaterial(new Material().setKD(0.25).setKS(0.25).setNShininess(20)
+                              .setKT(new Double3(0.5, 0, 0))),
+              new Sphere( 200d,new Point(-950, -900, -1000)).setEmission(new Color(100, 50, 20))
+                      .setMaterial(new Material().setKD(0.25).setKS(0.25).setNShininess(20)),
+              new Triangle(new Point(1500, -1500, -1500), new Point(-1500, 1500, -1500),
+                      new Point(670, 670, 3000))
+                      .setEmission(new Color(20, 20, 20))
+                      .setMaterial(new Material().setKR(1d)),
+              new Triangle(new Point(1500, -1500, -1500), new Point(-1500, 1500, -1500),
+                      new Point(-1500, -1500, -2000))
+                      .setEmission(new Color(20, 20, 20))
+                      .setMaterial(new Material().setKR(new Double3(0.5, 0, 0.4))));
       scene.setAmbientLight(new AmbientLight(new Color(255, 255, 255), 0.1));
       scene.lights.add(new SpotLight(new Color(1020, 400, 400), new Point(-750, -750, -150), new Vector(-1, -1, -4))
-         .setKL(0.00001).setKQ(0.000005));
+              .setKL(0.00001).setKQ(0.000005));
 
       cameraBuilder.setLocation(new Point(0, 0, 10000)).setVpDistance(10000)
-         .setVpSize(2500, 2500)
-         .setImageWriter(new ImageWriter("reflectionTwoSpheresMirrored", 500, 500))
-         .build()
-         .renderImage()
-         .writeToImage();
+              .setVpSize(2500, 2500)
+              .setImageWriter(new ImageWriter("reflectionTwoSpheresMirrored", 500, 500))
+              .build()
+              .renderImage()
+              .writeToImage();
    }
 
    /** Produce a picture of a two triangles lighted by a spot light with a
@@ -86,24 +86,24 @@ public class ReflectionRefractionTests {
    @Test
    public void trianglesTransparentSphere() {
       scene.geometries.add(
-                           new Triangle(new Point(-150, -150, -115), new Point(150, -150, -135),
-                                        new Point(75, 75, -150))
-                              .setMaterial(new Material().setKD(0.5).setKS(0.5).setNShininess(60)),
-                           new Triangle(new Point(-150, -150, -115), new Point(-70, 70, -140), new Point(75, 75, -150))
-                              .setMaterial(new Material().setKD(0.5).setKS(0.5).setNShininess(60)),
-                           new Sphere( 30d,new Point(60, 50, -50)).setEmission(new Color(BLUE))
-                              .setMaterial(new Material().setKD(0.2).setKS(0.2).setNShininess(30).setKT(0.6)));
+              new Triangle(new Point(-150, -150, -115), new Point(150, -150, -135),
+                      new Point(75, 75, -150))
+                      .setMaterial(new Material().setKD(0.5).setKS(0.5).setNShininess(60)),
+              new Triangle(new Point(-150, -150, -115), new Point(-70, 70, -140), new Point(75, 75, -150))
+                      .setMaterial(new Material().setKD(0.5).setKS(0.5).setNShininess(60)),
+              new Sphere( 30d,new Point(60, 50, -50)).setEmission(new Color(BLUE))
+                      .setMaterial(new Material().setKD(0.2).setKS(0.2).setNShininess(30).setKT(0.6)));
       scene.setAmbientLight(new AmbientLight(new Color(WHITE), 0.15));
       scene.lights.add(
-                       new SpotLight(new Color(700, 400, 400), new Point(60, 50, 0), new Vector(0, 0, -1))
-                          .setKL(4E-5).setKQ(2E-7));
+              new SpotLight(new Color(700, 400, 400), new Point(60, 50, 0), new Vector(0, 0, -1))
+                      .setKL(4E-5).setKQ(2E-7));
 
       cameraBuilder.setLocation(new Point(0, 0, 1000)).setVpDistance(1000)
-         .setVpSize(200, 200)
-         .setImageWriter(new ImageWriter("refractionShadow", 600, 600))
-         .build()
-         .renderImage()
-         .writeToImage();
+              .setVpSize(200, 200)
+              .setImageWriter(new ImageWriter("refractionShadow", 600, 600))
+              .build()
+              .renderImage()
+              .writeToImage();
    }
 
    @Test
@@ -175,12 +175,12 @@ public class ReflectionRefractionTests {
 
       scene.setAmbientLight(new AmbientLight(new Color(WHITE), 0.15));
       scene.lights.add(
-                 new PointLight(new Color(BLUE),Point.ZERO)
+              new PointLight(new Color(BLUE),Point.ZERO)
                       .setKL(4E-5).setKQ(2E-7));
       scene.lights.add(new SpotLight(new Color(171,0,255),new Point(15,0,10),Point.ZERO.subtract(new Point(15,0,10)))
-                      .setKL(4E-5).setKQ(2E-7));
+              .setKL(4E-5).setKQ(2E-7));
       scene.lights.add(new SpotLight(new Color(171,0,255),new Point(-15,0,10),Point.ZERO.subtract(new Point(-15,0,10)))
-                      .setKL(4E-5).setKQ(2E-7));
+              .setKL(4E-5).setKQ(2E-7));
       Camera.Builder cameraBuilder1 = Camera.getBuilder()
               .setRayTracer(new SimpleRayTracer(scene))
               .setVpSize(900, 900);
@@ -189,10 +189,10 @@ public class ReflectionRefractionTests {
               .setDirection(new Vector(-1,-1,-2),new Vector(-1,-1,1))
               .setVpDistance(965)
               .setImageWriter(new ImageWriter("geometriesImpressiveImage", 500, 500))
-              .setUseAntiAliasing(true,9)
-              .setUseSoftShadows(true,9,1,1)
+              .setUseAntiAliasing(true,4)
+              .setUseSoftShadows(true,6,2,2)
               .setPrintInterval(0.1)
-              .setThreadsCount(5)
+              .setThreadsCount(4)
               .build();
       camera.renderImage();
       camera.writeToImage();

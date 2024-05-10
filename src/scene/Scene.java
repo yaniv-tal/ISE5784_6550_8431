@@ -1,17 +1,15 @@
 package scene;
 
 import geometries.Geometries;
-import geometries.Intersectable;
 import lighting.AmbientLight;
 import lighting.LightSource;
 import primitives.Color;
-import primitives.Point;
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
-
+import primitives.Point;
+import geometries.Intersectable;
 /**
  * The class implements a scene.
  * @author Yaniv and Ahuvya.
@@ -27,9 +25,7 @@ public class Scene {
     public Geometries geometries = new Geometries();
     //list for the Light Sources
     public List<LightSource> lights = new LinkedList<>();
-
     public int kSize;
-
     /**
      * setter for the field 'lights'.
      * @param lights represents the getting list to set.
@@ -67,19 +63,17 @@ public class Scene {
         this.ambientLight = ambientLight;
         return this;
     }
-
+    //חלק שלישי מכאן
     public Scene setKMeans(int kSize) {
         // Set the size of k for KMeans clustering
         this.kSize = kSize;
         return this; // Return the Scene object
     }
-
     public static class KMeans {
         public List<List<Integer>> cluster(List<Point> points, int k) {
             List<List<Integer>> clusters = new ArrayList<>();
             // Step 1: Initialize centroids randomly
             List<Point> centroids = initializeCentroids(points, k);
-
             // Iterate until convergence
             boolean converged = false;
             while (!converged) {
@@ -94,7 +88,6 @@ public class Scene {
             }
             return clusters;
         }
-
         private List<Point> initializeCentroids(List<Point> points, int k) {
             // Randomly select k points as initial centroids
             List<Point> centroids = new ArrayList<>();
@@ -105,7 +98,6 @@ public class Scene {
             }
             return centroids;
         }
-
         private List<List<Integer>> assignPointsToCentroids(List<Point> points, List<Point> centroids) {
             // Assign each point to the nearest centroid
             List<List<Integer>> clusters = new ArrayList<>();
@@ -127,7 +119,6 @@ public class Scene {
             }
             return clusters;
         }
-
         private List<Point> updateCentroids(List<Point> points, List<List<Integer>> clusters) {
             // Update centroids based on the mean of the points in each cluster
             List<Point> centroids = new ArrayList<>();
@@ -152,7 +143,6 @@ public class Scene {
             return centroids;
         }
     }
-
     /**
      * Sets the geometries of the scene.
      *
@@ -161,7 +151,6 @@ public class Scene {
      */
     public Scene setGeometries(Geometries geometries) {
         List<Intersectable> objects = geometries.getGeometries();
-
         // Calculate centers of objects
         List<Point> centers = new ArrayList<>();
         for (Intersectable i : objects) {
@@ -169,9 +158,7 @@ public class Scene {
             Point avg = new Point((bvhPoints.get(0).getX() + bvhPoints.get(1).getX() ) / 2, (bvhPoints.get(0).getY()  + bvhPoints.get(1).getY() ) / 2, (bvhPoints.get(0).getZ()  + bvhPoints.get(1).getZ() ) / 2);
             centers.add(avg);
         }
-
         KMeans kMeans = new KMeans();
-        // Perform k-means clustering
         List<List<Integer>> clusters = kMeans.cluster(centers, kSize);
         // Build hierarchy based on clusters
         Geometries hierarchies = new Geometries();
@@ -187,7 +174,6 @@ public class Scene {
             }
         }
         this.geometries = hierarchies;
-
         return this; // Return the Scene object
     }
 
